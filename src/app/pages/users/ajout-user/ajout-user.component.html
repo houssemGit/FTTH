@@ -1,0 +1,150 @@
+<!--
+
+<div class="jumbotron">
+  <a *ngIf="currentUser" class="nav-item nav-link" style="cursor:pointer" (click)="logout()">Logout</a>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+      -->
+<div class="card">
+  <div class="card-header">
+    <h3>Ajout Utilisateur</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+      <div class="form-group">
+        <label for="Nom">Nom</label>
+        <input
+          type="text"
+          formControlName="Nom"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom.errors }"
+          placeholder="Enter Nom here"
+        />
+        <div *ngIf="submitted && fval.Nom.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom.errors.required">Nom is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Prenom">Prenom</label>
+        <input
+          type="text"
+          formControlName="Prenom"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Prenom.errors }"
+          placeholder="Enter Prenom here"
+        />
+        <div *ngIf="submitted && fval.Prenom.errors" class="invalid-feedback">
+          <div *ngIf="fval.Prenom.errors.required">Prenom is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          formControlName="Email"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Email.errors }"
+          placeholder="Enter Email here"
+        />
+        <div *ngIf="submitted && fval.Email.errors" class="invalid-feedback">
+          <div *ngIf="fval.Email.errors.required">Email is required</div>
+          <div *ngIf="fval.Email.errors.Email">Enter valid Email address</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Fonction">Fonction</label>
+        <input
+          type="text"
+          formControlName="Fonction"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Fonction.errors }"
+          placeholder="Enter Fonction here"
+        />
+        <div *ngIf="submitted && fval.Fonction.errors" class="invalid-feedback">
+          <div *ngIf="fval.Fonction.errors.required">Fonction is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Password">Password</label>
+        <input
+          type="Password"
+          formControlName="Password"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Password.errors }"
+          placeholder="Enter Password here"
+        />
+        <div *ngIf="submitted && fval.Password.errors" class="invalid-feedback">
+          <div *ngIf="fval.Password.errors.required">Password is required</div>
+          <div *ngIf="fval.Password.errors.minlength">
+            Password must be at least 6 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Utilisateur</label>
+              <select
+                class="custom-select "
+                (change)="changeRole($event)"
+                formControlName="Role"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.Role.errors }"
+                placeholder="Enter Role here"
+              >
+                <option value="">Enter role here</option>
+                <option *ngFor="let role of Roles" [value]="role">{{
+                  role
+                }}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="isSubmitted && Role.errors?.required"
+              >
+                <div *ngIf="fval.Role.errors.required">Role is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Default dropright button
+        <div class="form-group">
+        <div class="btn-group dropright">
+          <label style="margin-right: 2rem;">Utilisateur</label>
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{tata}}
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" (click)="getSelectedDropdown('1')" >Admin</a>
+            <a class="dropdown-item" (click)="getSelectedDropdown('2')">Commercial</a>
+            <a class="dropdown-item" (click)="getSelectedDropdown('3')">Expert FTTH horizental</a>
+            <a class="dropdown-item"  (click)="getSelectedDropdown('4')">Expert FTTH vertical</a>
+          </div>
+        </div>
+        </div>
+        -->
+      <div class="form-group">
+        <a routerLink="../gestion-user" class="btn btn-link">Annuler</a>
+        <button style="margin-left: 970px;" [disabled]="loading" class="btn btn-primary">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Ajouter
+        </button>
+
+      </div>
+    </form>
+
+    <!--
+      </div>
+    </div>
+  </div>
+
+</div>
+-->
+  </div>
+</div>
