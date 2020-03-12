@@ -1,5 +1,5 @@
-<h1 id="title" class="title">Login</h1>
-<p class="sub-title">Bonjour! Log in avec votre email.</p>
+<h1 id="title" class="title">Se connecter</h1>
+<p class="sub-title">Bonjour! Se connecter avec votre email.</p>
 
 <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
   <p class="alert-title"><b>Oh snap!</b></p>
@@ -85,3 +85,69 @@
   </button>
 </form>
 
+
+
+
+<!--
+
+  <form (ngSubmit)="login()" [formGroup]="loginForm" aria-labelledby="title">
+
+  <div class="form-group">
+    <label class="label" for="input-email">Email:</label>
+    <input class="Form-Control"
+           formControlName="Email"
+           nbInput
+           fullWidth
+           [(ngModel)]="user.email"
+
+           name="email"
+           id="input-email"
+           pattern=".+@.+\..+"
+           placeholder="Email"
+           fieldSize="large"
+         >
+    <ng-container *ngIf="email.invalid && email.touched">
+      <p class="caption status-danger" *ngIf="email.errors?.required">
+        Email obligatoire!
+      </p>
+      <p class="caption status-danger" *ngIf="email.errors?.pattern">
+        Email invalide!
+      </p>
+    </ng-container>
+  </div>
+
+  <div class="form-group">
+    <span class="label-with-link">
+      <label class="label" for="input-password">Mot de passe:</label>
+
+    </span>
+    <input class="Form-Control"
+           formControlName="Email"
+           nbInput
+           fullWidth
+           [(ngModel)]="user.password"
+
+           name="password"
+           type="password"
+           id="input-password"
+           placeholder="Mot de passe"
+           fieldSize="large"
+           [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : 'basic'"
+           [required]="getConfigValue('forms.validation.password.required')"
+           [minlength]="getConfigValue('forms.validation.password.minLength')"
+           [maxlength]="getConfigValue('forms.validation.password.maxLength')"
+           [attr.aria-invalid]="password.invalid && password.touched ? true : null">
+    <ng-container *ngIf="password.invalid && password.touched ">
+      <p class="caption status-danger" *ngIf="password.errors?.required">
+        Mot de pasee obligatoire!
+      </p>
+      <p class="caption status-danger" *ngIf="password.errors?.minlength || password.errors?.maxlength">
+        Mot de passe doit contenir
+        from {{ getConfigValue('forms.validation.password.minLength') }}
+        to {{ getConfigValue('forms.validation.password.maxLength') }}
+        characters
+      </p>
+    </ng-container>
+  </div>
+
+  -->

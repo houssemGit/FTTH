@@ -12,13 +12,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/utilisateurs/gestion-user',
   },
   {
-    title: 'FTTH Horizental',
+    title: 'Zones',
     icon: 'shuffle-2-outline',
-    link: '/pages/FTTH-H',
+    link: '/pages/zone',
     children: [
       {
-        title: 'Zone',
-        link: '/pages/FTTH-H/Zone',
+        title: 'Charguia1',
+        link: '/pages/zone/charguia1',
+      },
+      {
+        title: 'Charguia2',
+        link: '/pages/zone/charguia2',
+      },
+      {
+        title: 'CUN',
+        link: '/pages/zone/cun',
+      },
+      {
+        title: 'Lac1',
+        link: '/pages/zone/Lac1',
+      },
+      {
+        title: 'Lac2',
+        link: '/pages/zone/Lac2',
       }
     ]
   },
@@ -44,12 +60,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/iot-dashboard',
     home: true,
   },
-/*
+
   {
     title: 'FEATURES',
     group: true,
   },
-*/
+
   {
     title: 'Layout',
     icon: 'layout-outline',

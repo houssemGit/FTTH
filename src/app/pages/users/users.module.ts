@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 //import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserService } from '../../_service/user.service';
 
-
+import{UsersComponent} from './users.component'
 import { AjoutUserComponent } from './ajout-user/ajout-user.component';
 import { ModifierUserComponent } from './modifier-user/modifier-user.component';
 import { GestionUserComponent } from './gestion-user/gestion-user.component';
@@ -31,6 +31,10 @@ import { GestionUserComponent } from './gestion-user/gestion-user.component';
     UsersRoutingModule,
     HttpClientModule,
   ],
+  entryComponents: [
+
+  ],
   providers: [UserService,ToastrService],
+
 })
 export class UsersModule { }

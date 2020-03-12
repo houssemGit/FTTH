@@ -21,7 +21,7 @@ export class UserService {
     return this.http.put("http://localhost:8000/api/users/"+id, user);
   }
 
-  deleteuser(id: String) {
-    return this.http.delete("http://localhost:8000/api/users" + "/" + id);
+  deleteuser(id: string) {
+    return this.http.delete("http://localhost:8000/api/users/"+ id);
   }
 }

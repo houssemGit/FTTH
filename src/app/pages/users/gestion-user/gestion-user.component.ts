@@ -64,15 +64,15 @@ export class GestionUserComponent implements OnInit {
   }
 
   deleteUser(e) {
-
-    this.http.delete('api/users/' + e.ID_user).subscribe(
+    this.userService.deleteuser(e.ID_user.toString()).subscribe(
       Response => {
         if (Response['success']) {
-          this.toaster.success("Suppresion avec succés");
+          alert('Utilisateur supprime avec sucess!!');
+          //this.toaster.success("Suppresion avec succés");
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             // Destroy the table first
             dtInstance.destroy();
-            this.http.get<any>('api/users').subscribe(data => {
+            this.userService.allusers().subscribe(data => {
               this.user = data;
               this.dtTrigger.next();
             });

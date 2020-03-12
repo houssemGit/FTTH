@@ -1,4 +1,5 @@
 <div class="accordions-container row">
+  <!--
   <div class="accordion-container col-md-12 col-lg-6 col-xxxl-6">
     <nb-card>
       <nb-card-header>Toggle Accordion By Button</nb-card-header>
@@ -42,39 +43,163 @@
       </nb-accordion-item>
     </nb-accordion>
   </div>
-
-  <div class="accordion-container col-md-12 col-lg-6 col-xxxl-6">
+-->
+  <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
     <nb-accordion multi>
       <nb-accordion-item>
         <nb-accordion-item-header>
-          Product Details
+          OLT
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-          A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-          Originally, nebula was a name for any diffuse astronomical object,
-          including galaxies beyond the Milky Way.
+          Reférence OLT: (id)
         </nb-accordion-item-body>
       </nb-accordion-item>
 
       <nb-accordion-item>
         <nb-accordion-item-header>
-          Reviews
+          Carte P2P
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-          A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-          Originally, nebula was a name for any diffuse astronomical object,
-          including galaxies beyond the Milky Way.
+          <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Carte1
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div id="P2Ports">
+                  <label
+                    *ngFor="let port of ports; let i = index"
+                    class="switch grid-item"
+                    ><br /><br />
+               <div style="text-align: center ; ">{{ i + 1 }}</div>
+                    <input type="checkbox" /><span
+                      class="slider"
+                    ></span>
+                  </label>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Carte2
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div id="P2Ports">
+                  <label
+                    *ngFor="let port of ports; let i = index"
+                    class="switch grid-item"
+                    ><br /><br />
+                    <div style="text-align: center ; ">{{ i + 1 }}</div>
+                    <input type="checkbox" /><span
+                      class="slider"
+                    ></span>
+                  </label>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </div>
         </nb-accordion-item-body>
       </nb-accordion-item>
 
       <nb-accordion-item>
         <nb-accordion-item-header>
-          Edit
+          Carte GPON
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-          A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-          Originally, nebula was a name for any diffuse astronomical object,
-          including galaxies beyond the Milky Way.
+          <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Carte1
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div id="P2Ports">
+                  <label
+                    *ngFor="let port of port; let i = index"
+                    class="switch grid-item"
+                    ><br /><br />
+                    <div style="text-align: center ; ">{{ i + 1 }}</div>
+                    <input type="checkbox" /><span
+                      class="slider"
+                    ></span>
+                  </label>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Carte2
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div id="P2Ports">
+                  <label
+                    *ngFor="let port of port; let i = index"
+                    class="switch grid-item"
+                    ><br /><br />
+                    <div style="text-align: center ; ">{{ i + 1 }}</div>
+                    <input type="checkbox" /><span
+                      class="slider"
+                    ></span>
+                  </label>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Carte3
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div id="P2Ports">
+                  <label
+                    *ngFor="let port of port; let i = index"
+                    class="switch grid-item"
+                    ><br /><br />
+                    <div style="text-align: center ; ">{{ i + 1 }}</div>
+                    <input type="checkbox" /><span
+                      class="slider"
+                    ></span>
+                  </label>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Carte4
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div id="P2Ports">
+                  <label
+                    *ngFor="let port of port; let i = index"
+                    class="switch grid-item"
+                    ><br /><br />
+                <div style="text-align: center ;">{{ i + 1 }}</div>
+                    <input type="checkbox" /><span class="slider"></span>
+                  </label>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Carte5
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div id="P2Ports">
+                  <label
+                    *ngFor="let port of port; let i = index"
+                    class="switch grid-item"
+                    ><br /><br />
+                    <div style="text-align: center ; ">{{ i + 1 }}</div>
+                    <input type="checkbox" /><span
+                      class="slider"
+                    ></span>
+                  </label>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </div>
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>
