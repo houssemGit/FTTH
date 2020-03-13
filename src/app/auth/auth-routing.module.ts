@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NbAuthComponent } from '@nebular/auth';
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RequestResetPswComponent } from './reset-password/request-reset-psw/request-reset-psw.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,10 @@ export const routes: Routes = [
       {
         path: 'reset-password',
         component: ResetPasswordComponent,
+      },
+      {
+        path: 'request-reset-password',
+        component: RequestResetPswComponent,
       },
     ],
   },

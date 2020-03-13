@@ -18,11 +18,13 @@ import {
 
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RequestResetPswComponent } from './reset-password/request-reset-psw/request-reset-psw.component';
 
 @NgModule({
   declarations: [
   LoginComponent,
   ResetPasswordComponent,
+  RequestResetPswComponent,
 ],
   imports: [
     CommonModule,

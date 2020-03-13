@@ -24,4 +24,8 @@ export class UserService {
   deleteuser(id: string) {
     return this.http.delete("http://localhost:8000/api/users/"+ id);
   }
+  roleuser(id:string)
+  {
+    return this.http.get("http://localhost:8000/api/users/getRoleById/"+ id);
+  }
 }

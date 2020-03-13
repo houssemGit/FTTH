@@ -1,0 +1,85 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Ajouter OLT</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+      <div class="form-group">
+        <label for="Nom">Nom</label>
+        <input
+          type="text"
+          formControlName="Nom"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom.errors }"
+          placeholder="Entrer Nom ici"
+        />
+        <div *ngIf="submitted && fval.Nom.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom.errors.required">Nom est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Localisation">Localisation</label>
+        <input
+          type="text"
+          formControlName="Localisation"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Localisation.errors }"
+          placeholder="Entrer Localisation ici"
+        />
+        <div *ngIf="submitted && fval.Localisation.errors" class="invalid-feedback">
+          <div *ngIf="fval.Localisation.errors.required">Localisation est obligatoire</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Utilisateur</label>
+              <select
+                class="custom-select "
+                (change)="changeRole($event)"
+                formControlName="Role"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.Role.errors }"
+                placeholder="Entrer Role ici"
+              >
+                <option value="">Entrer role ici</option>
+                <option *ngFor="let role of Roles" [value]="role">{{role}}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="isSubmitted && Role.errors?.required"
+              >
+                <div *ngIf="fval.Role.errors.required">
+                  Role est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <a routerLink="#" style="color: black;" class="btn btn-link"
+          >Retour</a
+        >
+        <button
+          style="color: ivory; float:right "
+          [disabled]="loading"
+          class="btn btn-warning"
+        >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Modifier
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+

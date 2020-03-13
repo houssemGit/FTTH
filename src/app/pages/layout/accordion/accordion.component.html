@@ -57,151 +57,92 @@
 
       <nb-accordion-item>
         <nb-accordion-item-header>
-          Carte P2P
+          SRO
         </nb-accordion-item-header>
         <nb-accordion-item-body>
           <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
             <nb-accordion-item>
               <nb-accordion-item-header>
-                Carte1
+                Cassette1
               </nb-accordion-item-header>
               <nb-accordion-item-body>
-                <div id="P2Ports">
-                  <label
-                    *ngFor="let port of ports; let i = index"
-                    class="switch grid-item"
-                    ><br /><br />
-               <div style="text-align: center ; ">{{ i + 1 }}</div>
-                    <input type="checkbox" /><span
-                      class="slider"
-                    ></span>
-                  </label>
+
+                <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+                  <nb-accordion-item>
+                    <nb-accordion-item-header>
+                    Splitter1
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                      <div id="P2Ports">
+                        <label
+                          *ngFor="let port of ports; let i = index"
+                          class="switch grid-item"
+                          ><br /><br />
+                          <div style="text-align: center ; ">{{ i + 1 }}</div>
+                          <input type="checkbox" /><span
+                            class="slider"
+                          ></span>
+                        </label>
+                      </div>
+                    </nb-accordion-item-body>
+                  </nb-accordion-item>
                 </div>
+
               </nb-accordion-item-body>
             </nb-accordion-item>
+
             <nb-accordion-item>
               <nb-accordion-item-header>
-                Carte2
+                Cassette2
               </nb-accordion-item-header>
               <nb-accordion-item-body>
-                <div id="P2Ports">
-                  <label
-                    *ngFor="let port of ports; let i = index"
-                    class="switch grid-item"
-                    ><br /><br />
-                    <div style="text-align: center ; ">{{ i + 1 }}</div>
-                    <input type="checkbox" /><span
-                      class="slider"
-                    ></span>
-                  </label>
+
+                <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+                  <nb-accordion-item>
+                    <nb-accordion-item-header>
+                    Splitter1
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                      <div id="P2Ports">
+                        <label
+                          *ngFor="let port of port; let i = index"
+                          class="switch grid-item"
+                          ><br /><br />
+                          <div style="text-align: center ; ">{{ i + 1 }}</div>
+                          <input type="checkbox" /><span
+                            class="slider"
+                          ></span>
+                        </label>
+                      </div>
+                    </nb-accordion-item-body>
+                  </nb-accordion-item>
+                  <nb-accordion-item>
+                    <nb-accordion-item-header>
+                    Splitter2
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                      <div id="P2Ports">
+                        <label
+                          *ngFor="let port of port; let i = index"
+                          class="switch grid-item"
+                          ><br /><br />
+                          <div style="text-align: center ; ">{{ i + 1 }}</div>
+                          <input type="checkbox" /><span
+                            class="slider"
+                          ></span>
+                        </label>
+                      </div>
+                    </nb-accordion-item-body>
+                  </nb-accordion-item>
                 </div>
+
               </nb-accordion-item-body>
             </nb-accordion-item>
           </div>
         </nb-accordion-item-body>
       </nb-accordion-item>
 
-      <nb-accordion-item>
-        <nb-accordion-item-header>
-          Carte GPON
-        </nb-accordion-item-header>
-        <nb-accordion-item-body>
-          <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
-            <nb-accordion-item>
-              <nb-accordion-item-header>
-                Carte1
-              </nb-accordion-item-header>
-              <nb-accordion-item-body>
-                <div id="P2Ports">
-                  <label
-                    *ngFor="let port of port; let i = index"
-                    class="switch grid-item"
-                    ><br /><br />
-                    <div style="text-align: center ; ">{{ i + 1 }}</div>
-                    <input type="checkbox" /><span
-                      class="slider"
-                    ></span>
-                  </label>
-                </div>
-              </nb-accordion-item-body>
-            </nb-accordion-item>
 
-            <nb-accordion-item>
-              <nb-accordion-item-header>
-                Carte2
-              </nb-accordion-item-header>
-              <nb-accordion-item-body>
-                <div id="P2Ports">
-                  <label
-                    *ngFor="let port of port; let i = index"
-                    class="switch grid-item"
-                    ><br /><br />
-                    <div style="text-align: center ; ">{{ i + 1 }}</div>
-                    <input type="checkbox" /><span
-                      class="slider"
-                    ></span>
-                  </label>
-                </div>
-              </nb-accordion-item-body>
-            </nb-accordion-item>
-
-            <nb-accordion-item>
-              <nb-accordion-item-header>
-                Carte3
-              </nb-accordion-item-header>
-              <nb-accordion-item-body>
-                <div id="P2Ports">
-                  <label
-                    *ngFor="let port of port; let i = index"
-                    class="switch grid-item"
-                    ><br /><br />
-                    <div style="text-align: center ; ">{{ i + 1 }}</div>
-                    <input type="checkbox" /><span
-                      class="slider"
-                    ></span>
-                  </label>
-                </div>
-              </nb-accordion-item-body>
-            </nb-accordion-item>
-
-            <nb-accordion-item>
-              <nb-accordion-item-header>
-                Carte4
-              </nb-accordion-item-header>
-              <nb-accordion-item-body>
-                <div id="P2Ports">
-                  <label
-                    *ngFor="let port of port; let i = index"
-                    class="switch grid-item"
-                    ><br /><br />
-                <div style="text-align: center ;">{{ i + 1 }}</div>
-                    <input type="checkbox" /><span class="slider"></span>
-                  </label>
-                </div>
-              </nb-accordion-item-body>
-            </nb-accordion-item>
-
-            <nb-accordion-item>
-              <nb-accordion-item-header>
-                Carte5
-              </nb-accordion-item-header>
-              <nb-accordion-item-body>
-                <div id="P2Ports">
-                  <label
-                    *ngFor="let port of port; let i = index"
-                    class="switch grid-item"
-                    ><br /><br />
-                    <div style="text-align: center ; ">{{ i + 1 }}</div>
-                    <input type="checkbox" /><span
-                      class="slider"
-                    ></span>
-                  </label>
-                </div>
-              </nb-accordion-item-body>
-            </nb-accordion-item>
-          </div>
-        </nb-accordion-item-body>
-      </nb-accordion-item>
     </nb-accordion>
   </div>
 </div>
