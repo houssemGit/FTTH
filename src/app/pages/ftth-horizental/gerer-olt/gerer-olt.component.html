@@ -1,3 +1,77 @@
-<p>
-  gerer-olt works!
-</p>
+
+<button routerLink="../ajout-olt" class="btn btn-success" style="width:200px; float:right;"><i class="far fa-plus-square"></i>  Ajouter OLT </button>
+<br>
+<br>
+
+
+<div class="accordions-container row">
+  <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+    <nb-accordion >
+      <nb-accordion-item #item *ngFor="let olt of olts; "    >
+        <nb-accordion-item-header (click)="openC(olt)">
+          {{olt.Nom_olt}}
+          <div >
+            <button style=" float:right " class="btn btn-danger"   (click)="deleteOlt(olt)" >  <i class="fas fa-trash-alt"></i>  </button>
+            <button style=" float:right " class="btn btn-warning"  (click)="editOlt(olt)" style="margin-left: 20px;" > <i class="fas fa-edit"></i> </button>
+
+          </div>
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+
+          <button routerLink="../ajout-cassette" class="btn btn-success" style="width:120px; float:right;" (click)=AjoutC(olt)><i class="far fa-plus-square"></i>  Cassette  </button>
+          <br>
+          <br>
+          <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
+          <nb-accordion>
+            <nb-accordion-item #item1 *ngFor="let cassette of cassettes"  >
+              <nb-accordion-item-header (click)=openS(cassette) >
+                cassette{{cassette.Num_cassette}}
+                <button style=" float:right " class="btn btn-danger"   (click)="deleteC(cassette)" style="margin-left: 20px;" >  <i class="fas fa-trash-alt"></i>  </button>
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+
+                <button routerLink="../ajout-splitter" class="btn btn-success" style="width:120px; float:right;" (click)=AjoutS(cassette)><i class="far fa-plus-square"></i>  Splitter  </button>
+                <br>
+                <br>
+                <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+                  <nb-accordion >
+                  <nb-accordion-item #item2 *ngFor="let splitter of splitters" >
+                    <nb-accordion-item-header (click)=openP(splitter)>
+                      splitter{{splitter.Position}}
+                      <button style=" float:right " class="btn btn-info"   (click)="saveP(splitter)" style="margin-left: 20px;">  <i class="far fa-save"></i>  </button>
+
+                      <button style=" float:right " class="btn btn-danger"   (click)="deleteS(splitter)"  >  <i class="fas fa-trash-alt"></i>  </button>
+
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                      <div id="P2Ports">
+                        <label *ngFor="let port of ports; let i = index "  class="switch grid-item">
+                          <br /><br />
+                          <div style="text-align: center ; ">{{ i + 1 }}</div>
+                         <input type="checkbox" (click)="cheky(i)" *ngIf="port.Etat=='true'" checked="true"  /><span class="slider"></span>
+                        </label>
+                      </div>
+                    </nb-accordion-item-body>
+                  </nb-accordion-item>
+                </nb-accordion>
+                </div>
+
+
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+          </div>
+
+
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+</div>
+
+
+
+
+
+
+

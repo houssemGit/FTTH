@@ -12,31 +12,27 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/utilisateurs/gestion-user',
   },
   {
+    title: 'FTTH-horizental',
+    icon: 'shuffle-2-outline',
+
+    children: [
+
+      {
+        title: 'Gestion OLT',
+        link: '/pages/zones/gerer-olt',
+      },
+      {
+        title: 'Gestion SRO',
+        link: '/pages/zones/gerer-sro',
+      },
+
+    ]
+
+  },
+  {
     title: 'Zones',
     icon: 'shuffle-2-outline',
-    link: '/pages/zone',
-    children: [
-      {
-        title: 'Charguia1',
-        link: '/pages/zone/charguia1',
-      },
-      {
-        title: 'Charguia2',
-        link: '/pages/zone/charguia2',
-      },
-      {
-        title: 'CUN',
-        link: '/pages/zone/cun',
-      },
-      {
-        title: 'Lac1',
-        link: '/pages/zone/Lac1',
-      },
-      {
-        title: 'Lac2',
-        link: '/pages/zone/Lac2',
-      }
-    ]
+    link: '/pages/consulter-zone',
   },
   {
     title: 'FTTH Vertical',

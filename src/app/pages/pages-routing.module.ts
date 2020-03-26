@@ -5,6 +5,9 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { AjoutCassetteComponent } from './cassette/ajout-cassette/ajout-cassette.component';
+import { AjoutSplitterComponent } from './cassette/ajout-splitter/ajout-splitter.component';
+import { ConsulterZoneComponent } from './consulter-zone/consulter-zone.component';
 
 const routes: Routes = [{
   path: '',
@@ -15,9 +18,26 @@ const routes: Routes = [{
       component: ECommerceComponent,
     },
     {
+      path: 'zones/ajout-cassette',
+      component: AjoutCassetteComponent,
+    },
+    {
+      path: 'zones/ajout-splitter',
+      component: AjoutSplitterComponent,
+    },
+    {
+      path: 'consulter-zone',
+      component: ConsulterZoneComponent,
+    },
+    {
       path: 'utilisateurs',
       loadChildren: () => import('./users/users.module')
         .then(m => m.UsersModule),
+    },
+    {
+      path: 'zones',
+      loadChildren: () => import('./ftth-horizental/ftth-horizental.module')
+        .then(m => m.FtthHorizentalModule),
     },
     {
       path: 'iot-dashboard',

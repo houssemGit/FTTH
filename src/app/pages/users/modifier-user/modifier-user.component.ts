@@ -61,7 +61,12 @@ export class ModifierUserComponent implements OnInit {
 
   onFormSubmit(){
     this.submitted = true;
+    // return for here if form is invalid
+    if (this.registerForm.invalid) {
+      return console.log("champs invalid");
+    }
 
+    this.loading = true;
     this.user.Id = Number(localStorage.getItem('ID_user'));
     this.user.Nom = this.registerForm.controls["Nom"].value;
     this.user.Prenom = this.registerForm.controls["Prenom"].value;
@@ -70,15 +75,11 @@ export class ModifierUserComponent implements OnInit {
     this.user.Fonction = this.registerForm.controls["Fonction"].value;
     this.user.Role = this.registerForm.controls["Role"].value;
 
-    // return for here if form is invalid
-    if (this.registerForm.invalid) {
-      return console.log("champs invalid");
-    }
-    this.loading = true;
     this.userService.modifyuser(this.user, localStorage.getItem('ID_user')).subscribe(
       (data)=>{
         alert('Utilisateur modifie avec sucess!!');
         console.log(data);
+        //this.toastr.success("Utilisateur modifie avec sucess!!")
         this.router.navigate(['pages/utilisateurs/gestion-user']);
      },
       (error)=>{

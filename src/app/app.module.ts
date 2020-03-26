@@ -21,6 +21,7 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -41,6 +42,9 @@ import {
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+
+
+
   ],
   bootstrap: [AppComponent],
 })

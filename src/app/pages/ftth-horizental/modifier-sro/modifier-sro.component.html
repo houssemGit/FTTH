@@ -1,3 +1,115 @@
-<p>
-  modifier-sro works!
-</p>
+<div class="card">
+  <div class="card-header">
+    <h3>Modifier Sro</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+      <div class="form-group">
+        <label for="Nom">Nom</label>
+        <input
+          type="text"
+          formControlName="Nom"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom.errors }"
+          placeholder="Entrer Nom ici"
+        />
+        <div *ngIf="submitted && fval.Nom.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom.errors.required">Nom est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Zone">Zone</label>
+        <input
+          type="text"
+          formControlName="Zone"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Zone.errors }"
+          placeholder="Entrer Zone ici"
+        />
+        <div *ngIf="submitted && fval.Zone.errors" class="invalid-feedback">
+          <div *ngIf="fval.Zone.errors.required">Zone est obligatoire</div>
+        </div>
+      </div>
+
+      <!-- select item -->
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">OLT correspondant</label>
+              <select
+                class="custom-select "
+                (change)="olt($event)"
+                formControlName="olt"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.olt.errors }"
+                placeholder="Entrer olt ici"
+              >
+                <option value="">Entrer OLT ici</option>
+                <option *ngFor="let olt of ch" [value]="olt" >{{olt}}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="isSubmitted && olt.errors?.required"
+              >
+                <div *ngIf="fval.olt.errors.required">
+                  OLT est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- select item -->
+       <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Numero cable transport</label>
+              <select
+                class="custom-select "
+                (change)="N_C_T($event)"
+                formControlName="N_C_T"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.N_C_T.errors }"
+                placeholder="Entrer N_C_T ici"
+              >
+                <option value="">Entrer Numero cable transport ici</option>
+                <option *ngFor="let N_C_T of n_c_ts" [value]="N_C_T">{{N_C_T}}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="isSubmitted && N_C_T.errors?.required"
+              >
+                <div *ngIf="fval.N_C_T.errors.required">
+                  Numero est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <a routerLink="../gerer-sro" class="btn btn-link">Annuler</a>
+        <button style="float:right" [disabled]="loading" class="btn btn-warning">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Modifier
+        </button>
+
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+

@@ -39,7 +39,7 @@ export class AjoutUserComponent implements OnInit {
 
 
 
-
+  user: User;
   get fval() { return this.registerForm.controls; }
 
   onFormSubmit(){
@@ -53,6 +53,8 @@ export class AjoutUserComponent implements OnInit {
     // this.registerForm.value f 3oudh user
     this.userService.adduser(this.registerForm.value).subscribe(
       (data)=>{
+        this.user=<User>data;
+        console.log(this.user);
         alert('User Registered successfully!!');
         this.router.navigate(['pages/utilisateurs/gestion-user']);
      },

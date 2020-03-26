@@ -1,0 +1,144 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Ajouter Cassette</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+
+<!-- select item -->
+<div class="form-group">
+  <div class="group-gap">
+    <div class="d-block my-3">
+      <div class="mb-3">
+        <label style="margin-right: 2rem;">Numero cassette</label>
+        <select
+          class="custom-select "
+          (change)="NmCasete($event)"
+          formControlName="NmCasete"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.NmCasete.errors }"
+          placeholder="Entrer NmCasete ici"
+        >
+          <option value="">Entrer num cassette ici</option>
+          <option *ngFor="let NmCasete of NmCasetes" [value]="NmCasete">{{NmCasete}}</option>
+        </select>
+        <!--  error block -->
+        <div
+          class="invalid-feedback"
+          *ngIf="isSubmitted && NmCasete.errors?.required"
+        >
+          <div *ngIf="fval.NmCasete.errors.required">
+            Numero est obligatoire
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- select item -->
+<div class="form-group">
+  <div class="group-gap">
+    <div class="d-block my-3">
+      <div class="mb-3">
+        <label style="margin-right: 2rem;">Nombre splitter</label>
+        <select
+          class="custom-select "
+          (change)="Nbsplt($event)"
+          formControlName="Nbsplt"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nbsplt.errors }"
+          placeholder="Entrer Nbsplt ici"
+        >
+          <option value="">Entrer nombre splitter ici</option>
+          <option *ngFor="let Nbsplt of Nbsplts" [value]="Nbsplt">{{Nbsplt}}</option>
+        </select>
+        <!--  error block -->
+        <div
+          class="invalid-feedback"
+          *ngIf="isSubmitted && Nbsplt.errors?.required"
+        >
+          <div *ngIf="fval.Nbsplt.errors.required">
+            Nombre est obligatoire
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- select item -->
+<div class="form-group">
+  <div class="group-gap">
+    <div class="d-block my-3">
+      <div class="mb-3">
+        <label style="margin-right: 2rem;">Type splitter</label>
+        <select
+          class="custom-select "
+          (change)="Typespt($event)"
+          formControlName="Typespt"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Typespt.errors }"
+          placeholder="Entrer Typespt ici"
+        >
+          <option value="">Entrer Type splitter ici</option>
+          <option *ngFor="let Typespt of Typespts" [value]="Typespt">{{Typespt}}</option>
+        </select>
+        <!--  error block -->
+        <div
+          class="invalid-feedback"
+          *ngIf="isSubmitted && Typespts.errors?.required"
+        >
+          <div *ngIf="fval.Typespts.errors.required">
+            Type est obligatoire
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <label style="margin-right: 2rem;">Configuration des ports</label>
+    <div class="form-group">
+      <div class="accordions-container row">
+
+        <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
+          <nb-accordion multi>
+            <nb-accordion-item *ngFor="let splitter of splitters; let i = index">
+              <nb-accordion-item-header>
+                Splitter{{i+1}}
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                      <div id="P2Ports">
+                        <label *ngFor="let port of ports; let j = index"  class="switch grid-item">
+                          <br /><br />
+                          <div style="text-align: center ; ">{{i+1}}{{j+1}}</div>
+                         <input type="checkbox" (click)="cheky(i+1,j+1) "  /><span class="slider"></span>
+                        </label>
+                      </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+        </div>
+      </div>
+    </div>
+
+      <div class="form-group">
+        <a routerLink="../gerer-olt" class="btn btn-link">Annuler</a>
+        <button style="float:right" [disabled]="loading" class="btn btn-primary">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Ajouter
+        </button>
+
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+
