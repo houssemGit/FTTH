@@ -20,11 +20,8 @@ export class AjoutSroComponent implements OnInit {
 
   olts:Array<Olt>= new Array
   ch: Array<String> = new Array
-  nbcasetes: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   n_c_ts: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  nbc: number;
-  cassettes: any;
 
 
   constructor(
@@ -38,7 +35,6 @@ export class AjoutSroComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       Nom: ["", Validators.required],
       Zone: ["", Validators.required],
-      Nbcasete: ["", Validators.required],
       N_C_T: ["", [Validators.required]],
       olt: ["", [Validators.required]],
     });
@@ -54,14 +50,6 @@ export class AjoutSroComponent implements OnInit {
   }
 
 
-  get nbcasete() {
-    return this.registerForm.get("Nbcasete");
-  }
-  NbCasete(e) {
-    this.nbcasete.setValue(e.target.value, { onlySelf: true });
-    this.nbc = Number(this.registerForm.controls["Nbcasete"].value);
-    this.cassettes = Array(this.nbc);
-  }
 
   get n_c_t() {
     return this.registerForm.get("N_C_T");
@@ -81,7 +69,6 @@ export class AjoutSroComponent implements OnInit {
   }
 
   sro: Sro = new Sro()
-  cassette: Cassette = new Cassette()
   nomOlt:string
 
   onFormSubmit() {
@@ -93,8 +80,7 @@ export class AjoutSroComponent implements OnInit {
     }
     this.loading = true;
 
-    this.cassette.ID_olt = null;
-    this.cassette.ID_immeuble = null;
+
     this.sro.Nom_sro = this.registerForm.controls["Nom"].value;
     this.sro.Nom_zone = this.registerForm.controls["Zone"].value;
     this.sro.Num_cable_transport = this.registerForm.controls["N_C_T"].value;
@@ -108,11 +94,7 @@ export class AjoutSroComponent implements OnInit {
           }
         }
     this.ftthService.AjoutSro(this.sro).subscribe(data => {
-      this.cassette.ID_sro=data.ID_sro
-      for(var i=0;i<this.nbc;i++){
-      this.cassette.Num_cassette=i+1;
-      this.ftthService.AjoutCassette(this.cassette).subscribe(data => {alert("cassette ajoute")},error => {alert("error cassette ajout");});
-    }
+
       alert("sro ajoute"); this.router.navigate(['pages/zones/gerer-sro']);
 
   },error => alert("error sro ajout"));

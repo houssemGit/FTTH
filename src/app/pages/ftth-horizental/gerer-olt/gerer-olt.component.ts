@@ -66,31 +66,24 @@ export class GererOltComponent implements OnInit {
     this.router.navigateByUrl("pages/zones/ajout-splitter");
   }
 
-
-   @ViewChild('item',{static: false}) accordion;
-   @ViewChild('item1',{static: false}) accordion1;
-   @ViewChild('item2',{static: false}) accordion2;
-
-
-
   openC(e) {
     this.cassettes=[]
-    if(this.accordion.collapsed==false){
-    this.ftthService.getByOlt(e.ID_olt).subscribe(data => {this.cassettes = data;});
-    }
+    this.ftthService.getByOlt(e.ID_olt).subscribe(data => {this.cassettes = data;
+    },error => alert('aucune cassettes!'));
+
 
   }
   openS(e) {
     this.splitters=[]
-    if(this.accordion1.collapsed==false){
-    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;});
-    }
+
+    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;},error => alert('aucun splitter!'));
+
   }
   openP(e) {
     this.ports=[]
-    if(this.accordion2.collapsed==false){
-    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;});
-    }
+
+    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;},error => alert('error ports'));
+
   }
 
 

@@ -20,7 +20,7 @@
           placeholder="Entrer Position ici"
         >
           <option value="">Entrer Position ici</option>
-          <option *ngFor="let Position of Positions" [value]="Position">{{Position}}</option>
+          <option *ngFor="let Position of rest" [value]="Position">{{Position}}</option>
         </select>
         <!--  error block -->
         <div
@@ -94,7 +94,7 @@
     </div>
 
       <div class="form-group">
-        <a routerLink="../gerer-olt" class="btn btn-link">Annuler</a>
+        <a (click)="annuler()" style="color: royalblue;" class="btn btn-link">Annuler</a>
         <button style="float:right" [disabled]="loading" class="btn btn-primary">
           <span
             *ngIf="loading"

@@ -79,7 +79,7 @@ export class ModifierUserComponent implements OnInit {
       (data)=>{
         alert('Utilisateur modifie avec sucess!!');
         console.log(data);
-        //this.toastr.success("Utilisateur modifie avec sucess!!")
+        this.toastr.success('utilisateur modifie', 'Toastr fun!')
         this.router.navigate(['pages/utilisateurs/gestion-user']);
      },
       (error)=>{

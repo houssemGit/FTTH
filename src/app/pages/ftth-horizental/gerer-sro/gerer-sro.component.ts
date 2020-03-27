@@ -66,33 +66,33 @@ export class GererSroComponent implements OnInit {
   }
   AjoutS(e){
     localStorage.setItem("ID_cassette", e.ID_cassette.toString());
+    localStorage.setItem("ID_olt", e.ID_olt);
+    localStorage.setItem("ID_sro", e.ID_sro);
+    localStorage.setItem("ID_immeuble", e.ID_immeuble);
+
+
     this.router.navigateByUrl("pages/zones/ajout-splitter");
   }
-
-   @ViewChild('item',{static: false}) accordion;
-   @ViewChild('item1',{static: false}) accordion1;
-   @ViewChild('item2',{static: false}) accordion2;
-
 
 
   openC(e) {
     this.cassettes=[]
-    if(this.accordion.collapsed==false){
-    this.ftthService.getBySro(e.ID_sro).subscribe(data => {this.cassettes = data;});
-    }
+
+    this.ftthService.getBySro(e.ID_sro).subscribe(data => {this.cassettes = data;},error => alert('aucune cassettes!'));
+
 
   }
   openS(e) {
     this.splitters=[]
-    if(this.accordion1.collapsed==false){
-    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;});
-    }
+
+    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;},error => alert('aucuns splitters!'));
+
   }
   openP(e) {
     this.ports=[]
-    if(this.accordion2.collapsed==false){
-    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;});
-    }
+
+    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;},error => alert('error affichage ports!'));
+
   }
 
   saveP(e){

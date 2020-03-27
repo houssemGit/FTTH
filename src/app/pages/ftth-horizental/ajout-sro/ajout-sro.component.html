@@ -93,36 +93,6 @@
         </div>
       </div>
 
- <!-- select item -->
-      <div class="form-group">
-        <div class="group-gap">
-          <div class="d-block my-3">
-            <div class="mb-3">
-              <label style="margin-right: 2rem;">Nombre cassette</label>
-              <select
-                class="custom-select "
-                (change)="NbCasete($event)"
-                formControlName="Nbcasete"
-                class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && fval.Nbcasete.errors }"
-                placeholder="Entrer Nbcasete ici"
-              >
-                <option value="">Entrer nombre cassette ici</option>
-                <option *ngFor="let Nbcasete of nbcasetes" [value]="Nbcasete">{{Nbcasete}}</option>
-              </select>
-              <!--  error block -->
-              <div
-                class="invalid-feedback"
-                *ngIf="isSubmitted && Nbcasete.errors?.required"
-              >
-                <div *ngIf="fval.Nbcasete.errors.required">
-                  Nombre est obligatoire
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="form-group">
         <a routerLink="../gerer-sro" class="btn btn-link">Annuler</a>

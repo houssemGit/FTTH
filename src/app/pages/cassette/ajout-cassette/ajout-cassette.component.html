@@ -20,7 +20,7 @@
           placeholder="Entrer NmCasete ici"
         >
           <option value="">Entrer num cassette ici</option>
-          <option *ngFor="let NmCasete of NmCasetes" [value]="NmCasete">{{NmCasete}}</option>
+          <option *ngFor="let NmCasete of rest" [value]="NmCasete">{{NmCasete}}</option>
         </select>
         <!--  error block -->
         <div
@@ -125,7 +125,7 @@
     </div>
 
       <div class="form-group">
-        <a routerLink="../gerer-olt" class="btn btn-link">Annuler</a>
+        <a  class="btn btn-link" (click)="annuler()" style="color: royalblue;">Annuler</a>
         <button style="float:right" [disabled]="loading" class="btn btn-primary">
           <span
             *ngIf="loading"

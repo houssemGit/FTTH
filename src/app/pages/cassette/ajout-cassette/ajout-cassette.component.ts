@@ -16,7 +16,7 @@ export class AjoutCassetteComponent implements OnInit {
   loading = false;
   submitted = false;
 
-  NmCasetes: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20];
+  rest: any
   Nbsplts: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20];
   Typespts: any = [2, 4, 8, 16, 32, 64];
   nbs: number;
@@ -24,6 +24,10 @@ export class AjoutCassetteComponent implements OnInit {
   cassette: Cassette = new Cassette()
   splitter: Splitter = new Splitter()
   port: Port=new Port();
+
+  allPositions:Array<Number>= new Array
+  cassettes: Array<Cassette>;
+
 
   constructor( private formBuilder: FormBuilder,
     private router: Router,
@@ -35,6 +39,14 @@ export class AjoutCassetteComponent implements OnInit {
       Nbsplt: ["", Validators.required],
       Typespt: ["", Validators.required],
     });
+
+    this.cassettes=[]
+    this.ftthService.getByOlt(Number(localStorage.getItem('ID_olt'))).subscribe(data => {this.cassettes = data;
+    for (let i = 0; i < this.cassettes.length; i++) {
+      this.allPositions[i]= this.cassettes[i].Num_cassette
+    }
+    this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
+    },error => console.log('pas de cassette!'));
   }
 
    get nmcasete() {
@@ -81,7 +93,26 @@ export class AjoutCassetteComponent implements OnInit {
     {this.accordion.splice(i,1); this.bool=true}
     }
       if (this.bool===false) this.accordion.push({ num_splt: x, num_port: y, port: 'true' });
-     // console.log(this.accordion)
+
+  }
+
+  annuler(){
+    if (localStorage.getItem('ID_olt') != ''){
+      localStorage.setItem('ID_olt','')
+      this.router.navigateByUrl('pages/zones/gerer-olt')
+    }
+    if (localStorage.getItem('ID_sro') != ''){
+      localStorage.setItem('ID_sro','')
+      this.router.navigateByUrl('pages/zones/gerer-sro')
+
+    }
+    //a verifier!!
+    if (localStorage.getItem('ID_immeuble') != ''){
+      localStorage.setItem('ID_immeuble','')
+      this.router.navigateByUrl('pages/zones/gerer-immeuble')
+
+    }
+
   }
 
 
@@ -109,43 +140,44 @@ export class AjoutCassetteComponent implements OnInit {
 
     if (localStorage.getItem('ID_olt') != ''){
     this.cassette.ID_olt=Number(localStorage.getItem('ID_olt'))
-    localStorage.setItem('ID_olt','')
     this.cassette.ID_immeuble=null
     this.cassette.ID_sro=null
     }
     if (localStorage.getItem('ID_sro') != ''){
     this.cassette.ID_sro=Number(localStorage.getItem('ID_sro'))
-    localStorage.setItem('ID_sro','')
     this.cassette.ID_immeuble=null
     this.cassette.ID_olt=null
     }
 
     if (localStorage.getItem('ID_immeuble') != ''){
     this.cassette.ID_immeuble=Number(localStorage.getItem('ID_immeuble'))
-    localStorage.setItem('ID_immeuble','')
     this.cassette.ID_sro=null
     this.cassette.ID_olt=null
     }
     this.cassette.Num_cassette = this.registerForm.controls["NmCasete"].value;
     this.splitter.Type_splitter=this.registerForm.controls["Typespt"].value;
+
+    var f= Number(this.splitter.Type_splitter)
+    var d=0
     this.ftthService.AjoutCassette(this.cassette).subscribe(data => {
       this.splitter.ID_cassette=data.ID_cassette
-      //console.log(this.splitter.ID_cassette);
       for(var i=0;i<this.nbs;i++){
       this.splitter.Position=i+1;
       this.ftthService.AjoutSplitter(this.splitter).subscribe(data =>
        { this.port.ID_splitter=data.ID_splitter
-        for(var m=0;m<this.accordion1.length ;m++ )
-        {this.port.Etat = this.accordion1[m].port
-        this.port.ID_splitter = this.accordion1[m].num_port;
-        this.ftthService.AjoutPort(this.port).subscribe(data => alert("port ajoute"),error => {alert("error port ajout");});
+
+        for(var m=d;m<f ;m++ )
+        {
+          this.port.Etat = this.accordion1[m].port
+        this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {});
         }
-        alert("splitter ajoute")},error => {alert("error splitter ajout");});
-    }alert("cassete ajoute");
-  },error => alert("error cassette ajout"));
+        f+=Number(this.splitter.Type_splitter);
+        d+=Number(this.splitter.Type_splitter);
+        },error => {});
+    }   alert("succes ajout");
+  },error => {});
 
-
-
+  this.annuler();
   }
 
 }

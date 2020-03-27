@@ -39,6 +39,7 @@ import { ConsulterZoneComponent } from './consulter-zone/consulter-zone.componen
     ConsulterZoneComponent,
 
   ],
+
 })
 export class PagesModule {
 }

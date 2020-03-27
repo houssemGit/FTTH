@@ -7,7 +7,7 @@
 <div class="accordions-container row">
   <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
     <nb-accordion >
-      <nb-accordion-item #item *ngFor="let olt of olts; "    >
+      <nb-accordion-item  *ngFor="let olt of olts; "    >
         <nb-accordion-item-header (click)="openC(olt)">
           {{olt.Nom_olt}}
           <div >
@@ -23,7 +23,7 @@
           <br>
           <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
           <nb-accordion>
-            <nb-accordion-item #item1 *ngFor="let cassette of cassettes"  >
+            <nb-accordion-item  *ngFor="let cassette of cassettes"  >
               <nb-accordion-item-header (click)=openS(cassette) >
                 cassette{{cassette.Num_cassette}}
                 <button style=" float:right " class="btn btn-danger"   (click)="deleteC(cassette)" style="margin-left: 20px;" >  <i class="fas fa-trash-alt"></i>  </button>
@@ -35,7 +35,7 @@
                 <br>
                 <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
                   <nb-accordion >
-                  <nb-accordion-item #item2 *ngFor="let splitter of splitters" >
+                  <nb-accordion-item  *ngFor="let splitter of splitters" >
                     <nb-accordion-item-header (click)=openP(splitter)>
                       splitter{{splitter.Position}}
                       <button style=" float:right " class="btn btn-info"   (click)="saveP(splitter)" style="margin-left: 20px;">  <i class="far fa-save"></i>  </button>

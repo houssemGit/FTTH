@@ -5,6 +5,8 @@
       <nb-card-body>
         <nb-list>
           <nb-list-item *ngFor="let zone of sros" (click)="viewZone(zone)">
+            <button style=" float:right " class="btn btn-info"   (click)="viewZone(zone)" style="margin-left: 450px;">  <i class="fas fa-search"></i>  </button>
+
            {{ zone.Nom_zone }}
           </nb-list-item>
         </nb-list>

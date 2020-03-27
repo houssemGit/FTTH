@@ -4,7 +4,7 @@
 <div class="accordions-container row">
   <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
     <nb-accordion >
-      <nb-accordion-item #item *ngFor="let olt of olt; "    >
+      <nb-accordion-item  *ngFor="let olt of olt; "    >
         <nb-accordion-item-header (click)="openC(olt)">
           {{olt.Nom_olt}}
         </nb-accordion-item-header>
@@ -12,14 +12,14 @@
 
           <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
           <nb-accordion>
-            <nb-accordion-item #item1 *ngFor="let cassette of cassettes"  >
+            <nb-accordion-item *ngFor="let cassette of cassettes"  >
               <nb-accordion-item-header (click)=openS(cassette) >
                 cassette{{cassette.Num_cassette}}
               </nb-accordion-item-header>
               <nb-accordion-item-body>
                 <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
                   <nb-accordion >
-                  <nb-accordion-item #item2 *ngFor="let splitter of splitters" >
+                  <nb-accordion-item *ngFor="let splitter of splitters" >
                     <nb-accordion-item-header (click)=openP(splitter)>
                       splitter{{splitter.Position}}
                     </nb-accordion-item-header>
@@ -52,7 +52,7 @@
 <div class="accordions-container row">
   <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
     <nb-accordion >
-      <nb-accordion-item #item3 *ngFor="let sro of sro; "    >
+      <nb-accordion-item  *ngFor="let sro of sro; "    >
         <nb-accordion-item-header (click)="openCs(sro)">
           {{sro.Nom_sro}}
         </nb-accordion-item-header>
@@ -60,14 +60,14 @@
 
           <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
           <nb-accordion>
-            <nb-accordion-item #item4 *ngFor="let cassette of cassettess"  >
+            <nb-accordion-item  *ngFor="let cassette of cassettess"  >
               <nb-accordion-item-header (click)=openSs(cassette) >
                 cassette{{cassette.Num_cassette}}
               </nb-accordion-item-header>
               <nb-accordion-item-body>
                 <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
                   <nb-accordion >
-                  <nb-accordion-item #item5 *ngFor="let splitter of splitterss" >
+                  <nb-accordion-item  *ngFor="let splitter of splitterss" >
                     <nb-accordion-item-header (click)=openPs(splitter)>
                       splitter{{splitter.Position}}
                     </nb-accordion-item-header>

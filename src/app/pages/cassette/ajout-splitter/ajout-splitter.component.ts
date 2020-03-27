@@ -23,6 +23,10 @@ export class AjoutSplitterComponent implements OnInit {
   splitter: Splitter = new Splitter()
   port: Port=new Port();
 
+  rest: any
+  allPositions:Array<Number>= new Array
+  splitters: Array<Splitter>;
+
   constructor( private formBuilder: FormBuilder,
     private router: Router,
     private ftthService: FtthService,) { }
@@ -33,6 +37,14 @@ export class AjoutSplitterComponent implements OnInit {
       Position: ["", Validators.required],
 
     });
+    //controle saisie position
+    this.splitters=[]
+    this.ftthService.getByCassette(Number(localStorage.getItem('ID_cassette'))).subscribe(data => {this.splitters = data;
+    for (let i = 0; i < this.splitters.length; i++) {
+      this.allPositions[i]= this.splitters[i].Position
+    }
+    this.rest= this.Positions.filter(item => this.allPositions.indexOf(item) < 0)
+    },error => console.log('pas de splitter!'));
   }
 
   get position() {
@@ -59,6 +71,7 @@ export class AjoutSplitterComponent implements OnInit {
   bool: Boolean
   accordion: Array<{  num_port: number, port: string }> = new Array()
   accordion1: Array<{  num_port: number, port: string }> = new Array()
+
  // fonction qui detecte le changement d'etat des ports
  cheky(y) {
 /*
@@ -73,6 +86,32 @@ export class AjoutSplitterComponent implements OnInit {
    }
      if (this.bool===false) this.accordion.push({  num_port: y, port: 'true' });
  }
+
+ annuler(){
+  if (localStorage.getItem('ID_olt') != 'null'){
+    console.log('aa');
+    console.log(localStorage.getItem('ID_olt'));
+
+    localStorage.setItem('ID_olt','')
+    this.router.navigateByUrl('pages/zones/gerer-olt')
+  }
+  if (localStorage.getItem('ID_sro') != 'null'){
+    console.log('bb');
+
+    localStorage.setItem('ID_sro','')
+    this.router.navigateByUrl('pages/zones/gerer-sro')
+
+  }
+  //a verifier!!
+  if (localStorage.getItem('ID_immeuble') != 'null'){
+    console.log('cc');
+
+    localStorage.setItem('ID_immeuble','')
+    this.router.navigateByUrl('pages/zones/gerer-immeuble')
+
+  }
+
+}
 
   onFormSubmit() {
     this.submitted = true;
@@ -97,18 +136,17 @@ export class AjoutSplitterComponent implements OnInit {
        this.splitter.Type_splitter=this.registerForm.controls["Typespt"].value;
        this.splitter.Position=this.registerForm.controls["Position"].value;
        this.splitter.ID_cassette=Number(localStorage.getItem('ID_cassette'))
-       localStorage.setItem('ID_cassette','')
-
 
         this.ftthService.AjoutSplitter(this.splitter).subscribe(data =>
          { this.port.ID_splitter=data.ID_splitter
           for(var m=0;m<this.accordion1.length ;m++ )
           {this.port.Etat = this.accordion1[m].port
-          this.ftthService.AjoutPort(this.port).subscribe(data => alert("port ajoute"),error => {alert("error port ajout");});
+          this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
           }
           alert("splitter ajoute")},error => {alert("error splitter ajout");});
-
+          this.annuler();
         }
+
 
 
 }
