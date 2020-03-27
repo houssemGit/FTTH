@@ -90,18 +90,13 @@ export class GererSroComponent implements OnInit {
   }
   openP(e) {
     this.ports=[]
-
-    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;},error => alert('error affichage ports!'));
-
+    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;
+    },error => alert('error ports'));
   }
 
-  saveP(e){
-    for(var i=0;i<this.ports.length;i++){
-      this.ftthService.updatePort(e.ID_splitter, this.ports[i]).subscribe((data)=>{alert('ports '+i +' modifie avec sucess!!');},(error)=>{alert('error modification!!');})
-    }
-  }
-  cheky(i){
-    //this.ports[i].Etat=!this.ports[i].Etat
+  porto : Port=new Port
+  cheky(e){
+    this.ftthService.updatePort(e.ID_port,this.porto ).subscribe((data)=>{},(error)=>{alert('error modification!!');})
   }
 
   ngOnInit() {

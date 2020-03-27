@@ -38,7 +38,6 @@
                   <nb-accordion-item  *ngFor="let splitter of splitters" >
                     <nb-accordion-item-header (click)=openP(splitter)>
                       splitter{{splitter.Position}}
-                      <button style=" float:right " class="btn btn-info"   (click)="saveP(splitter)" style="margin-left: 20px;">  <i class="far fa-save"></i>  </button>
 
                       <button style=" float:right " class="btn btn-danger"   (click)="deleteS(splitter)"  >  <i class="fas fa-trash-alt"></i>  </button>
 
@@ -48,7 +47,10 @@
                         <label *ngFor="let port of ports; let i = index "  class="switch grid-item">
                           <br /><br />
                           <div style="text-align: center ; ">{{ i + 1 }}</div>
-                         <input type="checkbox" (click)="cheky(i)" *ngIf="port.Etat=='true'" checked="true"  /><span class="slider"></span>
+                         <input type="checkbox" (click)="cheky(port)" *ngIf="port.Etat=='Raccorde';else unchecked" checked="true"  /><span class="slider"></span>
+                         <ng-template #unchecked>
+                          <input type="checkbox" (click)="cheky(port)">
+                        </ng-template>
                         </label>
                       </div>
                     </nb-accordion-item-body>

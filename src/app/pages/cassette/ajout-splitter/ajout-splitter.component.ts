@@ -38,6 +38,7 @@ export class AjoutSplitterComponent implements OnInit {
 
     });
     //controle saisie position
+    this.rest=this.Positions
     this.splitters=[]
     this.ftthService.getByCassette(Number(localStorage.getItem('ID_cassette'))).subscribe(data => {this.splitters = data;
     for (let i = 0; i < this.splitters.length; i++) {
@@ -84,7 +85,7 @@ export class AjoutSplitterComponent implements OnInit {
    if (this.accordion[i].num_port === y )
    {this.accordion.splice(i,1); this.bool=true}
    }
-     if (this.bool===false) this.accordion.push({  num_port: y, port: 'true' });
+     if (this.bool===false) this.accordion.push({  num_port: y, port: 'Raccorde' });
  }
 
  annuler(){
@@ -96,8 +97,6 @@ export class AjoutSplitterComponent implements OnInit {
     this.router.navigateByUrl('pages/zones/gerer-olt')
   }
   if (localStorage.getItem('ID_sro') != 'null'){
-    console.log('bb');
-
     localStorage.setItem('ID_sro','')
     this.router.navigateByUrl('pages/zones/gerer-sro')
 
@@ -126,11 +125,11 @@ export class AjoutSplitterComponent implements OnInit {
            var k = 0; var baal=false;
              while(k < this.accordion.length && baal==false){
                  if (this.accordion[k].num_port==i )
-                 {this.accordion1.push({ num_port: i, port: 'true' }); baal=true}
+                 {this.accordion1.push({ num_port: i, port: 'Raccorde' }); baal=true}
                  else  {k++;}
 
              }
-             if(baal== false) this.accordion1.push({  num_port: i, port: 'false' });
+             if(baal== false) this.accordion1.push({  num_port: i, port: 'Libre' });
        }
 
        this.splitter.Type_splitter=this.registerForm.controls["Typespt"].value;

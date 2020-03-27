@@ -28,7 +28,7 @@
                         <label *ngFor="let port of ports; let i = index "  class="switch grid-item">
                           <br /><br />
                           <div style="text-align: center ; ">{{ i + 1 }}</div>
-                         <input type="checkbox" (click)="cheky(i)" *ngIf="port.Etat=='true'" checked="true"  /><span class="slider"></span>
+                         <input type="checkbox" (click)="cheky(i)" *ngIf="port.Etat=='Raccorde'" checked="true" disabled  /><span class="slider"></span>
                         </label>
                       </div>
                     </nb-accordion-item-body>
@@ -52,8 +52,8 @@
 <div class="accordions-container row">
   <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
     <nb-accordion >
-      <nb-accordion-item  *ngFor="let sro of sro; "    >
-        <nb-accordion-item-header (click)="openCs(sro)">
+      <nb-accordion-item   *ngFor="let sro of sro; " >
+        <nb-accordion-item-header  (click)="openCs(sro)">
           {{sro.Nom_sro}}
         </nb-accordion-item-header>
         <nb-accordion-item-body>
@@ -61,9 +61,10 @@
           <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
           <nb-accordion>
             <nb-accordion-item  *ngFor="let cassette of cassettess"  >
-              <nb-accordion-item-header (click)=openSs(cassette) >
-                cassette{{cassette.Num_cassette}}
-              </nb-accordion-item-header>
+                <nb-accordion-item-header (click)=openSs(cassette) >
+                  cassette{{cassette.Num_cassette}}
+                </nb-accordion-item-header>
+
               <nb-accordion-item-body>
                 <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
                   <nb-accordion >
@@ -76,7 +77,8 @@
                         <label *ngFor="let port of portss; let i = index "  class="switch grid-item">
                           <br /><br />
                           <div style="text-align: center ; ">{{ i + 1 }}</div>
-                         <input type="checkbox" (click)="cheky(i)" *ngIf="port.Etat=='true'" checked="true"  /><span class="slider"></span>
+                         <input type="checkbox"  *ngIf="port.Etat=='Raccorde' ; " checked="true" disabled /><span class="slider"></span>
+
                         </label>
                       </div>
                     </nb-accordion-item-body>

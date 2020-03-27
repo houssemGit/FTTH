@@ -33,39 +33,39 @@ export class DetailsZoneComponent implements OnInit {
   openC(e) {
     this.cassettes=[]
 
-    this.ftthService.getByOlt(e.ID_olt).subscribe(data => {this.cassettes = data;});
+    this.ftthService.getByOlt(e.ID_olt).subscribe(data => {this.cassettes = data;},error=>{alert('Cette olt ne contient pas de cassettes')});
 
   }
   openS(e) {
     this.splitters=[]
 
-    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;});
+    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;},error=>{alert('Cette olt ne contient pas de splitters')});
 
   }
   openP(e) {
     this.ports=[]
 
-    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;});
+    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;},error=>{alert('error')});
 
   }
 
   openCs(e) {
     this.cassettess=[]
 
-    this.ftthService.getBySro(e.ID_sro).subscribe(data => {this.cassettess = data;});
+    this.ftthService.getBySro(e.ID_sro).subscribe(data => {this.cassettess = data;},error=>{alert('Cette sro ne contient pas de cassettes')});
 
 
   }
   openSs(e) {
     this.splitterss=[]
 
-    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitterss = data;});
+    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitterss = data;},error=>{alert('Cette sro ne contient pas de splitters')});
 
   }
   openPs(e) {
     this.portss=[]
 
-    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.portss = data;});
+    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.portss = data;},error=>{alert('error')});
 
   }
 

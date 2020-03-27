@@ -39,7 +39,7 @@ export class AjoutCassetteComponent implements OnInit {
       Nbsplt: ["", Validators.required],
       Typespt: ["", Validators.required],
     });
-
+    this.rest=this.Nbsplts
     this.cassettes=[]
     this.ftthService.getByOlt(Number(localStorage.getItem('ID_olt'))).subscribe(data => {this.cassettes = data;
     for (let i = 0; i < this.cassettes.length; i++) {
@@ -47,6 +47,8 @@ export class AjoutCassetteComponent implements OnInit {
     }
     this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
     },error => console.log('pas de cassette!'));
+    console.log(this.rest);
+
   }
 
    get nmcasete() {
@@ -92,7 +94,7 @@ export class AjoutCassetteComponent implements OnInit {
     if (this.accordion[i].num_splt === x && this.accordion[i].num_port === y )
     {this.accordion.splice(i,1); this.bool=true}
     }
-      if (this.bool===false) this.accordion.push({ num_splt: x, num_port: y, port: 'true' });
+      if (this.bool===false) this.accordion.push({ num_splt: x, num_port: y, port: 'Raccorde' });
 
   }
 
@@ -130,11 +132,11 @@ export class AjoutCassetteComponent implements OnInit {
         var k = 0; var baal=false;
           while(k < this.accordion.length && baal==false){
               if (this.accordion[k].num_splt==i && this.accordion[k].num_port==j )
-              {this.accordion1.push({ num_splt: i, num_port: j, port: 'true' }); baal=true}
+              {this.accordion1.push({ num_splt: i, num_port: j, port: 'Raccorde' }); baal=true}
               else  {k++;}
 
           }
-          if(baal== false) this.accordion1.push({ num_splt: i, num_port: j, port: 'false' });
+          if(baal== false) this.accordion1.push({ num_splt: i, num_port: j, port: 'Libre' });
       }
     }
 
