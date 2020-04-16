@@ -70,13 +70,13 @@ input:checked + .slider:before {
 
 
 
-#P2Ports{
-  display:grid;
-  grid-template-columns: repeat(9,11%);
-  grid-template-rows: repeat(15,30%);
-  grid-column-gap: 10px;
-  grid-row-gap: 7px;
-   }
+ #P2Ports{
+display:grid;
+grid-template-columns: repeat(9,11%);
+grid-template-rows: auto;
+grid-column-gap: 10px;
+grid-row-gap: 18px;
+ }
  .grid-item{
    display: inline;
    ;

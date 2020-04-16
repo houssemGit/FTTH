@@ -18,9 +18,13 @@ export class AjoutSroComponent implements OnInit {
   loading = false;
   submitted = false;
 
+  rest: any
   olts:Array<Olt>= new Array
+  sros:Array<Sro>= new Array
   ch: Array<String> = new Array
-  n_c_ts: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  ch1: Array<number> = new Array
+  n_c_ts: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20,21];
+  c_c_ts
 
 
 
@@ -36,19 +40,27 @@ export class AjoutSroComponent implements OnInit {
       Nom: ["", Validators.required],
       Zone: ["", Validators.required],
       N_C_T: ["", [Validators.required]],
+      C_C_T: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       olt: ["", [Validators.required]],
     });
 
-//
+
     this.ftthService.AllOlt().subscribe(data => {
       this.olts=data
       for (let i = 0; i < this.olts.length; i++) {
         this.ch[i]=this.olts[i].Nom_olt
       }
-
     })
-  }
 
+    this.ftthService.AllSro().subscribe(data => {
+      this.sros=data
+      for (let i = 0; i < this.sros.length; i++) {
+        this.ch1[i]=this.sros[i].Num_cable_transport
+      }
+      this.rest= this.n_c_ts.filter(item => this.ch1.indexOf(item) < 0)
+    })
+
+  }
 
 
   get n_c_t() {
@@ -84,6 +96,7 @@ export class AjoutSroComponent implements OnInit {
     this.sro.Nom_sro = this.registerForm.controls["Nom"].value;
     this.sro.Nom_zone = this.registerForm.controls["Zone"].value;
     this.sro.Num_cable_transport = this.registerForm.controls["N_C_T"].value;
+    this.sro.Capacite_cable_transport= this.registerForm.controls["C_C_T"].value;
     this.nomOlt= this.registerForm.controls["olt"].value;
 
     this.ftthService.AllOlt().subscribe(data =>

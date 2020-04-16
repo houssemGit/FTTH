@@ -92,7 +92,19 @@
           </div>
         </div>
       </div>
-
+      <div class="form-group">
+        <label for="C_C_T">Capacite cable transport</label>
+        <input
+          type="text"
+          formControlName="C_C_T"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.C_C_T.errors }"
+          placeholder="Entrer Capacite cable transport ici"
+        />
+        <div *ngIf="submitted && fval.C_C_T.errors" class="invalid-feedback">
+          <div *ngIf="fval.C_C_T.errors.required">Capacite cable transport est obligatoire</div>
+        </div>
+      </div>
 
 
       <div class="form-group">

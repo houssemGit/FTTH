@@ -34,6 +34,7 @@ export class ModifierSroComponent implements OnInit {
       Nom: ["", Validators.required],
       Zone: ["", Validators.required],
       N_C_T: ["", [Validators.required]],
+      C_C_T: ["", [Validators.required]],
       olt: ["", [Validators.required]],
     });
   }
@@ -42,10 +43,12 @@ export class ModifierSroComponent implements OnInit {
     this.registerForm.controls['Nom'].setValue(localStorage.getItem('Nom_sro'))
     this.registerForm.controls['Zone'].setValue(localStorage.getItem('Nom_zone'))
     this.registerForm.controls['N_C_T'].setValue(localStorage.getItem('Num_cable_transport'))
+    this.registerForm.controls['C_C_T'].setValue(localStorage.getItem('Capacite_cable_transport'))
     this.ftthService.getOltById(Number(localStorage.getItem('ID_olt'))).subscribe(data => {this.registerForm.controls['olt'].setValue(data.Nom_olt)},error => {alert('olt not found ')})
     localStorage.setItem('Nom_sro','')
     localStorage.setItem('Nom_zone','')
     localStorage.setItem('Num_cable_transport','')
+    localStorage.setItem('Capacite_cable_transport','')
     localStorage.setItem('ID_olt','')
 
     this.ftthService.AllOlt().subscribe(data => {
@@ -90,6 +93,7 @@ export class ModifierSroComponent implements OnInit {
     this.sro.Nom_sro = this.registerForm.controls["Nom"].value;
     this.sro.Nom_zone = this.registerForm.controls["Zone"].value;
     this.sro.Num_cable_transport = this.registerForm.controls["N_C_T"].value;
+    this.sro.Capacite_cable_transport = this.registerForm.controls["C_C_T"].value;
     this.nomOlt= this.registerForm.controls["olt"].value;
 
     //Allolt a effacer

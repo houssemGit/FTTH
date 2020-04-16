@@ -1,16 +1,33 @@
 <div class="card">
   <div class="card-header">
-    <h3>Ajouter Cassette</h3>
+    <h3>Ajouter {{Binding}}</h3>
   </div>
   <div class="card-body">
     <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+
+
+
+      <div class="form-group">
+        <label for="Nom"> Nom </label>
+        <input
+          type="text"
+          formControlName="Nom"
+          [(ngModel)]="Binding"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom.errors }"
+          placeholder="Enter Nom here"
+        />
+        <div *ngIf="submitted && fval.Nom.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom.errors.required">Nom est obligatoire</div>
+        </div>
+      </div>
 
 <!-- select item -->
 <div class="form-group">
   <div class="group-gap">
     <div class="d-block my-3">
       <div class="mb-3">
-        <label style="margin-right: 2rem;">Numero cassette</label>
+        <label style="margin-right: 2rem;">Numero {{Binding}}</label>
         <select
           class="custom-select "
           (change)="NmCasete($event)"
@@ -19,7 +36,7 @@
           [ngClass]="{ 'is-invalid': submitted && fval.NmCasete.errors }"
           placeholder="Entrer NmCasete ici"
         >
-          <option value="">Entrer num cassette ici</option>
+          <option value="">Entrer num {{Binding}} ici</option>
           <option *ngFor="let NmCasete of rest" [value]="NmCasete">{{NmCasete}}</option>
         </select>
         <!--  error block -->
@@ -113,8 +130,8 @@
                       <div id="P2Ports">
                         <label *ngFor="let port of ports; let j = index"  class="switch grid-item">
                           <br /><br />
-                          <div style="text-align: center ; ">{{i+1}}{{j+1}}</div>
-                         <input type="checkbox" (click)="cheky(i+1,j+1) "  /><span class="slider"></span>
+                          <div style="text-align: center ; ">{{j+1}}</div>
+                         <input type="checkbox" disabled   /><span class="slider"></span>
                         </label>
                       </div>
               </nb-accordion-item-body>

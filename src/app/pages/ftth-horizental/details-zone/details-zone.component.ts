@@ -29,7 +29,6 @@ export class DetailsZoneComponent implements OnInit {
   ports: Array<Port>;
 
 
-
   openC(e) {
     this.cassettes=[]
 
@@ -45,7 +44,7 @@ export class DetailsZoneComponent implements OnInit {
   openP(e) {
     this.ports=[]
 
-    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.ports = data;},error=>{alert('error')});
+    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.ports = data;},error=>{alert('error')});
 
   }
 
@@ -58,17 +57,46 @@ export class DetailsZoneComponent implements OnInit {
   }
   openSs(e) {
     this.splitterss=[]
-
     this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitterss = data;},error=>{alert('Cette sro ne contient pas de splitters')});
-
   }
+
+  itat: string;
   openPs(e) {
     this.portss=[]
-
-    this.ftthService.getBySplitter(e.ID_splitter).subscribe(data => {this.portss = data;},error=>{alert('error')});
-
+    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.portss = data;},error=>{alert('error')});
+    //this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.itat = data.Etat;},error=>{alert('error')});
+    this.itat='Raccorde';
   }
 
+
+  portIN : Array<Port>
+  portOUT : Port
+  splt : Splitter
+  cast : Cassette
+  posP : Number
+  posS : Number
+  posC : Number
+  posTT : string
+
+  showCrsp(e){
+
+    this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
+      this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
+        this.posTT=this.portOUT[0].Position_tiroir
+        this.posP=this.portOUT[0].Position
+        console.log(this.portOUT[0].ID_splitter);
+
+        this.ftthService.getSplitterById(this.portOUT[0].ID_splitter).subscribe(data => {this.splt = data;
+          this.posS=this.splt[0].Position
+          this.ftthService.getCassetteById(this.splt[0].ID_cassette).subscribe(data => {this.cast = data;
+            this.posC=this.cast[0].Num_cassette
+
+          },error=>{alert('error')});
+        },error=>{alert('error')});
+      },error=>{alert('error')});
+    },error=>{alert('error')});
+
+  }
 
   ngOnInit() {
 
@@ -77,5 +105,4 @@ export class DetailsZoneComponent implements OnInit {
 
 
   }
-
 }

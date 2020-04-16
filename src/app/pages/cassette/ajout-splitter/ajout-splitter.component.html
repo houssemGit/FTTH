@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <h3>Ajouter Cassette</h3>
+    <h3>Ajouter Splitter</h3>
   </div>
   <div class="card-body">
     <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
@@ -79,11 +79,12 @@
                 Ports
               </nb-accordion-item-header>
               <nb-accordion-item-body>
+
                       <div id="P2Ports">
                         <label *ngFor="let port of ports; let j = index"  class="switch grid-item">
                           <br /><br />
                           <div style="text-align: center ; ">{{j+1}}</div>
-                         <input type="checkbox" (click)="cheky(j+1) "  /><span class="slider"></span>
+                         <input type="checkbox" disabled  /><span class="slider"></span>
                         </label>
                       </div>
               </nb-accordion-item-body>
@@ -109,5 +110,6 @@
     </form>
   </div>
 </div>
+
 
 

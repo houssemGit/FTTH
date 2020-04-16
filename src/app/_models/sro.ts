@@ -4,6 +4,7 @@ export class Sro {
   Nom_zone: string;
   ID_olt: number;
   Num_cable_transport: number
+  Capacite_cable_transport : number
 
   constructor(){
 

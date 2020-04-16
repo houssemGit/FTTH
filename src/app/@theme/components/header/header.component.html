@@ -3,8 +3,10 @@
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()">FTTH-<span>ooredoo</span></a>
+    <a class="logo" href="#" (click)="navigateHome()">FTTH-ooredoo
+       <!-- <img src="https://images.app.goo.gl/j2tK8Qxw1jXmGn8z7" alt="logo"> -->
 
+    </a>
   </div>
   <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary" hidden>
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>

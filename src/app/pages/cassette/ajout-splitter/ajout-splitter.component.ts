@@ -73,20 +73,21 @@ export class AjoutSplitterComponent implements OnInit {
   accordion: Array<{  num_port: number, port: string }> = new Array()
   accordion1: Array<{  num_port: number, port: string }> = new Array()
 
- // fonction qui detecte le changement d'etat des ports
- cheky(y) {
-/*
-  for (var i = 0; i < this.nbp; i++){
-    this.accordion.push({  num_port: i, port: 'false' }
-  }*/
+//  // fonction qui detecte le changement d'etat des ports
+//  cheky(y) {
+// /*
+//   for (var i = 0; i < this.nbp; i++){
+//     this.accordion.push({  num_port: i, port: 'false' }
+//   }*/
 
-   this.bool=false
-   for (var i = 0; i < this.accordion.length; i++) {
-   if (this.accordion[i].num_port === y )
-   {this.accordion.splice(i,1); this.bool=true}
-   }
-     if (this.bool===false) this.accordion.push({  num_port: y, port: 'Raccorde' });
- }
+//    this.bool=false
+//    for (var i = 0; i < this.accordion.length; i++) {
+//    if (this.accordion[i].num_port === y )
+//    {this.accordion.splice(i,1); this.bool=true}
+//    }
+//      if (this.bool===false) this.accordion.push({  num_port: y, port: 'Raccorde' });
+//  }
+
 
  annuler(){
   if (localStorage.getItem('ID_olt') != 'null'){
@@ -119,18 +120,18 @@ export class AjoutSplitterComponent implements OnInit {
     }
     this.loading = true;
 
-       //stockage de l'etat final de l'olt dans accordion1
-       this.accordion1 = []
-       for (var i = 1; i <= this.nbp; i++) {
-           var k = 0; var baal=false;
-             while(k < this.accordion.length && baal==false){
-                 if (this.accordion[k].num_port==i )
-                 {this.accordion1.push({ num_port: i, port: 'Raccorde' }); baal=true}
-                 else  {k++;}
+      //  //stockage de l'etat final de l'olt dans accordion1
+      //  this.accordion1 = []
+      //  for (var i = 1; i <= this.nbp; i++) {
+      //      var k = 0; var baal=false;
+      //        while(k < this.accordion.length && baal==false){
+      //            if (this.accordion[k].num_port==i )
+      //            {this.accordion1.push({ num_port: i, port: 'Raccorde' }); baal=true}
+      //            else  {k++;}
 
-             }
-             if(baal== false) this.accordion1.push({  num_port: i, port: 'Libre' });
-       }
+      //        }
+      //        if(baal== false) this.accordion1.push({  num_port: i, port: 'Libre' });
+      //  }
 
        this.splitter.Type_splitter=this.registerForm.controls["Typespt"].value;
        this.splitter.Position=this.registerForm.controls["Position"].value;
@@ -138,9 +139,16 @@ export class AjoutSplitterComponent implements OnInit {
 
         this.ftthService.AjoutSplitter(this.splitter).subscribe(data =>
          { this.port.ID_splitter=data.ID_splitter
-          for(var m=0;m<this.accordion1.length ;m++ )
-          {this.port.Etat = this.accordion1[m].port
-          this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
+            this.port.Position_tiroir= "Non Raccodé"
+            this.port.Etat = "Libre"
+            this.port.Position = 0
+            this.port.Type = "IN"
+            this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
+
+          this.port.Type="OUT"
+          for(var m=0;m<this.splitter.Type_splitter ;m++ )
+          { this.port.Position = m+1
+           this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
           }
           alert("splitter ajoute")},error => {alert("error splitter ajout");});
           this.annuler();

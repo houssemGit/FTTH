@@ -25,7 +25,7 @@
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
                       <div id="P2Ports">
-                        <label *ngFor="let port of ports; let i = index "  class="switch grid-item">
+                        <label *ngFor="let port of ports; let i = index " nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="top" class="switch grid-item" class="switch grid-item">
                           <br /><br />
                           <div style="text-align: center ; ">{{ i + 1 }}</div>
                          <input type="checkbox" (click)="cheky(i)" *ngIf="port.Etat=='Raccorde'" checked="true" disabled  /><span class="slider"></span>
@@ -73,14 +73,28 @@
                       splitter{{splitter.Position}}
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
-                      <div id="P2Ports">
-                        <label *ngFor="let port of portss; let i = index "  class="switch grid-item">
-                          <br /><br />
-                          <div style="text-align: center ; ">{{ i + 1 }}</div>
-                         <input type="checkbox"  *ngIf="port.Etat=='Raccorde' ; " checked="true" disabled /><span class="slider"></span>
 
+                      <a>Port IN:</a>
+                      <span><button *ngIf="itat=='Raccorde' ;" style="position: absolute; margin-left: 50px;"  (click)=showCrsp(splitter) class="btn btn-primary"  data-toggle="modal" data-target="#exampleModalLong"  ><i class="fas fa-search"></i> </button>
+                      </span>
+
+                      <div id="P2Ports">
+                        <label  class="switch grid-item">
+                          <input  type="checkbox"  *ngIf="itat=='Raccorde' ; " checked="true" disabled /><span class="slider"></span>
                         </label>
                       </div>
+                      <br />
+                      <a>Ports OUT:</a>
+                      <div id="P2Ports">
+                        <label *ngFor="let port of portss; let i = index "  class="switch grid-item">
+                          <div style=" height:20px" *ngIf="port.Position_tiroir != null" nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="top">
+                          <br /><br />
+                          <div style="text-align: center ; ">{{ i + 1 }}</div>
+                         <input  type="checkbox"  *ngIf="port.Etat=='Raccorde' ; " checked="true" disabled /><span class="slider"></span>
+                          </div>
+                        </label>
+                      </div>
+
                     </nb-accordion-item-body>
                   </nb-accordion-item>
                 </nb-accordion>
@@ -104,4 +118,24 @@
 
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Correspondance OLT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Tiroir Transport: {{posTT}}</h6>
+        <h6>N°Cassette: {{posC}}</h6>
+        <h6>N°Splitter: {{posS}}</h6>
+        <h6>N°Port: {{posP}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
 

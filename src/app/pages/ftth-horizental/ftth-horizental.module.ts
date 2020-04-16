@@ -4,7 +4,7 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FtthHorizentalRoutingModule, routedComponents } from './ftth-horizental-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { NbAccordionModule } from '@nebular/theme';
+import { NbAccordionModule, NbPopoverModule } from '@nebular/theme';
 
 
 
@@ -32,6 +32,7 @@ import { DetailsZoneComponent } from './details-zone/details-zone.component';
     FtthHorizentalRoutingModule,
     NbAccordionModule,
     NgbModule,
+    NbPopoverModule
 
   ]
 })
