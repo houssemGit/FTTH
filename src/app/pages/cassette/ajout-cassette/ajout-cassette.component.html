@@ -116,34 +116,9 @@
 </div>
 
 
-      <label style="margin-right: 2rem;">Configuration des ports</label>
-    <div class="form-group">
-      <div class="accordions-container row">
-
-        <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
-          <nb-accordion multi>
-            <nb-accordion-item *ngFor="let splitter of splitters; let i = index">
-              <nb-accordion-item-header>
-                Splitter{{i+1}}
-              </nb-accordion-item-header>
-              <nb-accordion-item-body>
-                      <div id="P2Ports">
-                        <label *ngFor="let port of ports; let j = index"  class="switch grid-item">
-                          <br /><br />
-                          <div style="text-align: center ; ">{{j+1}}</div>
-                         <input type="checkbox" disabled   /><span class="slider"></span>
-                        </label>
-                      </div>
-              </nb-accordion-item-body>
-            </nb-accordion-item>
-          </nb-accordion>
-        </div>
-      </div>
-    </div>
-
       <div class="form-group">
         <a  class="btn btn-link" (click)="annuler()" style="color: royalblue;">Annuler</a>
-        <button style="float:right" [disabled]="loading" class="btn btn-primary">
+        <button style="float:right" [disabled]="loading" nbButton status="primary">
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"

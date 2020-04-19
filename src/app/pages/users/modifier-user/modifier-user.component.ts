@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../../_models/user';
 import { UserService } from '../../../_service/user.service';
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-modifier-user',
@@ -13,10 +14,12 @@ import { UserService } from '../../../_service/user.service';
 })
 export class ModifierUserComponent implements OnInit {
 
+  status: NbComponentStatus ;
 
   // role Names
   Roles: any = ['Admin', 'Commercial', 'Expert FTTH horizental', 'Expert FTTH vertical']
   constructor(
+    private toastrService: NbToastrService,
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
@@ -49,8 +52,6 @@ export class ModifierUserComponent implements OnInit {
      this.registerForm.controls['Password'].setValue(localStorage.getItem('Password'))
      this.registerForm.controls['Fonction'].setValue(localStorage.getItem('Fonction'))
      this.registerForm.controls['Role'].setValue(localStorage.getItem('Role'))
-
-
   }
 
 
@@ -77,17 +78,21 @@ export class ModifierUserComponent implements OnInit {
 
     this.userService.modifyuser(this.user, localStorage.getItem('ID_user')).subscribe(
       (data)=>{
-        alert('Utilisateur modifie avec sucess!!');
-        console.log(data);
-        this.toastr.success('utilisateur modifie', 'Toastr fun!')
+        this.status="warning"
+        this.toastrService.show(``,`Utilisateur modifié!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});        this.loading = false;
         this.router.navigate(['pages/utilisateurs/gestion-user']);
+        localStorage.clear();
      },
       (error)=>{
-        this.toastr.error(error.error.message, 'Error');
-        this.loading = false;
+        this.status="danger"
+        this.toastrService.show(``,`Erreur modification!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});        this.loading = false;
       }
     )
 
+  }
+  annuler(){
+    this.router.navigate(['pages/utilisateurs/gestion-user']);
+    localStorage.clear();
   }
     // Getter method to access formcontrols
     get roleName() {

@@ -8,7 +8,6 @@ import { AjoutOltComponent } from './ajout-olt/ajout-olt.component';
 import { AjoutSroComponent } from './ajout-sro/ajout-sro.component';
 import { ModifierOltComponent } from './modifier-olt/modifier-olt.component';
 import { ModifierSroComponent } from './modifier-sro/modifier-sro.component';
-import { DetailsZoneComponent } from './details-zone/details-zone.component';
 
 
 
@@ -41,10 +40,7 @@ const routes: Routes = [{
       path: 'modifier-sro',
       component: ModifierSroComponent,
     },
-    {
-      path: 'details-zone',
-      component: DetailsZoneComponent,
-    },
+
 
 
   ],
@@ -64,7 +60,7 @@ export const routedComponents = [
   AjoutSroComponent,
   ModifierOltComponent,
   ModifierSroComponent,
-  DetailsZoneComponent
+
 
 
 

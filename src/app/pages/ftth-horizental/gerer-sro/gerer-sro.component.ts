@@ -6,6 +6,8 @@ import { Splitter } from "../../../_models/splitter";
 import { Port } from "../../../_models/port";
 import { Sro } from '../../../_models/sro';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
+import { Olt } from '../../../_models/olt';
 
 @Component({
   selector: 'ngx-gerer-sro',
@@ -14,6 +16,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 })
 export class GererSroComponent implements OnInit {
 
+  status: NbComponentStatus ;
 
   FormRacOut: FormGroup;
   FormRacIn: FormGroup;
@@ -22,13 +25,13 @@ export class GererSroComponent implements OnInit {
   rest = [1,2,3,4,5,6,7,8,9,10,11]
 
   ngOnInit() {
+    localStorage.clear();
     this.sros=[]
-    this.ftthService.AllSro().subscribe(data => {this.sros = data;});
-
-
+    this.ftthService.AllSro().subscribe(data => {this.sros = data;}, error => {this.status="warning"
+    this.toastrService.show(``,`Aucun SRO`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private ftthService: FtthService) {
+  constructor(private toastrService: NbToastrService,private formBuilder: FormBuilder, private router: Router, private ftthService: FtthService) {
     this.FormRacOut = this.formBuilder.group({
       Num_TT: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Pos_TT:['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
@@ -56,37 +59,61 @@ export class GererSroComponent implements OnInit {
     localStorage.setItem("ID_olt", e.ID_olt.toString());
     this.router.navigateByUrl("pages/zones/modifier-sro");
   }
+
   deleteSro(e) {
-    console.log(e);
-    this.ftthService.deleteSro(e.ID_sro).subscribe(
-      Response => {
-          alert("sro supprime avec sucess!!");
-          //this.toaster.success("Suppresion avec succés");
-          this.ngOnInit();
-      },
-      error => alert("Erreur lors de la communication avec serveur") //this.toaster.error("Erreur lors de la communication avec serveur")
-    );
+    localStorage.setItem("ID_sro",e.ID_sro)
+
   }
   deleteC(e){
-    this.ftthService.deleteCassette(e.ID_cassette).subscribe(
-      Response => {
-          alert("cassette supprime avec sucess!!");
-          //this.toaster.success("Suppresion avec succés");
-          this.ngOnInit();
-      },
-      error => alert("Erreur lors de la communication avec serveur") //this.toaster.error("Erreur lors de la communication avec serveur")
-    );
+    localStorage.setItem("ID_cassette",e.ID_cassette)
+
 
   }
   deleteS(e){
-    this.ftthService.deleteSplitter(e.ID_splitter).subscribe(
+    localStorage.setItem("ID_splitter",e.ID_splitter)
+
+  }
+  ConfirmeSupR(){
+    this.ftthService.deleteSro(Number(localStorage.getItem("ID_sro"))).subscribe(
       Response => {
-          alert("splitter supprime avec sucess!!");
-          //this.toaster.success("Suppresion avec succés");
+        this.status="danger"
+        this.toastrService.show(``,`SRO supprimée avec sucess!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+        localStorage.setItem("ID_sro",'')
+        this.ngOnInit();
+      },
+      error => alert("Erreur lors de la communication avec serveur")
+    );
+  }
+  ConfirmeSupC(){
+
+
+    this.ftthService.deleteCassette(Number(localStorage.getItem("ID_cassette"))).subscribe(
+      Response => {
+          this.status="danger"
+    this.toastrService.show(``,`Cassette supprimée avec sucess!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    localStorage.setItem("ID_cassette",'')
+    this.ngOnInit();
+      },
+      error => alert("Erreur lors de la communication avec serveur")
+    );
+  }
+  ConfirmeSupS(){
+
+    this.ftthService.deleteSplitter(Number(localStorage.getItem("ID_splitter"))).subscribe(
+      Response => {
+          this.status="danger"
+          this.toastrService.show(``,`Splitter supprimée avec sucess!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+          localStorage.setItem("ID_splitter",'')
           this.ngOnInit();
       },
-      error => alert("Erreur lors de la communication avec serveur") //this.toaster.error("Erreur lors de la communication avec serveur")
+      error => alert("Erreur lors de la communication avec serveur")
     );
+  }
+
+  annulerSup(){
+    localStorage.setItem("ID_sro",'')
+    localStorage.setItem("ID_cassette",'')
+    localStorage.setItem("ID_splitter",'')
   }
   AjoutC(e){
     localStorage.setItem("ID_sro", e.ID_sro.toString());
@@ -94,25 +121,22 @@ export class GererSroComponent implements OnInit {
   }
   AjoutS(e){
     localStorage.setItem("ID_cassette", e.ID_cassette.toString());
-    localStorage.setItem("ID_olt", e.ID_olt);
-    localStorage.setItem("ID_sro", e.ID_sro);
-    localStorage.setItem("ID_immeuble", e.ID_immeuble);
-
-
     this.router.navigateByUrl("pages/zones/ajout-splitter");
   }
 
   openC(e) {
     this.cassettes=[]
     this.ftthService.getBySro(e.ID_sro).subscribe(data => {this.cassettes = data;
-    },error => alert('aucune cassettes!'));
-    localStorage.setItem("ID_SRO", e.ID_sro )
+    },error => {this.status="warning"
+    this.toastrService.show(``,`Cette SRO ne contient pas de cassettes`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
+    localStorage.setItem("ID_sro", e.ID_sro )
   }
 
   openS(e) {
     this.splitters=[]
 
-    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;},error => alert('aucuns splitters!'));
+    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;},error => {this.status="warning"
+    this.toastrService.show(``,`Cette Cassette ne contient pas de splitters`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
 
   }
   porti: Array<Port>
@@ -173,7 +197,8 @@ export class GererSroComponent implements OnInit {
     this.loading = true;
 
     this.porto.Position_tiroir= "TT N°: "+localStorage.getItem('n_c_t')+" Position: "+this.FormRacIn.controls["Pos_TTin"].value;
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat},(error)=>{alert('error modification!!');})
+    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
+    this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     this.closeModal.nativeElement.click()
     localStorage.setItem("ID_port",'')
     localStorage.setItem("n_c_t",'')
@@ -181,7 +206,8 @@ export class GererSroComponent implements OnInit {
   }
   DeraccordeIN(){
     this.porto.Position_tiroir="Non Raccodé"
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat},(error)=>{alert('error modification!!');})
+    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
+    this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     localStorage.setItem("ID_port",'')
     localStorage.setItem("n_c_t",'')
 
@@ -224,7 +250,8 @@ export class GererSroComponent implements OnInit {
     //this.porto=null
     this.porto.Position_tiroir= "TD N°: "+this.FormRacOut.controls["Num_TT"].value+" Position: "+this.FormRacOut.controls["Pos_TT"].value
     this.pos= Number(localStorage.getItem('Port_position'))-1
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;},(error)=>{alert('error modification!!');})
+    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
+    this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     this.closeModal2.nativeElement.click()
     localStorage.setItem("Port_position",'')
     localStorage.setItem("ID_port",'')
@@ -234,7 +261,8 @@ export class GererSroComponent implements OnInit {
   DeraccordeOUT(){
     this.porto.Position_tiroir="Non Raccodé"
     this.pos= Number(localStorage.getItem('Port_position'))-1
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;},(error)=>{alert('error modification!!');})
+    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
+    this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     localStorage.setItem("Port_position",'')
     localStorage.setItem("ID_port",'')
 
@@ -255,12 +283,20 @@ export class GererSroComponent implements OnInit {
   portOUT : Port
   splt : Splitter
   cast : Cassette
+  olt : Olt
   posP : Number
   posS : Number
   posC : Number
+  nomOLT : string
   posTT : string
 
   showCrsp(e){
+
+    this.ftthService.getSroById(localStorage.getItem("ID_sro")).subscribe((data)=>{this.sro= data
+     this.ftthService.getOltById(this.sro.ID_olt).subscribe((data)=>{this.olt= data
+      this.nomOLT=this.olt.Nom_olt
+      }, (error)=>{})
+    }, (error)=>{})
 
     this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
       this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../_models/user';
 import { UserService } from '../../../_service/user.service';
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-ajout-user',
@@ -17,8 +18,9 @@ export class AjoutUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private toastr: ToastrService
-  ) { }
+    private toastrService: NbToastrService) { }
+
+  status: NbComponentStatus ;
   registerForm: FormGroup;
   loading = false;
   submitted = false;
@@ -44,22 +46,21 @@ export class AjoutUserComponent implements OnInit {
 
   onFormSubmit(){
     this.submitted = true;
-
-    // return for here if form is invalid
     if (this.registerForm.invalid) {
       return console.log("champs invalid");
     }
+
     this.loading = true;
-    // this.registerForm.value f 3oudh user
     this.userService.adduser(this.registerForm.value).subscribe(
       (data)=>{
         this.user=<User>data;
-        console.log(this.user);
-        alert('User Registered successfully!!');
+        this.status="success"
+        this.toastrService.show(``,`Utilisateur ajouté avec succès!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
         this.router.navigate(['pages/utilisateurs/gestion-user']);
      },
       (error)=>{
-        this.toastr.error(error.error.message, 'Error');
+        this.status="danger"
+        this.toastrService.show(``,`'Erreur Ajout!'`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
         this.loading = false;
       }
     )
@@ -71,7 +72,6 @@ export class AjoutUserComponent implements OnInit {
     }
    // Choose role using select dropdown
    changeRole(e) {
-    console.log(e.value)
     this.roleName.setValue(e.target.value, {
       onlySelf: true
     })

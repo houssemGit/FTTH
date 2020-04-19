@@ -5,13 +5,14 @@ import { FtthService } from "../../../_service/ftth.service";
 import { Cassette } from "../../../_models/cassette";
 import { Sro } from '../../../_models/sro';
 import { Olt } from '../../../_models/olt';
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 @Component({
   selector: 'ngx-modifier-sro',
   templateUrl: './modifier-sro.component.html',
   styleUrls: ['./modifier-sro.component.scss']
 })
 export class ModifierSroComponent implements OnInit {
-
+  status: NbComponentStatus ;
   registerForm: FormGroup;
   loading = false;
   submitted = false;
@@ -26,6 +27,7 @@ export class ModifierSroComponent implements OnInit {
 
 
   constructor(
+    private toastrService: NbToastrService,
     private formBuilder: FormBuilder,
     private router: Router,
     private ftthService: FtthService,
@@ -45,11 +47,7 @@ export class ModifierSroComponent implements OnInit {
     this.registerForm.controls['N_C_T'].setValue(localStorage.getItem('Num_cable_transport'))
     this.registerForm.controls['C_C_T'].setValue(localStorage.getItem('Capacite_cable_transport'))
     this.ftthService.getOltById(Number(localStorage.getItem('ID_olt'))).subscribe(data => {this.registerForm.controls['olt'].setValue(data.Nom_olt)},error => {alert('olt not found ')})
-    localStorage.setItem('Nom_sro','')
-    localStorage.setItem('Nom_zone','')
-    localStorage.setItem('Num_cable_transport','')
-    localStorage.setItem('Capacite_cable_transport','')
-    localStorage.setItem('ID_olt','')
+
 
     this.ftthService.AllOlt().subscribe(data => {
       this.olts=data
@@ -104,10 +102,19 @@ export class ModifierSroComponent implements OnInit {
             this.sro.ID_olt=this.olts[i].ID_olt
           }
         }
-    this.ftthService.updateSro(localStorage.getItem('ID_sro') ,this.sro).subscribe(data => {alert("sro modif"); this.router.navigate(['pages/zones/gerer-sro']);
-  },error => alert("error sro modif"));
+    this.ftthService.updateSro(localStorage.getItem('ID_sro') ,this.sro).subscribe(data => {this.status="success"
+    this.toastrService.show(``,`SRO modifié avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    this.router.navigate(['pages/zones/gerer-sro']);
+  },error => {this.status="danger"
+  this.toastrService.show(``,`Erreur modification`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
 
   })
+
+
+  }
+  Annuler(){
+    this.router.navigate(['pages/zones/gerer-sro'])
+
   }
 }
 

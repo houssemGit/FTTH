@@ -10,14 +10,14 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
 
-          <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
+          <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
           <nb-accordion>
             <nb-accordion-item *ngFor="let cassette of cassettes"  >
               <nb-accordion-item-header (click)=openS(cassette) >
                 cassette{{cassette.Num_cassette}}
               </nb-accordion-item-header>
               <nb-accordion-item-body>
-                <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+                <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
                   <nb-accordion >
                   <nb-accordion-item *ngFor="let splitter of splitters" >
                     <nb-accordion-item-header (click)=openP(splitter)>
@@ -58,7 +58,7 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
 
-          <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
+          <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
           <nb-accordion>
             <nb-accordion-item  *ngFor="let cassette of cassettess"  >
                 <nb-accordion-item-header (click)=openSs(cassette) >
@@ -66,7 +66,7 @@
                 </nb-accordion-item-header>
 
               <nb-accordion-item-body>
-                <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+                <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
                   <nb-accordion >
                   <nb-accordion-item  *ngFor="let splitter of splitterss" >
                     <nb-accordion-item-header (click)=openPs(splitter)>
@@ -75,12 +75,19 @@
                     <nb-accordion-item-body>
 
                       <a>Port IN:</a>
-                      <span><button *ngIf="itat=='Raccorde' ;" style="position: absolute; margin-left: 50px;"  (click)=showCrsp(splitter) class="btn btn-primary"  data-toggle="modal" data-target="#exampleModalLong"  ><i class="fas fa-search"></i> </button>
+                      <span><button *ngIf="itat=='Raccorde' ;" style="position: absolute; margin-left: 50px;"  (click)=showCrsp(splitter) nbButton status="primary"  data-toggle="modal" data-target="#exampleModalLong" nbPopover="Voir Correspondance OLT" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" ><i class="fas fa-search"></i> </button>
                       </span>
 
                       <div id="P2Ports">
-                        <label  class="switch grid-item">
-                          <input  type="checkbox"  *ngIf="itat=='Raccorde' ; " checked="true" disabled /><span class="slider"></span>
+                        <label *ngFor="let port of porti; "  class="switch grid-item">
+                          <div style=" height:20px" *ngIf="port.Position_tiroir " nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
+                          <div *ngIf="port.Etat== 'Raccorde'; else Libre ">
+                          <input  type="checkbox" checked="true" disabled /><span class="slider"></span>
+                         </div>
+                        <ng-template #Libre>
+                          <input type="checkbox" disabled /><span class="slider"></span>
+                        </ng-template>
+                      </div>
                         </label>
                       </div>
                       <br />
@@ -131,6 +138,7 @@
       </div>
       <div class="modal-body">
         <h6>Tiroir Transport: {{posTT}}</h6>
+        <h6>Nom OLT: {{nomOLT}}</h6>
         <h6>N°Cassette: {{posC}}</h6>
         <h6>N°Splitter: {{posS}}</h6>
         <h6>N°Port: {{posP}}</h6>

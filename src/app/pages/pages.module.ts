@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbListModule } from '@nebular/theme';
+import { NbMenuModule, NbListModule, NbPopoverModule, NbButtonModule } from '@nebular/theme';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NbAccordionModule } from '@nebular/theme';
@@ -14,7 +14,6 @@ import {NbCardModule} from '@nebular/theme';
 import { PagesComponent } from './pages.component';
 import { AjoutCassetteComponent } from './cassette/ajout-cassette/ajout-cassette.component';
 import { AjoutSplitterComponent } from './cassette/ajout-splitter/ajout-splitter.component';
-import { ConsulterZoneComponent } from './consulter-zone/consulter-zone.component';
 
 @NgModule({
   imports: [
@@ -30,13 +29,13 @@ import { ConsulterZoneComponent } from './consulter-zone/consulter-zone.componen
     ReactiveFormsModule,
     NbCardModule,
     NbListModule,
-
+    NbPopoverModule,
+    NbButtonModule
   ],
   declarations: [
     PagesComponent,
     AjoutCassetteComponent,
     AjoutSplitterComponent,
-    ConsulterZoneComponent,
 
   ],
 

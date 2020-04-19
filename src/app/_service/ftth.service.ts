@@ -4,7 +4,6 @@ import { Cassette  } from "../_models/cassette";
 import { Olt  } from "../_models/olt";
 import { Splitter  } from "../_models/splitter";
 import { Port  } from "../_models/port";
-import { map } from "rxjs/operators";
 import 'rxjs/add/operator/map'
 import { Sro } from '../_models/sro';
 
@@ -22,13 +21,13 @@ export class FtthService {
   deleteOlt(id: number){
     return this.http.delete("http://localhost:8000/api/olts/"+id.toString())
   }
-  deleteCassette(id: Cassette){
+  deleteCassette(id: number){
     return this.http.delete("http://localhost:8000/api/cassettes/"+id.toString())
   }
-  deleteSplitter(id: Splitter){
+  deleteSplitter(id: number){
     return this.http.delete("http://localhost:8000/api/splitters/"+id.toString())
   }
-  deleteSro(id: Sro){
+  deleteSro(id: number){
     return this.http.delete("http://localhost:8000/api/sros/"+id.toString())
   }
 

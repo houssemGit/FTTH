@@ -6,6 +6,7 @@ import { Cassette } from "../../../_models/cassette";
 import { Splitter } from "../../../_models/splitter";
 import { Port } from "../../../_models/port";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { NbGlobalPhysicalPosition, NbToastrService, NbComponentStatus } from '@nebular/theme';
 
 @Component({
   selector: "ngx-gerer-olt",
@@ -16,12 +17,13 @@ export class GererOltComponent implements OnInit {
   FormRacOut: FormGroup;
   loading = false;
   submitted = false;
-  constructor(private formBuilder: FormBuilder,private router: Router, private ftthService: FtthService) {
+  constructor(private toastrService: NbToastrService,private formBuilder: FormBuilder,private router: Router, private ftthService: FtthService) {
     this.FormRacOut = this.formBuilder.group({
       Num_TT: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Pos_TT:['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
     });
   }
+  status: NbComponentStatus ;
 
   olts: Array<Olt>;
   cassettes: Array<Cassette>;
@@ -35,38 +37,53 @@ export class GererOltComponent implements OnInit {
     this.router.navigateByUrl("pages/zones/modifier-olt");
   }
   deleteOlt(e) {
-    console.log(e);
-    this.ftthService.deleteOlt(e.ID_olt).subscribe(
-      Response => {
-          alert("olt supprime avec sucess!!");
-          //this.toaster.success("Suppresion avec succés");
-          this.ngOnInit();
-      },
-      error => alert("Erreur lors de la communication avec serveur") //this.toaster.error("Erreur lors de la communication avec serveur")
-    );
+    localStorage.setItem("ID_olt",e.ID_olt)
   }
-  deleteC(e){
-    this.ftthService.deleteCassette(e.ID_cassette).subscribe(
-      Response => {
-          alert("cassette supprime avec sucess!!");
-          //this.toaster.success("Suppresion avec succés");
-          this.ngOnInit();
-      },
-      error => alert("Erreur lors de la communication avec serveur") //this.toaster.error("Erreur lors de la communication avec serveur")
-    );
+  ConfirmeSupO(){
+    this.ftthService.deleteOlt(Number(localStorage.getItem("ID_olt"))).subscribe(Response => {this.status="danger" ;this.toastrService.show(``,`OLT supprimée avec sucess!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    localStorage.setItem("ID_olt",'')
+    this.ngOnInit();},
+         error => alert("Erreur lors de la communication avec serveur")
+       );
+     }
 
+  deleteC(e){
+    localStorage.setItem("ID_cassette",e.ID_cassette)
+  }
+  ConfirmeSupC(){
+    this.ftthService.deleteCassette(Number(localStorage.getItem("ID_cassette"))).subscribe(
+      Response => {
+        this.status="danger"
+        this.toastrService.show(``,`Cassette supprimée avec sucess!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+        localStorage.setItem("ID_cassette",'')
+        this.ngOnInit();
+      },
+      error => alert("Erreur lors de la communication avec serveur")
+    );
   }
   deleteS(e){
-    this.ftthService.deleteSplitter(e.ID_splitter).subscribe(
+    localStorage.setItem("ID_splitter",e.ID_splitter)
+  }
+
+  ConfirmeSupS(){
+    this.ftthService.deleteSplitter(Number(localStorage.getItem("ID_splitter"))).subscribe(
       Response => {
-          alert("splitter supprime avec sucess!!");
-          //this.toaster.success("Suppresion avec succés");
-          this.ngOnInit();
+        this.status="danger"
+        this.toastrService.show(``,`Splitter supprimée avec sucess!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+        localStorage.setItem("ID_splitter",'')
+        this.ngOnInit();
       },
-      error => alert("Erreur lors de la communication avec serveur") //this.toaster.error("Erreur lors de la communication avec serveur")
+      error => alert("Erreur lors de la communication avec serveur")
     );
   }
+  annulerSup(){
+    localStorage.setItem("ID_olt",'')
+    localStorage.setItem("ID_cassette",'')
+    localStorage.setItem("ID_splitter",'')
+  }
+
   AjoutC(e){
+
     localStorage.setItem("ID_olt", e.ID_olt.toString());
     this.router.navigateByUrl("pages/zones/ajout-cassette");
   }
@@ -76,16 +93,19 @@ export class GererOltComponent implements OnInit {
   }
 
   openC(e) {
+    localStorage.setItem("ID_olt", e.ID_olt.toString());
     this.cassettes=[]
     this.ftthService.getByOlt(e.ID_olt).subscribe(data => {this.cassettes = data;
-    },error => alert('aucune cassettes!'));
+    },error => { this.status="warning"
+    this.toastrService.show(``,`Cette OLT ne contient pas de cassettes`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
 
 
   }
   openS(e) {
     this.splitters=[]
 
-    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;},error => alert('aucun splitter!'));
+    this.ftthService.getByCassette(e.ID_cassette).subscribe(data => {this.splitters = data;},error => {this.status="warning"
+    this.toastrService.show(``,`Cette Cassette ne contient pas de splitters`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
 
   }
 
@@ -124,7 +144,8 @@ export class GererOltComponent implements OnInit {
 
     this.porto.Position_tiroir= "TT N°: "+this.FormRacOut.controls["Num_TT"].value+" Position: "+this.FormRacOut.controls["Pos_TT"].value
     this.pos= Number(localStorage.getItem('Port_position'))-1
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;},(error)=>{alert('error modification!!');})
+    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;;this.status="success"
+    this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     this.closeModal2.nativeElement.click()
     localStorage.setItem("Port_position",'')
     localStorage.setItem("ID_port",'')
@@ -134,7 +155,8 @@ export class GererOltComponent implements OnInit {
   DeraccordeOUT(){
     this.porto.Position_tiroir="Non Raccodé"
     this.pos= Number(localStorage.getItem('Port_position'))-1
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;},(error)=>{alert('error modification!!');})
+    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;;this.status="success"
+    this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     localStorage.setItem("Port_position",'')
     localStorage.setItem("ID_port",'')
 
@@ -148,8 +170,10 @@ export class GererOltComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.clear()
     this.olts=null
-    this.ftthService.AllOlt().subscribe(data => {this.olts = data;});
-
+    this.ftthService.AllOlt().subscribe(data => {this.olts = data;},error => {this.status="warning"
+    this.toastrService.show(``,`Aucun OLT`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
   }
+
 }

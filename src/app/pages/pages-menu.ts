@@ -3,17 +3,17 @@ import { NbMenuItem } from '@nebular/theme';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
-    icon: 'home-outline',
+    icon: 'bar-chart-outline',
     link: '/pages/dashboard',
   },
   {
     title: 'Utilisateurs',
-    icon: 'lock-outline',
+    icon: 'person-outline',
     link: '/pages/utilisateurs/gestion-user',
   },
   {
     title: 'FTTH-horizental',
-    icon: 'shuffle-2-outline',
+    icon: 'flip-2-outline',
 
     children: [
 
@@ -31,24 +31,34 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Zones',
-    icon: 'shuffle-2-outline',
-    link: '/pages/consulter-zone',
+    icon: 'map-outline',
+    link: '/pages/consulter-zones/zones',
   },
   {
     title: 'FTTH Vertical',
-    icon: 'shuffle-2-outline',
-    link: '/pages/FTTH-V',
+    icon: 'flip-outline',
     children: [
       {
-        title: 'Immeuble',
-        link: '/pages/FTTH-V/Immeuble',
+        title: 'Gestion Immeuble',
+        link: '/pages/immeubles/consulter-zone-immeuble-mono-apart',
       },
       {
-        title: 'Client',
-        link: '/pages/FTTH-V/Client',
+        title: 'Gestion Client',
+        link: '/pages/immeubles/consulter-zone-client',
       }
     ]
   },
+  {
+    title: 'Immeuble',
+    icon: 'home-outline',
+    link: '/pages/consulter-immeubles/consulter-zone-immeuble',
+  },
+  {
+    title: 'Residences',
+    icon: 'home-outline',
+    link: '/pages/consulter-immeubles/consulter-zone-residence',
+  },
+
 
 
   {

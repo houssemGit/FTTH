@@ -1,51 +1,51 @@
 
-<button routerLink="../ajout-sro" class="btn btn-success" style="width:200px; float:right;"><i class="far fa-plus-square"></i>  Ajouter SRO </button>
+<button routerLink="../ajout-sro" nbButton status="success"  style="width:200px; float:right;"><i class="far fa-plus-square"></i>  Ajouter SRO </button>
 <br>
 <br>
-
-
 <div class="accordions-container row">
   <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
     <nb-accordion >
       <nb-accordion-item  *ngFor="let sro of sros; "    >
         <nb-accordion-item-header (click)="openC(sro)">
           {{sro.Nom_sro}}
-          <div >
-            <button style=" float:right " class="btn btn-danger"   (click)="deleteSro(sro)" >  <i class="fas fa-trash-alt"></i>  </button>
-            <button style=" float:right " class="btn btn-warning"  (click)="editSro(sro)" style="margin-left: 20px;" > <i class="fas fa-edit"></i> </button>
-
+          <div style=" position: absolute; right: 5%">
+            <button nbButton status="danger"    (click)="deleteSro(sro)" data-toggle="modal" data-target="#confsupr" >  <i class="far fa-trash-alt"></i>   </button>
+            <button nbButton status="warning"   (click)="editSro(sro)" style="margin-left: 20px;" > <i class="far fa-edit"></i> </button>
           </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body>
 
-          <button routerLink="../ajout-cassette" class="btn btn-success" style="width:120px; float:right;" (click)=AjoutC(sro)><i class="far fa-plus-square"></i>   </button>
+          <button routerLink="../ajout-cassette" nbButton status="success" style="width:120px; float:right;" (click)=AjoutC(sro)><i class="far fa-plus-square"></i>   </button>
           <br>
           <br>
-          <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6" >
+          <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
           <nb-accordion>
             <nb-accordion-item  *ngFor="let cassette of cassettes"  >
               <nb-accordion-item-header (click)=openS(cassette) >
                 {{cassette.Nom_cassette}}{{cassette.Num_cassette}}
-                <button style=" float:right " class="btn btn-danger"   (click)="deleteC(cassette)" style="margin-left: 20px;" >  <i class="fas fa-trash-alt"></i>  </button>
+                <div style=" position: absolute; right: 5%" >
+                  <button nbButton status="danger" data-toggle="modal" data-target="#confsupc"  (click)="deleteC(cassette)" style="margin-left: 20px;" >  <i class="far fa-trash-alt"></i>  </button>
+                </div>
               </nb-accordion-item-header>
               <nb-accordion-item-body>
 
-                <button routerLink="../ajout-splitter" class="btn btn-success" style="width:120px; float:right;" (click)=AjoutS(cassette)><i class="far fa-plus-square"></i>  Splitter  </button>
+                <button routerLink="../ajout-splitter" nbButton status="success" style="width:120px; float:right;" (click)=AjoutS(cassette)><i class="far fa-plus-square"></i>  Splitter  </button>
                 <br>
                 <br>
-                <div class="accordion-container col-md-6 col-lg-12 col-xxxl-6">
+                <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
                   <nb-accordion >
                   <nb-accordion-item  *ngFor="let splitter of splitters" >
                     <nb-accordion-item-header (click)=openP(splitter)>
                       splitter{{splitter.Position}}
-
-                      <button style=" float:right " class="btn btn-danger"   (click)="deleteS(splitter)" style="margin-left: 20px;"  >  <i class="fas fa-trash-alt"></i>  </button>
+                      <div style=" position: absolute; right: 5%">
+                        <button  nbButton status="danger" data-toggle="modal" data-target="#confsups" (click)="deleteS(splitter)" style="margin-left: 20px;"  >  <i class="far fa-trash-alt"></i>  </button>
+                      </div>
 
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
 
                       <a>Port IN:</a>
-                      <span><button *ngIf="itat=='Raccorde' ;" style="position: absolute; margin-left: 50px;"  (click)=showCrsp(splitter) class="btn btn-primary"  data-toggle="modal" data-target="#exampleModalLong" nbPopover="Voir Correspondance OLT" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+                      <span><button nbButton status="primary" *ngIf="itat=='Raccorde' ;" style="position: absolute; margin-left: 50px;"  (click)=showCrsp(splitter)   data-toggle="modal" data-target="#exampleModalLong" nbPopover="Voir Correspondance OLT" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
                       </span>
 
                       <div id="P2Ports">
@@ -99,9 +99,6 @@
 
 
 
-
-
-
 <!-- Modal correspondance -->
 <div  class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -114,6 +111,7 @@
       </div>
       <div class="modal-body">
         <h6>Tiroir Transport {{posTT}}</h6>
+        <h6>Nom OLT: {{nomOLT}}</h6>
         <h6>N°Cassette: {{posC}}</h6>
         <h6>N°Splitter: {{posS}}</h6>
         <h6>N°Port: {{posP}}</h6>
@@ -164,8 +162,8 @@
 
       </div>
       <div class="form-group" class="modal-footer">
-        <button type="button"  (click)="annulerRIN()" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        <button  type="button" (click)="SubRaccordeIN()"   class="btn btn-warning">Modifier</button>
+        <button type="button"  (click)="annulerRIN()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button  type="button" (click)="SubRaccordeIN()"   nbButton status="warning">Modifier</button>
       </div>
     </div>
   </form>
@@ -221,8 +219,8 @@
 
       </div>
       <div class="form-group" class="modal-footer">
-        <button type="button" (click)="annulerROUT()" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-warning" (click)="SubRaccordeOUT()"> Modifier</button>
+        <button type="button" (click)="annulerROUT()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" nbButton status="warning" (click)="SubRaccordeOUT()"> Modifier</button>
       </div>
     </div>
   </form>
@@ -245,8 +243,8 @@
         <h6>Etes vous sûr de déraccorder ce port?</h6>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="annulerRIN()" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        <button type="button" (click)="DeraccordeIN()" class="btn btn-warning" data-dismiss="modal">Oui</button>
+        <button type="button" (click)="annulerRIN()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="DeraccordeIN()" nbButton status="warning" data-dismiss="modal">Oui</button>
       </div>
     </div>
   </div>
@@ -265,8 +263,63 @@
         <h6>Etes vous sûr de déraccorder ce port?</h6>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="annulerROUT()" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        <button type="button" (click)="DeraccordeOUT()" class="btn btn-warning" data-dismiss="modal">Oui</button>
+        <button type="button" (click)="annulerROUT()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="DeraccordeOUT()" nbButton status="warning" data-dismiss="modal">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal confsup -->
+<div data-backdrop="static" class="modal fade" id="confsupr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6 style="text-align: center;">Merci de confirmez la suppression</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerSup()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="ConfirmeSupR()" nbButton status="warning" data-dismiss="modal">Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal confsup -->
+<div data-backdrop="static" class="modal fade" id="confsupc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6 style="text-align: center;">Merci de confirmez la suppression</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerSup()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="ConfirmeSupC()" nbButton status="warning" data-dismiss="modal">Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal confsup -->
+<div data-backdrop="static" class="modal fade" id="confsups" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6 style="text-align: center;">Merci de confirmez la suppression</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerSup()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="ConfirmeSupS()" nbButton status="warning" data-dismiss="modal">Confirmer</button>
       </div>
     </div>
   </div>

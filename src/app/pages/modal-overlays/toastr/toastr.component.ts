@@ -18,7 +18,6 @@ import {
 export class ToastrComponent {
   constructor(private toastrService: NbToastrService) {}
 
-  config: ToasterConfig;
 
   index = 1;
   destroyByClick = true;
@@ -26,7 +25,6 @@ export class ToastrComponent {
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
-  status: NbComponentStatus = 'primary';
 
   title = 'HI there!';
   content = `I'm cool toaster!`;
@@ -85,4 +83,20 @@ export class ToastrComponent {
       `Toast ${this.index}${titleContent}`,
       config);
   }
+
+
+  status: NbComponentStatus = 'success';
+
+  private showToasttest() {
+    const config = {
+      status: this.status,
+      destroyByClick: true,
+      hasIcon: false,
+      duration: 2000,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+    };
+
+    this.toastrService.show(`yabhim`,`Error port`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+  }
+
 }

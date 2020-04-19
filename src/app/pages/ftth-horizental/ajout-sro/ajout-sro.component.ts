@@ -8,6 +8,7 @@ import { Port } from "../../../_models/port";
 import { Sro } from '../../../_models/sro';
 import { Olt } from '../../../_models/olt';
 import { JsonPipe } from '@angular/common';
+import { NbToastrService, NbComponentStatus, NbGlobalPhysicalPosition } from '@nebular/theme';
 @Component({
   selector: 'ngx-ajout-sro',
   templateUrl: './ajout-sro.component.html',
@@ -17,6 +18,7 @@ export class AjoutSroComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  status: NbComponentStatus ;
 
   rest: any
   olts:Array<Olt>= new Array
@@ -31,7 +33,7 @@ export class AjoutSroComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private ftthService: FtthService,
+    private ftthService: FtthService,private toastrService: NbToastrService
   ) {}
 
   ngOnInit() {
@@ -108,7 +110,9 @@ export class AjoutSroComponent implements OnInit {
         }
     this.ftthService.AjoutSro(this.sro).subscribe(data => {
 
-      alert("sro ajoute"); this.router.navigate(['pages/zones/gerer-sro']);
+      this.status="success"
+      this.toastrService.show(``,`SRO ajouté avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+      this.router.navigate(['pages/zones/gerer-sro']);
 
   },error => alert("error sro ajout"));
 

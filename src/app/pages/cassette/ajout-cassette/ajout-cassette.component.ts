@@ -5,6 +5,7 @@ import { FtthService } from "../../../_service/ftth.service";
 import { Splitter } from '../../../_models/splitter';
 import { Cassette } from '../../../_models/cassette';
 import { Port } from '../../../_models/port';
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-ajout-cassette',
@@ -12,13 +13,14 @@ import { Port } from '../../../_models/port';
   styleUrls: ['./ajout-cassette.component.scss']
 })
 export class AjoutCassetteComponent implements OnInit {
+  status: NbComponentStatus ;
   registerForm: FormGroup;
   loading = false;
   submitted = false;
 
   rest: any
   Nbsplts: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20];
-  Typespts: any = [2, 4, 8, 16, 32, 64];
+  Typespts: any = [1,2, 4, 8, 16, 32, 64];
   nbs: number;
   nbp: number;
   cassette: Cassette = new Cassette()
@@ -31,7 +33,7 @@ export class AjoutCassetteComponent implements OnInit {
 
   constructor( private formBuilder: FormBuilder,
     private router: Router,
-    private ftthService: FtthService,) { }
+    private ftthService: FtthService,private toastrService: NbToastrService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -42,12 +44,22 @@ export class AjoutCassetteComponent implements OnInit {
     });
     this.rest=this.Nbsplts
     this.cassettes=[]
-    this.ftthService.getByOlt(Number(localStorage.getItem('ID_olt'))).subscribe(data => {this.cassettes = data;
-    for (let i = 0; i < this.cassettes.length; i++) {
-      this.allPositions[i]= this.cassettes[i].Num_cassette
+    if (localStorage.getItem('ID_olt') != null ){
+      this.ftthService.getByOlt(Number(localStorage.getItem('ID_olt'))).subscribe(data => {this.cassettes = data;
+        for (let i = 0; i < this.cassettes.length; i++) {
+          this.allPositions[i]= this.cassettes[i].Num_cassette
+        }
+        this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
+        },error => alert('pas de cassette!'));
+    }else if (localStorage.getItem('ID_sro') != null ){
+      this.ftthService.getBySro(Number(localStorage.getItem('ID_sro'))).subscribe(data => {this.cassettes = data;
+        for (let i = 0; i < this.cassettes.length; i++) {
+          this.allPositions[i]= this.cassettes[i].Num_cassette
+        }
+        this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
+        },error => alert('pas de cassette!'));
     }
-    this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
-    },error => alert('pas de cassette!'));
+
 
   }
 
@@ -61,21 +73,17 @@ export class AjoutCassetteComponent implements OnInit {
   get nbsplt() {
     return this.registerForm.get("Nbsplt");
   }
-  splitters : any;
   Nbsplt(e) {
     this.nbsplt.setValue(e.target.value, { onlySelf: true });
     this.nbs = Number(this.registerForm.controls["Nbsplt"].value);
-    this.splitters = Array(this.nbs);
   }
 
   get typespt() {
     return this.registerForm.get("Typespt");
   }
-  ports : any;
   Typespt(e) {
     this.typespt.setValue(e.target.value, { onlySelf: true });
     this.nbp = Number(this.registerForm.controls["Typespt"].value);
-    this.ports = Array(this.nbp);
   }
 
 
@@ -99,18 +107,18 @@ export class AjoutCassetteComponent implements OnInit {
   }
 
   annuler(){
-    if (localStorage.getItem('ID_olt') != ''){
-      localStorage.setItem('ID_olt','')
+    if (localStorage.getItem('ID_olt') != null){
+      localStorage.clear()
       this.router.navigateByUrl('pages/zones/gerer-olt')
     }
-    if (localStorage.getItem('ID_sro') != ''){
-      localStorage.setItem('ID_sro','')
+    if (localStorage.getItem('ID_sro') != null){
+      localStorage.clear()
       this.router.navigateByUrl('pages/zones/gerer-sro')
 
     }
     //a verifier!!
-    if (localStorage.getItem('ID_immeuble') != ''){
-      localStorage.setItem('ID_immeuble','')
+    if (localStorage.getItem('ID_immeuble') != null){
+      localStorage.clear()
       this.router.navigateByUrl('pages/zones/gerer-immeuble')
     }
   }
@@ -138,18 +146,18 @@ export class AjoutCassetteComponent implements OnInit {
     //   }
     // }
 
-    if (localStorage.getItem('ID_olt') != ''){
+    if (localStorage.getItem('ID_olt') != null){
     this.cassette.ID_olt=Number(localStorage.getItem('ID_olt'))
     this.cassette.ID_immeuble=null
     this.cassette.ID_sro=null
     }
-    if (localStorage.getItem('ID_sro') != ''){
+    if (localStorage.getItem('ID_sro') != null){
     this.cassette.ID_sro=Number(localStorage.getItem('ID_sro'))
     this.cassette.ID_immeuble=null
     this.cassette.ID_olt=null
     }
 
-    if (localStorage.getItem('ID_immeuble') != ''){
+    if (localStorage.getItem('ID_immeuble') != null){
     this.cassette.ID_immeuble=Number(localStorage.getItem('ID_immeuble'))
     this.cassette.ID_sro=null
     this.cassette.ID_olt=null
@@ -188,7 +196,8 @@ export class AjoutCassetteComponent implements OnInit {
         // f+=Number(this.splitter.Type_splitter);
         // d+=Number(this.splitter.Type_splitter);
         },error => {});
-    }   alert("succes ajout");
+    }   this.status="success"
+    this.toastrService.show(``,`Cassette ajoutée avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
   },error => {});
 
   this.annuler();

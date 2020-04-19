@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DataTableDirective } from 'angular-datatables';
 import { UserService } from '../../../_service/user.service';
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 @Component({
   selector: 'ngx-gestion-user',
   templateUrl: './gestion-user.component.html',
@@ -13,6 +14,7 @@ import { UserService } from '../../../_service/user.service';
 })
 export class GestionUserComponent implements OnInit {
 
+  status: NbComponentStatus ;
   user: any;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<User> = new Subject();
@@ -25,7 +27,7 @@ export class GestionUserComponent implements OnInit {
   Password: string
 
   @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective;
-  constructor(private http: HttpClient, private router: Router, private toaster: ToastrService, private userService: UserService ) { }
+  constructor(private toastrService: NbToastrService,private http: HttpClient, private router: Router, private toaster: ToastrService, private userService: UserService ) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -66,9 +68,8 @@ export class GestionUserComponent implements OnInit {
   deleteUser(e) {
     this.userService.deleteuser(e.ID_user.toString()).subscribe(
       Response => {
-        if (Response['success']) {
-          alert('Utilisateur supprime avec sucess!!');
-          //this.toaster.success("Suppresion avec succés");
+          this.status="danger"
+          this.toastrService.show(``,`Utilisateur supprimé!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             // Destroy the table first
             dtInstance.destroy();
@@ -77,8 +78,11 @@ export class GestionUserComponent implements OnInit {
               this.dtTrigger.next();
             });
           });
-        } else { this.toaster.error("Erreur") }
-      }, error => this.toaster.error("Erreur lors de la communication avec serveur"));
+
+      }, error => {this.status="danger"
+      this.toastrService.show(``,`Erreur Suppression!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
   }
+
+
 
 }

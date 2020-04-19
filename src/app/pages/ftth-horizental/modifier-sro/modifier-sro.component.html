@@ -108,8 +108,8 @@
 
 
       <div class="form-group">
-        <a routerLink="../gerer-sro" class="btn btn-link">Annuler</a>
-        <button style="float:right" [disabled]="loading" class="btn btn-warning">
+        <a  (click)="Annuler()" class="btn btn-link">Annuler</a>
+        <button style="float:right" [disabled]="loading" nbButton status="warning">
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"

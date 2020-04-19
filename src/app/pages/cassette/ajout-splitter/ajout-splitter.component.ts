@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Port } from '../../../_models/port';
 import { FtthService } from '../../../_service/ftth.service';
 import { Splitter } from '../../../_models/splitter';
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-ajout-splitter',
@@ -12,11 +13,13 @@ import { Splitter } from '../../../_models/splitter';
 })
 export class AjoutSplitterComponent implements OnInit {
 
+  status: NbComponentStatus ;
+
   registerForm: FormGroup;
   loading = false;
   submitted = false;
 
-  Typespts: any = [2, 4, 8, 16, 32, 64];
+  Typespts: any = [1,2, 4, 8, 16, 32, 64];
   Positions: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20];
 
   nbp: number;
@@ -29,7 +32,7 @@ export class AjoutSplitterComponent implements OnInit {
 
   constructor( private formBuilder: FormBuilder,
     private router: Router,
-    private ftthService: FtthService,) { }
+    private ftthService: FtthService,private toastrService: NbToastrService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -58,11 +61,9 @@ export class AjoutSplitterComponent implements OnInit {
   get typespt() {
     return this.registerForm.get("Typespt");
   }
-  ports : any;
   Typespt(e) {
     this.typespt.setValue(e.target.value, { onlySelf: true });
     this.nbp = Number(this.registerForm.controls["Typespt"].value);
-    this.ports = Array(this.nbp);
   }
 
   get fval() {
@@ -90,23 +91,18 @@ export class AjoutSplitterComponent implements OnInit {
 
 
  annuler(){
-  if (localStorage.getItem('ID_olt') != 'null'){
-    console.log('aa');
-    console.log(localStorage.getItem('ID_olt'));
-
-    localStorage.setItem('ID_olt','')
+  if (localStorage.getItem('ID_olt') != null){
+    localStorage.clear()
     this.router.navigateByUrl('pages/zones/gerer-olt')
   }
-  if (localStorage.getItem('ID_sro') != 'null'){
-    localStorage.setItem('ID_sro','')
+  if (localStorage.getItem('ID_sro') != null){
+    localStorage.clear()
     this.router.navigateByUrl('pages/zones/gerer-sro')
 
   }
   //a verifier!!
-  if (localStorage.getItem('ID_immeuble') != 'null'){
-    console.log('cc');
-
-    localStorage.setItem('ID_immeuble','')
+  if (localStorage.getItem('ID_immeuble') != null){
+    localStorage.clear()
     this.router.navigateByUrl('pages/zones/gerer-immeuble')
 
   }
@@ -150,7 +146,8 @@ export class AjoutSplitterComponent implements OnInit {
           { this.port.Position = m+1
            this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
           }
-          alert("splitter ajoute")},error => {alert("error splitter ajout");});
+          this.status="success"
+    this.toastrService.show(``,`Splitter ajoutée avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},error => {alert("error splitter ajout");});
           this.annuler();
         }
 

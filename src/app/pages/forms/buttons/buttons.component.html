@@ -10,7 +10,11 @@
           <button disabled nbButton hero>
             disabled
           </button>
+
         </div>
+        <button  nbButton status="warning"  nbPopover="{{port.Position_tiroir}}" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" data-toggle="modal" data-target="#déraccordéOUT" >
+          karam dkhil <i class="fas fa-trash-alt"></i>
+        </button>
       </nb-card-body>
     </nb-card>
 
@@ -119,5 +123,25 @@
         </nb-actions>
       </nb-card-body>
     </nb-card>
+  </div>
+</div>
+
+
+
+<!-- Modal déraccordé OUT -->
+<div data-backdrop="static" class="modal fade" id="déraccordéOUT" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6>Etes vous sûr de déraccorder ce port?</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerROUT()" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="DeraccordeOUT()" class="btn btn-warning" data-dismiss="modal">Oui</button>
+      </div>
+    </div>
   </div>
 </div>
