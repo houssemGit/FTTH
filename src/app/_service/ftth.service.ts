@@ -6,6 +6,11 @@ import { Splitter  } from "../_models/splitter";
 import { Port  } from "../_models/port";
 import 'rxjs/add/operator/map'
 import { Sro } from '../_models/sro';
+import { Client } from '../_models/client';
+import { Monosite } from '../_models/monosite';
+import { Appartement } from '../_models/appartement';
+import { Immeuble } from '../_models/immeuble';
+import { Pri } from '../_models/pri';
 
 
 
@@ -30,6 +35,14 @@ export class FtthService {
   deleteSro(id: number){
     return this.http.delete("http://localhost:8000/api/sros/"+id.toString())
   }
+  deleteClient(id: number){
+    return this.http.delete("http://localhost:8000/api/clients/"+id.toString())
+  }
+  deletePri(id: number){
+    return this.http.delete("http://localhost:8000/api/pris/"+id.toString())
+  }
+
+
 
   //update
   updatePort(id: string , port : Port){
@@ -44,6 +57,15 @@ export class FtthService {
   updateSro(id: string , sro : Sro){
     return this.http.put("http://localhost:8000/api/sros/"+id,sro)
   }
+  updateClient(id: string , client : Client){
+    return this.http.put("http://localhost:8000/api/clients/"+id,client)
+  }
+  updateImmeuble(id: string , immeuble : Immeuble){
+    return this.http.put("http://localhost:8000/api/immeubles/"+id,immeuble)
+  }
+  updatePri(id: string , pri : Pri){
+    return this.http.put("http://localhost:8000/api/pris/"+id,pri)
+  }
 
 
 
@@ -55,12 +77,18 @@ export class FtthService {
     return this.http.get<Array<Sro>>("http://localhost:8000/api/sros");
   }
 
+
+
   getByOlt(id: number){
     return this.http.get<Array<Cassette>>("http://localhost:8000/api/cassettes/olt/"+id.toString());
   }
   getBySro(id: number){
     return this.http.get<Array<Cassette>>("http://localhost:8000/api/cassettes/sro/"+id.toString());
   }
+  getByPri(id: number){
+    return this.http.get<Array<Cassette>>("http://localhost:8000/api/cassettes/pri/"+id.toString());
+  }
+
   getByCassette(id: number){
     return this.http.get<Array<Splitter>>("http://localhost:8000/api/splitters/cassette/"+id.toString());
   }
@@ -82,6 +110,13 @@ export class FtthService {
   getSroById(id: string){
     return this.http.get<Sro>("http://localhost:8000/api/sros/"+id)
   }
+  getPriById(id: string){
+    return this.http.get<Pri>("http://localhost:8000/api/pris/"+id)
+  }
+
+  // getImmeubleById(id: string){
+  //   return this.http.get<Immeuble>("http://localhost:8000/api/immeubles/"+id)
+  // }
 
   getCassetteById(id: number){
     return this.http.get<Cassette>("http://localhost:8000/api/cassette/"+id.toString())
@@ -110,6 +145,22 @@ export class FtthService {
     return this.http.get<Sro>("http://localhost:8000/api/sros/zone/"+id.toString())
 
   }
+  getClientsByZone(id:string){
+    return this.http.get<Array<Client>>("http://localhost:8000/api/clients/zone/"+id.toString())
+
+  }
+  getImmeublesByZone(id:string){
+    return this.http.get<Array<Immeuble>>("http://localhost:8000/api/immebles/zone/"+id.toString())
+
+  }
+  getPriByZone(id:string){
+    return this.http.get<Array<Pri>>("http://localhost:8000/api/pris/zone/"+id.toString())
+
+  }
+  getSroByPri(id:string){
+    //return this.http.get<Array<Pri>>("http://localhost:8000/api/pris/zone/"+id.toString())
+
+  }
 
   //add
   AjoutOlt(olt: any){
@@ -126,6 +177,12 @@ export class FtthService {
   }
   AjoutPort(port: any){
     return this.http.post<Port>("http://localhost:8000/api/ports", port);
+  }
+  AjoutClient(client: any){
+    return this.http.post<Client>("http://localhost:8000/api/clients", client);
+  }
+  AjoutPri(pri: any){
+    return this.http.post<Pri>("http://localhost:8000/api/pris", pri);
   }
 
 }

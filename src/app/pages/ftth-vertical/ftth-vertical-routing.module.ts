@@ -13,6 +13,10 @@ import { GererMonositeComponent } from './gerer-monosite/gerer-monosite.componen
 import { GererAppartementComponent } from './gerer-appartement/gerer-appartement.component';
 import { ConsulterZoneClientComponent } from './consulter-zone-client/consulter-zone-client.component';
 import { ConsulterZoneImmeubleMonoApartComponent } from './consulter-zone-immeuble-mono-apart/consulter-zone-immeuble-mono-apart.component';
+import { GererPriComponent } from './gerer-pri/gerer-pri.component';
+import { AjoutPriComponent } from './ajout-pri/ajout-pri.component';
+import { ModifierPriComponent } from './modifier-pri/modifier-pri.component';
+import { ConsulterZonePriComponent } from './consulter-zone-pri/consulter-zone-pri.component';
 
 
 
@@ -35,6 +39,10 @@ const routes: Routes = [{
       component: GererMonositeComponent,
     },
     {
+      path: 'gerer-pri',
+      component: GererPriComponent,
+    },
+    {
       path: 'ajout-client',
       component: AjoutClientComponent ,
     },
@@ -45,6 +53,10 @@ const routes: Routes = [{
     {
       path: 'ajout-monosite',
       component: AjoutMonositeComponent,
+    },
+    {
+      path: 'ajout-pri',
+      component: AjoutPriComponent,
     },
     {
       path: 'modifier-client',
@@ -59,12 +71,20 @@ const routes: Routes = [{
       component: ModifierMonositeComponent,
     },
     {
+      path: 'modifier-pri',
+      component: ModifierPriComponent,
+    },
+    {
       path: 'consulter-zone-client',
       component: ConsulterZoneClientComponent,
     },
     {
       path: 'consulter-zone-immeuble-mono-apart',
       component: ConsulterZoneImmeubleMonoApartComponent,
+    },
+    {
+      path: 'consulter-zone-pri',
+      component: ConsulterZonePriComponent,
     },
 
 
@@ -90,5 +110,9 @@ export const routedComponents = [
   GererMonositeComponent,
   GererAppartementComponent,
   ConsulterZoneClientComponent,
-  ConsulterZoneImmeubleMonoApartComponent
+  ConsulterZoneImmeubleMonoApartComponent,
+  GererPriComponent,
+  AjoutPriComponent,
+  ModifierPriComponent,
+  ConsulterZonePriComponent
 ];

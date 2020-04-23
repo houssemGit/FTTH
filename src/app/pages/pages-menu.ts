@@ -39,6 +39,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'flip-outline',
     children: [
       {
+        title: 'Gestion PRI',
+        link: '/pages/immeubles/consulter-zone-pri',
+      },
+      {
         title: 'Gestion Immeuble',
         link: '/pages/immeubles/consulter-zone-immeuble-mono-apart',
       },

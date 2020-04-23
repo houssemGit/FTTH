@@ -81,7 +81,6 @@ export class ModifierUserComponent implements OnInit {
         this.status="warning"
         this.toastrService.show(``,`Utilisateur modifié!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});        this.loading = false;
         this.router.navigate(['pages/utilisateurs/gestion-user']);
-        localStorage.clear();
      },
       (error)=>{
         this.status="danger"
@@ -92,7 +91,6 @@ export class ModifierUserComponent implements OnInit {
   }
   annuler(){
     this.router.navigate(['pages/utilisateurs/gestion-user']);
-    localStorage.clear();
   }
     // Getter method to access formcontrols
     get roleName() {

@@ -1,3 +1,124 @@
-<p>
-  modifier-client works!
-</p>
+
+<div class="card">
+  <div class="card-header">
+    <h3>Modifier Client</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+
+      <div class="form-group">
+        <label for="Num_serie_ont">Num serie ONT</label>
+        <input
+          type="text"
+          formControlName="Num_serie_ont"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_serie_ont.errors }"
+          placeholder="Enter Num_serie_ont here"
+        />
+        <div *ngIf="submitted && fval.Num_serie_ont.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_serie_ont.errors.required">Num serie ont est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Solution_raccordement">Solution raccordement</label>
+        <input
+          type="text"
+          formControlName="Solution_raccordement"
+          class="form-control"
+          placeholder="Enter Solution_raccordement here"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="Budget_optique">Budget optique</label>
+        <input
+          type="text"
+          formControlName="Budget_optique"
+          class="form-control"
+          placeholder="Enter Budget_optique here"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="Num_telephone">Num Téléphone</label>
+        <input
+          type="text"
+          formControlName="Num_telephone"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_telephone.errors }"
+          placeholder="Enter Num telephone here"
+        />
+        <div *ngIf="submitted && fval.Num_telephone.errors" class="invalid-feedback">
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Type Client</label>
+              <select
+                class="custom-select "
+                (change)="changeType_client($event)"
+                formControlName="Type_client"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.Type_client.errors }"
+                placeholder="Enter Type_client here"
+              >
+                <option value="">Entrer Type_client here</option>
+                <option *ngFor="let Type_client of Type_clients" [value]="Type_client">{{Type_client}}</option>
+              </select>
+              <!--  error block -->
+              <div class="invalid-feedback" *ngIf="isSubmitted && Type_client.errors?.required">
+                <div *ngIf="fval.Type_client.errors.required">Type est obligatoire</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Num steg</label>
+
+              <select
+              data-live-search="true"
+              class=" form-control selectpicker "
+              (change)="changeNum_steg($event)"
+              formControlName="Num_steg"
+              [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }">
+              <option value="">Entrer Type_client here</option>
+              <option *ngFor="let Num_steg of Num_stegs" [value]="Num_steg">{{Num_steg}}</option>
+              </select>
+              <!--  error block -->
+              <div class="invalid-feedback" *ngIf="isSubmitted && Num_steg.errors?.required">
+                <div *ngIf="fval.Num_steg.errors.required">Num steg est obligatoire</div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <a routerLink="../gerer-client" class="btn btn-link">Annuler</a>
+        <button style="float:right" [disabled]="loading" nbButton status="warning">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Modifier
+        </button>
+
+      </div>
+    </form>
+
+
+  </div>
+</div>

@@ -30,6 +30,8 @@ export class GestionUserComponent implements OnInit {
   constructor(private toastrService: NbToastrService,private http: HttpClient, private router: Router, private toaster: ToastrService, private userService: UserService ) { }
 
   ngOnInit() {
+    localStorage.clear();
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 5

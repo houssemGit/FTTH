@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Sro } from '../../../_models/sro';
 import { Router } from '@angular/router';
 import { FtthService } from '../../../_service/ftth.service';
+import { Sro } from '../../../_models/sro';
 
 @Component({
-  selector: 'ngx-consulter-zone-immeuble-mono-apart',
-  templateUrl: './consulter-zone-immeuble-mono-apart.component.html',
-  styleUrls: ['./consulter-zone-immeuble-mono-apart.component.scss']
+  selector: 'ngx-consulter-zone-pri',
+  templateUrl: './consulter-zone-pri.component.html',
+  styleUrls: ['./consulter-zone-pri.component.scss']
 })
-export class ConsulterZoneImmeubleMonoApartComponent implements OnInit {
+export class ConsulterZonePriComponent implements OnInit {
 
   constructor(private router: Router, private ftthService: FtthService) { }
 
@@ -16,7 +16,7 @@ export class ConsulterZoneImmeubleMonoApartComponent implements OnInit {
 
   viewZone(e){
     localStorage.setItem('choixzone',e.Nom_zone)
-    this.router.navigateByUrl('pages/consulter-zones/details')
+    this.router.navigateByUrl('pages/immeubles/gerer-pri')
   }
   ngOnInit() {
     this.ftthService.AllSro().subscribe(data=>{

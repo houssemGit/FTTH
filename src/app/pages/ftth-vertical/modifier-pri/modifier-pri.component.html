@@ -1,0 +1,127 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Modifier Pri</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+      <div class="form-group">
+        <label for="Nom_pri">Nom </label>
+        <input
+          type="text"
+          formControlName="Nom_pri"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom_pri.errors }"
+          placeholder="Entrer Nom pri ici"
+        />
+        <div *ngIf="submitted && fval.Nom_pri.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom_pri.errors.required">Nom pri est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Nom_residence">Nom residence</label>
+        <input
+          type="text"
+          formControlName="Nom_residence"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom_residence.errors }"
+          placeholder="Entrer Nom residence ici"
+        />
+        <div *ngIf="submitted && fval.Nom_residence.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom_residence.errors.required">Nom residence est obligatoire</div>
+        </div>
+      </div>
+
+      <!-- select item -->
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">SRO correspondant</label>
+              <select
+                class="custom-select "
+                (change)="sro($event)"
+                formControlName="sro"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.sro.errors }"
+                placeholder="Entrer sro ici"
+              >
+                <option value="">Entrer nom sro ici</option>
+                <option *ngFor="let sro of ch" [value]="sro" >{{sro}}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="isSubmitted && olt.errors?.required"
+              >
+                <div *ngIf="fval.olt.errors.required">
+                  SRO est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- select item -->
+       <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Numero cable distribution</label>
+              <select
+                class="custom-select "
+                (change)="N_C_D($event)"
+                formControlName="N_C_D"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.N_C_D.errors }"
+                placeholder="Entrer cable distribution ici"
+              >
+                <option value="">Entrer Numero cable distribution ici</option>
+                <option *ngFor="let N_C_D of rest" [value]="N_C_D">{{N_C_D}}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="isSubmitted && N_C_T.errors?.required"
+              >
+                <div *ngIf="fval.N_C_T.errors.required">
+                  Numero est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="C_C_D">Capacite cable distribution</label>
+        <input
+          type="text"
+          formControlName="C_C_D"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.C_C_D.errors }"
+          placeholder="Entrer capacite cable distribution ici"
+        />
+        <div *ngIf="submitted && fval.C_C_D.errors" class="invalid-feedback">
+          <div *ngIf="fval.C_C_D.errors.required">Capacite cable distribution est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <a routerLink="../gerer-pri" class="btn btn-link">Annuler</a>
+        <button style="float:right" [disabled]="loading" nbButton status="warning">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Modifier
+        </button>
+
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+

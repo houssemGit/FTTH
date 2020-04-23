@@ -13,11 +13,16 @@ import { ConsulterZoneClientComponent } from './consulter-zone-client/consulter-
 import { ConsulterZoneImmeubleMonoApartComponent } from './consulter-zone-immeuble-mono-apart/consulter-zone-immeuble-mono-apart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NbAccordionModule, NbPopoverModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import { NbAccordionModule, NbPopoverModule, NbButtonModule, NbIconModule, NbCardModule, NbListModule } from '@nebular/theme';
 import { FtthVerticalRoutingModule, routedComponents } from './ftth-vertical-routing.module';
+import { GererPriComponent } from './gerer-pri/gerer-pri.component';
+import { AjoutPriComponent } from './ajout-pri/ajout-pri.component';
+import { ModifierPriComponent } from './modifier-pri/modifier-pri.component';
+import { ConsulterZonePriComponent } from './consulter-zone-pri/consulter-zone-pri.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
-  declarations: [routedComponents,GererClientComponent, AjoutClientComponent, ModifierClientComponent, GererAppartementComponent, AjoutAppartementComponent, ModifierAppartementComponent, ModifierMonositeComponent, AjoutMonositeComponent, GererMonositeComponent, ConsulterZoneClientComponent, ConsulterZoneImmeubleMonoApartComponent],
+  declarations: [routedComponents,GererClientComponent, AjoutClientComponent, ModifierClientComponent, GererAppartementComponent, AjoutAppartementComponent, ModifierAppartementComponent, ModifierMonositeComponent, AjoutMonositeComponent, GererMonositeComponent, ConsulterZoneClientComponent, ConsulterZoneImmeubleMonoApartComponent, GererPriComponent, AjoutPriComponent, ModifierPriComponent, ConsulterZonePriComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -28,6 +33,9 @@ import { FtthVerticalRoutingModule, routedComponents } from './ftth-vertical-rou
     NbPopoverModule,
     NbButtonModule,
     NbIconModule,
+    NbCardModule,
+    NbListModule,
+    DataTablesModule,
   ]
 })
 export class FtthVerticalModule { }
