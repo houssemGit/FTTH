@@ -51,7 +51,7 @@
               <!--  error block -->
               <div
                 class="invalid-feedback"
-                *ngIf="isSubmitted && olt.errors?.required"
+                *ngIf="submitted && fval.olt.errors"
               >
                 <div *ngIf="fval.olt.errors.required">
                   OLT est obligatoire
@@ -82,7 +82,7 @@
               <!--  error block -->
               <div
                 class="invalid-feedback"
-                *ngIf="isSubmitted && N_C_T.errors?.required"
+                *ngIf="submitted && fval.N_C_T.errors"
               >
                 <div *ngIf="fval.N_C_T.errors.required">
                   Numero est obligatoire

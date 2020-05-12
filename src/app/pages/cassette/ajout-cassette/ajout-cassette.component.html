@@ -42,7 +42,7 @@
         <!--  error block -->
         <div
           class="invalid-feedback"
-          *ngIf="isSubmitted && NmCasete.errors?.required"
+          *ngIf="submitted && fval.NmCasete.errors"
         >
           <div *ngIf="fval.NmCasete.errors.required">
             Numero est obligatoire
@@ -73,7 +73,7 @@
         <!--  error block -->
         <div
           class="invalid-feedback"
-          *ngIf="isSubmitted && Nbsplt.errors?.required"
+          *ngIf="submitted && fval.Nbsplt.errors"
         >
           <div *ngIf="fval.Nbsplt.errors.required">
             Nombre est obligatoire
@@ -104,7 +104,7 @@
         <!--  error block -->
         <div
           class="invalid-feedback"
-          *ngIf="isSubmitted && Typespts.errors?.required"
+          *ngIf="submitted && fval.Typespts.errors"
         >
           <div *ngIf="fval.Typespts.errors.required">
             Type est obligatoire

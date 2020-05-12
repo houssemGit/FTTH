@@ -42,7 +42,7 @@ export class EchartsPieComponent implements AfterViewInit, OnDestroy {
             radius: '80%',
             center: ['50%', '50%'],
             data: [
-              { value: 335, name: 'Germany' },
+              { value: 335, name: 'Germany'  },
               { value: 310, name: 'France' },
               { value: 234, name: 'Canada' },
               { value: 135, name: 'Russia' },
@@ -78,4 +78,6 @@ export class EchartsPieComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
   }
+
+
 }

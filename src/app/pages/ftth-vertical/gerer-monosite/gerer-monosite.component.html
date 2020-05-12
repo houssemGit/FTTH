@@ -1,3 +1,168 @@
-<p>
-  gerer-monosite works!
-</p>
+
+<button routerLink="../ajout-monosite" nbButton status="success"  style="width:200px; float:right;"><i class="far fa-plus-square"></i>  Ajouter Monosite </button>
+<br>
+<br>
+<div class="accordions-container row">
+  <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+    <nb-accordion >
+      <nb-accordion-item  *ngFor="let mono of concat;let i = index  "    >
+        <nb-accordion-item-header (click)="clickacco(mono)" >
+          {{mono.Nom_monosite}}
+          <div style=" position: absolute; right: 5%">
+            <button nbButton status="danger"  (click)="deletemono(mono)" data-toggle="modal" data-target="#confsupr" >  <i class="far fa-trash-alt"></i>   </button>
+            <button nbButton status="warning" (click)="editmono(mono)" style="margin-left: 20px;" > <i class="far fa-edit"></i> </button>
+          </div>
+        </nb-accordion-item-header>
+        <nb-accordion-item-body *ngFor="let p of pto">
+          <a>Point de Terminaison Optique (PTO) </a>
+          <span><button nbButton status="primary" *ngIf="p && p!='Non raccordé' "  style="float: right;"  (click)=showCrsp(mono)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+          </span>
+
+          <div  id="P2Ports">
+            <label   class="switch grid-item">
+              <div style=" height:20px"  nbPopover={{p}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
+              <div *ngIf="p && p!='Non raccordé' ; else Libre ">
+              <input  type="checkbox" checked="true" (click)="chekyracIN(mono,i)" data-toggle="modal" data-target="#déraccordéIN"/><span class="slider"></span>
+             </div>
+            <ng-template #Libre>
+              <input type="checkbox"  (click)="chekyracIN(mono,i)" data-toggle="modal" data-target="#raccordéIN" /><span class="slider"></span>
+            </ng-template>
+          </div>
+            </label>
+          </div>
+
+          <br />
+          <a>Num steg: {{mono.Num_steg}}</a><br />
+          <a>Adresse: {{mono.Adresse}}</a><br />
+          <a>Num plan: {{mono.Num_plan}}</a>
+
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+</div>
+
+<!-- Modal correspondance OLT-SRO-PRI -->
+<div  class="modal fade" id="exampleModalLongcrs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Correspondance OLT-SRO </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Tiroir Transport {{posTT}}</h6>
+        <h6>Nom OLT: {{nomOLT}}</h6>
+        <h6>N°Cassette: {{posCo}}</h6>
+        <h6>N°Splitter: {{posSo}}</h6>
+        <h6>N°Port: {{posPo}}</h6>
+        <br>
+        <h6>Tiroir Distribution {{posTD}}</h6>
+        <h6>Nom SRO: {{nomSRO}}</h6>
+        <h6>N°Cassette: {{posCs}}</h6>
+        <h6>N°Splitter: {{posSs}}</h6>
+        <h6>N°Port: {{posPs}}</h6>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal déraccordé IN -->
+<div data-backdrop="static" class="modal fade" id="déraccordéIN" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6>Etes vous sûr de déraccorder ce port?</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerRIN()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="DeraccordeIN()" nbButton status="warning" data-dismiss="modal">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal raccordé IN-->
+<div  data-backdrop="static" class="modal fade" id="raccordéIN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form [formGroup]="FormRacIn" (ngSubmit)="SubRaccordeIN()">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Raccordement Tiroir Distribution </h5>
+        <button  (click)="annulerRIN()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <button #closeModal hidden type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="n_t_d">Numero tiroir Distribution</label>
+          <input
+            type="text"
+            formControlName="n_t_d"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval1.n_t_d.errors }"
+            placeholder="Entrer Numero Tiroir Distribution ici"
+          />
+          <div *ngIf="submitted && fval1.n_t_d.errors" class="invalid-feedback">
+            <div *ngIf="fval1.n_t_d.errors.required">Numero tiroir Distribution est obligatoire</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="P_t_d">Position Tiroir Distribution</label>
+          <input
+            type="text"
+            formControlName="P_t_d"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval1.P_t_d.errors }"
+            placeholder="Entrer Position Tiroir Distribution ici"
+          />
+          <div *ngIf="submitted && fval1.P_t_d.errors" class="invalid-feedback">
+            <div *ngIf="fval1.P_t_d.errors.required">Position Tiroir Distribution est obligatoire</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group" class="modal-footer">
+        <button type="button"  (click)="annulerRIN()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button  type="button" (click)="SubRaccordeIN()"   nbButton status="warning">Modifier</button>
+      </div>
+    </div>
+  </form>
+
+  </div>
+</div>
+
+
+<!-- Modal confsup -->
+<div data-backdrop="static" class="modal fade" id="confsupr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6 style="text-align: center;">Merci de confirmez la suppression</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerSup()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="ConfirmeSupR()" nbButton status="warning" data-dismiss="modal">Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

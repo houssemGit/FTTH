@@ -1,3 +1,111 @@
-<p>
-  ajout-appartement works!
-</p>
+<div class="card">
+  <div class="card-header">
+    <h3>Ajouter Appartement</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+      <div class="form-group">
+        <label for="Num_steg">Numero steg </label>
+        <input
+          type="text"
+          formControlName="Num_steg"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }"
+          placeholder="Entrer Numero steg  ici"
+        />
+        <div *ngIf="submitted && fval.Num_steg.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_steg.errors.required">Numero steg  est obligatoire</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="Adresse">Adresse</label>
+        <input
+          type="text"
+          formControlName="Adresse"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Adresse.errors }"
+          placeholder="Entrer Adresse ici"
+        />
+        <div *ngIf="submitted && fval.Adresse.errors" class="invalid-feedback">
+          <div *ngIf="fval.Adresse.errors.required">Adresse est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Num_appartement">Numero appartement</label>
+        <input
+          type="text"
+          formControlName="Num_appartement"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_appartement.errors }"
+          placeholder="Entrer Num appartement ici"
+        />
+        <div *ngIf="submitted && fval.Num_appartement.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_appartement.errors.required">Numero appartement est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Nom_bloc">Nom bloc</label>
+        <input
+          type="text"
+          formControlName="Nom_bloc"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom_bloc.errors }"
+          placeholder="Entrer Nom bloc ici"
+        />
+        <div *ngIf="submitted && fval.Nom_bloc.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom_bloc.errors.required">Nom bloc est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Num_etage">Numero etage</label>
+        <input
+          type="text"
+          formControlName="Num_etage"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_etage.errors }"
+          placeholder="Entrer Num etage ici"
+        />
+        <div *ngIf="submitted && fval.Num_etage.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_etage.errors.required">Numero etage est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Num_BE">Numero Boitier d'etage</label>
+        <input
+          type="text"
+          formControlName="Num_BE"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_BE.errors }"
+          placeholder="Entrer Num Boitier d'etage ici"
+        />
+        <div *ngIf="submitted && fval.Num_BE.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_BE.errors.required">Numero Boitier d'etage est obligatoire</div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <a routerLink="../gerer-appartement" class="btn btn-link">Annuler</a>
+        <button style="float:right" [disabled]="loading" nbButton status="primary">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Ajouter
+        </button>
+
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+

@@ -97,7 +97,7 @@
               <!--  error block -->
               <div
                 class="invalid-feedback"
-                *ngIf="isSubmitted && Role.errors?.required"
+                *ngIf="submitted && fval.Role.errors"
               >
                 <div *ngIf="fval.Role.errors.required">Role est obligatoire</div>
               </div>

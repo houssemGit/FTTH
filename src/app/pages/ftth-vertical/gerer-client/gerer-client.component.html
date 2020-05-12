@@ -1,32 +1,35 @@
 <button routerLink="../ajout-client" class="btn btn-success" style="width:200px"><i class="far fa-plus-square"></i>  Ajouter Client </button>
-<button nbButton status="warning" routerLink="../modifier-client" (click)="editClient(e)" > <i class="far fa-edit"></i> </button>
-
 <br>
 <br>
 
-<table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+<table datatable id="example" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr>
-      <th>N° serie ONT </th>
+      <th>Num serie ONT </th>
+      <th>Num SN </th>
       <th>Solution raccordement</th>
-      <th>Email</th>
       <th>Budget optique</th>
       <th>Type client</th>
       <th>Num telephone</th>
+      <th>Nom Immeuble</th>
+      <th>Num steg</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let e of client">
+    <tr *ngFor="let e of mix">
 
-    <td>{{e.Num_serie_ont}}</td>
+    <td>{{e.Num_serie_ONT}}</td>
+    <td>{{e.Num_SN}}</td>
     <td>{{e.Solution_raccordement}}</td>
     <td>{{e.Budget_optique}}</td>
     <td>{{e.Type_client}}</td>
     <td>{{e.Num_telephone}}</td>
+    <td>{{e.Adresse}}</td>
+    <td>{{e.Num_steg}}</td>
    <td >
       <div style=" display:flex;flex-direction:row; position: relative; left: 40px">
-     <button nbButton status="warning"  (click)="editClient(e)" > <i class="far fa-edit"></i> </button>
+     <button nbButton status="warning" routerLink="../modifier-client" (click)="editClient(e)" > <i class="far fa-edit"></i> </button>
      <button nbButton status="danger"   (click)="deleteClient(e)" style="margin-left: 20px;">  <i class="far fa-trash-alt"></i>  </button>
       </div>
     </td>

@@ -15,7 +15,7 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
 
-          <button routerLink="../ajout-cassette" nbButton status="success" style="width:120px; float:right;" (click)=AjoutC(sro)><i class="far fa-plus-square"></i>   </button>
+          <button routerLink="../../zones/ajout-cassette" nbButton status="success" style="width:120px; float:right;" (click)=AjoutC(sro)><i class="far fa-plus-square"></i>   </button>
           <br>
           <br>
           <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
@@ -29,7 +29,7 @@
               </nb-accordion-item-header>
               <nb-accordion-item-body>
 
-                <button routerLink="../ajout-splitter" nbButton status="success" style="width:120px; float:right;" (click)=AjoutS(cassette)><i class="far fa-plus-square"></i>  Splitter  </button>
+                <button routerLink="../../zones/ajout-splitter" nbButton status="success" style="width:120px; float:right;" (click)=AjoutS(cassette)><i class="far fa-plus-square"></i>  Splitter  </button>
                 <br>
                 <br>
                 <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
@@ -109,13 +109,14 @@
         </button>
       </div>
       <div class="modal-body">
+
         <h6>Tiroir Transport {{posTT}}</h6>
         <h6>Nom OLT: {{nomOLT}}</h6>
         <h6>N°Cassette: {{posCo}}</h6>
         <h6>N°Splitter: {{posSo}}</h6>
         <h6>N°Port: {{posPo}}</h6>
         <br>
-        <h6>Tiroir Distribution {{PosTD}}</h6>
+        <h6>Tiroir Distribution {{posTD}}</h6>
         <h6>Nom SRO: {{nomSRO}}</h6>
         <h6>N°Cassette: {{posCs}}</h6>
         <h6>N°Splitter: {{posSs}}</h6>

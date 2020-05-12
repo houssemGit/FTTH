@@ -7,16 +7,30 @@
     <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
 
       <div class="form-group">
-        <label for="Num_serie_ont">Num serie ONT</label>
+        <label for="Num_serie_ONT">Num serie ONT</label>
         <input
           type="text"
-          formControlName="Num_serie_ont"
+          formControlName="Num_serie_ONT"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && fval.Num_serie_ont.errors }"
-          placeholder="Enter Num_serie_ont here"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_serie_ONT.errors }"
+          placeholder="Enter Num_serie_ONT here"
         />
-        <div *ngIf="submitted && fval.Num_serie_ont.errors" class="invalid-feedback">
-          <div *ngIf="fval.Num_serie_ont.errors.required">Num serie ont est obligatoire</div>
+        <div *ngIf="submitted && fval.Num_serie_ONT.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_serie_ONT.errors.required">Num serie ont est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Num_SN">Num SN</label>
+        <input
+          type="text"
+          formControlName="Num_SN"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_SN.errors }"
+          placeholder="Enter Num_SN here"
+        />
+        <div *ngIf="submitted && fval.Num_SN.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_SN.errors.required">Num SN est obligatoire</div>
         </div>
       </div>
 
@@ -50,6 +64,7 @@
           placeholder="Enter Num telephone here"
         />
         <div *ngIf="submitted && fval.Num_telephone.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_telephone.errors.required">Num telephone  est obligatoire</div>
         </div>
       </div>
 
@@ -71,7 +86,7 @@
                 <option *ngFor="let Type_client of Type_clients" [value]="Type_client">{{Type_client}}</option>
               </select>
               <!--  error block -->
-              <div class="invalid-feedback" *ngIf="isSubmitted && Type_client.errors?.required">
+              <div class="invalid-feedback" *ngIf="submitted && fval.Type_client.errors">
                 <div *ngIf="fval.Type_client.errors.required">Type est obligatoire</div>
               </div>
             </div>
@@ -79,24 +94,23 @@
         </div>
       </div>
 
-
-      <div class="form-group">
+      <!-- <div class="form-group">
         <div class="group-gap">
           <div class="d-block my-3">
             <div class="mb-3">
               <label style="margin-right: 2rem;">Num steg</label>
 
               <select
-              data-live-search="true"
-              class=" form-control selectpicker "
+              class="form-control selectpicker"
               (change)="changeNum_steg($event)"
               formControlName="Num_steg"
+              data-live-search="true"
               [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }">
-              <option value="">Entrer Type_client here</option>
+              <option value="">Entrer Num steg here</option>
               <option *ngFor="let Num_steg of Num_stegs" [value]="Num_steg">{{Num_steg}}</option>
               </select>
-              <!--  error block -->
-              <div class="invalid-feedback" *ngIf="isSubmitted && Num_steg.errors?.required">
+
+              <div class="invalid-feedback" *ngIf="submitted && Num_steg.errors?.required">
                 <div *ngIf="fval.Num_steg.errors.required">Num steg est obligatoire</div>
               </div>
 
@@ -104,7 +118,27 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
+
+
+      <!-- <div class="form-group">
+        <label for="typeahead-format">Num Steg </label>
+        <input  id="typeahead-format"
+                type="text"
+                formControlName="Num_steg"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }"
+                [ngbTypeahead]="search"
+                placeholder="Tapez içi num steg"/>
+        <div class="invalid-feedback" *ngIf="submitted && fval.Num_steg.errors  ">
+          <div *ngIf="fval.Num_steg.errors.required">Num steg est obligatoire</div>
+       </div>
+
+      </div> -->
+
+
+
 
       <div class="form-group">
         <a routerLink="../gerer-client" class="btn btn-link">Annuler</a>

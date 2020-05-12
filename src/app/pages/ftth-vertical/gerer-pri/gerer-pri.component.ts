@@ -25,9 +25,8 @@ export class GererPriComponent implements OnInit {
   rest = [1,2,3,4,5,6,7,8,9,10,11]
 
   ngOnInit() {
-    localStorage.clear();
     this.pris=[]
-    this.ftthService.getPriByZone(localStorage.getItem('choixzone')).subscribe(data => {this.pris = data;}, error => {
+    this.ftthService.getPriByZone(localStorage.getItem('ID_sro')).subscribe(data => {this.pris = data;}, error => {
     this.status="warning"
     this.toastrService.show(``,`Aucun PRI`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
   }
@@ -53,9 +52,13 @@ export class GererPriComponent implements OnInit {
     localStorage.setItem("ID_pri", e.ID_pri.toString());
     localStorage.setItem("Nom_pri", e.Nom_pri.toString());
     localStorage.setItem("Nom_residence", e.Nom_residence.toString());
-    localStorage.setItem("N_c_d", e.Num_cable_distribustion.toString());
-    localStorage.setItem("C_c_d", e.Capacite_cable_distribution.toString());
-    this.router.navigateByUrl("pages/zones/modifier-pri");
+    localStorage.setItem("N_c_d", e.Num_cable_distribution.toString());
+    localStorage.setItem("Num_plan", e.Num_plan.toString());
+    localStorage.setItem("Nb_prise", e.Nb_prise.toString());
+    localStorage.setItem("Num_syndique", e.Num_syndique.toString());
+    localStorage.setItem("Nom_syndique", e.Nom_syndique.toString());
+    localStorage.setItem("ID_sro", e.ID_sro.toString());
+    this.router.navigateByUrl("pages/immeubles/modifier-pri");
   }
 
   deletePri(e) {
@@ -112,7 +115,7 @@ export class GererPriComponent implements OnInit {
   }
 
   AjoutC(e){
-    localStorage.setItem("ID_pri", e.ID_pri.toString());
+    //localStorage.setItem("ID_pri", e.ID_pri.toString());
     this.router.navigateByUrl("pages/zones/ajout-cassette");
   }
   AjoutS(e){
@@ -167,8 +170,8 @@ export class GererPriComponent implements OnInit {
 
     this.ftthService.getPriById(localStorage.getItem("ID_pri")).subscribe((data)=>{
         this.pri=data
-        this.num=this.pri.Num_cable_distribustion
-        localStorage.setItem("n_c_d",this.pri.Num_cable_distribustion.toString())
+        this.num=this.pri.Num_cable_distribution
+        localStorage.setItem("n_c_d",this.pri.Num_cable_distribution.toString())
 
     },(error)=>{alert('error pri');})
   }
@@ -201,7 +204,7 @@ export class GererPriComponent implements OnInit {
 
   }
   DeraccordeIN(){
-    this.porto.Position_tiroir="Non Raccodé"
+    this.porto.Position_tiroir="Non Raccordé"
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     localStorage.setItem("ID_port",'')
@@ -240,7 +243,7 @@ export class GererPriComponent implements OnInit {
     this.loading = true;
 
     //this.porto=null
-    this.porto.Position_tiroir= "TD N°: "+this.FormRacOut.controls["Num_TD"].value+" Position: "+this.FormRacOut.controls["Pos_TD"].value
+    this.porto.Position_tiroir= "TCM N°: "+this.FormRacOut.controls["Num_TD"].value+" Position: "+this.FormRacOut.controls["Pos_TD"].value
     this.pos= Number(localStorage.getItem('Port_position'))-1
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
     this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
@@ -251,7 +254,7 @@ export class GererPriComponent implements OnInit {
   }
 
   DeraccordeOUT(){
-    this.porto.Position_tiroir="Non Raccodé"
+    this.porto.Position_tiroir="Non Raccordé"
     this.pos= Number(localStorage.getItem('Port_position'))-1
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
@@ -278,6 +281,7 @@ export class GererPriComponent implements OnInit {
   posSs : Number
   posCs : Number
   nomOLT : string
+  nomSRO : string
   posTT : string
   posTD : string
 
@@ -291,52 +295,57 @@ export class GererPriComponent implements OnInit {
 
 
 
-  showCrsp(e){
-
+  showCrsp(e){ //nom équipements
     this.ftthService.getPriById(localStorage.getItem("ID_pri")).subscribe((data)=>{this.pri= data
-     this.ftthService.getOltById(this.sro.ID_olt).subscribe((data)=>{this.olt= data
-      this.nomOLT=this.olt.Nom_olt
-      }, (error)=>{})
-    }, (error)=>{})
-
-    this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
-      this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
-        this.posTD=this.portOUT[0].Position_tiroir
-        this.posPs=this.portOUT[0].Position
-
-
-        this.ftthService.getSplitterById(this.portOUT[0].ID_splitter).subscribe(data => {this.splt = data;
-          this.posSs=this.splt[0].Position
-          this.ftthService.getCassetteById(this.splt[0].ID_cassette).subscribe(data => {this.cast = data;
-            this.posCs=this.cast[0].Num_cassette
-
-
-          },error=>{alert('error')});
-        },error=>{alert('error')});
-
-             this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
-              this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
-
-                this.posTT=this.portOUT1[0].Position_tiroir
-                this.posPo=this.portOUT1[0].Position
-
-
-                this.ftthService.getSplitterById(this.portOUT[0].ID_splitter).subscribe(data => {this.splt1 = data;
-                  this.posSo=this.splt1[0].Position
-                  this.ftthService.getCassetteById(this.splt1[0].ID_cassette).subscribe(data => {this.cast1 = data;
-                    this.posCo=this.cast1[0].Num_cassette
-
-                  },error=>{alert('error')})
-                },error=>{alert('error')})
+      this.ftthService.getSroById(this.pri.ID_sro.toString()).subscribe((data)=>{this.sro= data
+        this.nomSRO=this.sro.Nom_sro
+        this.ftthService.getOltById(this.sro.ID_olt).subscribe((data)=>{this.olt= data
+          this.nomOLT=this.olt.Nom_olt
+          }, (error)=>{})
+        }, (error)=>{})
+     }, (error)=>{})
 
 
 
-      },error=>{alert('error')});
-    },error=>{alert('error')});
+     this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
+       this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
+         this.posTD=this.portOUT[0].Position_tiroir
+         this.posPs=this.portOUT[0].Position
+
+        // position spliter cassette SRO
+         this.ftthService.getSplitterById(this.portOUT[0].ID_splitter).subscribe(data => {this.splt = data;
+           this.posSs=this.splt[0].Position
+           this.ftthService.getCassetteById(this.splt[0].ID_cassette).subscribe(data => {this.cast = data;
+             this.posCs=this.cast[0].Num_cassette
 
 
-  },error=>{alert('error')});
-},error=>{alert('error')});
+           },error=>{alert('error')});
+         },error=>{alert('error')});
+
+              this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
+               this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
+
+                 this.posTT=this.portOUT1[0].Position_tiroir
+                 this.posPo=this.portOUT1[0].Position
+
+                 // position spliter cassette OLT
+
+                 this.ftthService.getSplitterById(this.portOUT[0].ID_splitter).subscribe(data => {this.splt1 = data;
+                   this.posSo=this.splt1[0].Position
+                   this.ftthService.getCassetteById(this.splt1[0].ID_cassette).subscribe(data => {this.cast1 = data;
+                     this.posCo=this.cast1[0].Num_cassette
+
+                   },error=>{alert('error')})
+                 },error=>{alert('error')})
+
+
+
+       },error=>{alert('error')});
+     },error=>{alert('error')});
+
+
+   },error=>{alert('error')});
+ },error=>{alert('error')});
 
 }
 }

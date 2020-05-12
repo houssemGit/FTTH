@@ -1,22 +1,10 @@
 <div class="card">
   <div class="card-header">
-    <h3>Modifier Pri</h3>
+    <h3>Modifier Residence</h3>
   </div>
   <div class="card-body">
     <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
-      <div class="form-group">
-        <label for="Nom_pri">Nom </label>
-        <input
-          type="text"
-          formControlName="Nom_pri"
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && fval.Nom_pri.errors }"
-          placeholder="Entrer Nom pri ici"
-        />
-        <div *ngIf="submitted && fval.Nom_pri.errors" class="invalid-feedback">
-          <div *ngIf="fval.Nom_pri.errors.required">Nom pri est obligatoire</div>
-        </div>
-      </div>
+
       <div class="form-group">
         <label for="Nom_residence">Nom residence</label>
         <input
@@ -28,6 +16,20 @@
         />
         <div *ngIf="submitted && fval.Nom_residence.errors" class="invalid-feedback">
           <div *ngIf="fval.Nom_residence.errors.required">Nom residence est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Nom_pri">Nom PRI </label>
+        <input
+          type="text"
+          formControlName="Nom_pri"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom_pri.errors }"
+          placeholder="Entrer Nom pri ici"
+        />
+        <div *ngIf="submitted && fval.Nom_pri.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom_pri.errors.required">Nom pri est obligatoire</div>
         </div>
       </div>
 
@@ -51,9 +53,9 @@
               <!--  error block -->
               <div
                 class="invalid-feedback"
-                *ngIf="isSubmitted && olt.errors?.required"
+                *ngIf="submitted && fval.sro.errors"
               >
-                <div *ngIf="fval.olt.errors.required">
+                <div *ngIf="fval.sro.errors.required">
                   SRO est obligatoire
                 </div>
               </div>
@@ -61,9 +63,8 @@
           </div>
         </div>
       </div>
-
-       <!-- select item -->
-       <div class="form-group">
+      <!-- select item -->
+      <div class="form-group">
         <div class="group-gap">
           <div class="d-block my-3">
             <div class="mb-3">
@@ -74,18 +75,14 @@
                 formControlName="N_C_D"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && fval.N_C_D.errors }"
-                placeholder="Entrer cable distribution ici"
+                placeholder="Entrer N_C_D ici"
               >
-                <option value="">Entrer Numero cable distribution ici</option>
-                <option *ngFor="let N_C_D of rest" [value]="N_C_D">{{N_C_D}}</option>
+                <option value="">Entrer nom N_C_D ici</option>
+                <option *ngFor="let N_C_D of rest" [value]="N_C_D" >{{N_C_D}}</option>
               </select>
               <!--  error block -->
-              <div
-                class="invalid-feedback"
-                *ngIf="isSubmitted && N_C_T.errors?.required"
-              >
-                <div *ngIf="fval.N_C_T.errors.required">
-                  Numero est obligatoire
+              <div class="invalid-feedback" *ngIf="submitted && fval.N_C_D.errors">
+                <div *ngIf="fval.N_C_D.errors.required"> N_C_D est obligatoire
                 </div>
               </div>
             </div>
@@ -93,17 +90,57 @@
         </div>
       </div>
 
+
       <div class="form-group">
-        <label for="C_C_D">Capacite cable distribution</label>
+        <label for="Nb_prise">Nombre de prises</label>
         <input
           type="text"
-          formControlName="C_C_D"
+          formControlName="Nb_prise"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && fval.C_C_D.errors }"
-          placeholder="Entrer capacite cable distribution ici"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nb_prise.errors }"
+          placeholder="Entrer Nombre de prises ici"
         />
-        <div *ngIf="submitted && fval.C_C_D.errors" class="invalid-feedback">
-          <div *ngIf="fval.C_C_D.errors.required">Capacite cable distribution est obligatoire</div>
+        <div *ngIf="submitted && fval.Nb_prise.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nb_prise.errors.required">Nombre de prises est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Num_plan">Numero plan</label>
+        <input
+          type="text"
+          formControlName="Num_plan"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_plan.errors }"
+          placeholder="Entrer Numero plan ici"
+        />
+        <div *ngIf="submitted && fval.Num_plan.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_plan.errors.required">Numero plan est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Nom_syndique">Nom syndique</label>
+        <input
+          type="text"
+          formControlName="Nom_syndique"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom_syndique.errors }"
+          placeholder="Entrer Nom syndique ici"
+        />
+        <div *ngIf="submitted && fval.Nom_syndique.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom_syndique.errors.required">Nom syndique est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Num_syndique">Numero syndique</label>
+        <input
+          type="text"
+          formControlName="Num_syndique"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_syndique.errors }"
+          placeholder="Entrer Numero syndique ici"
+        />
+        <div *ngIf="submitted && fval.Num_syndique.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_syndique.errors.required">Numero syndique est obligatoire</div>
         </div>
       </div>
 

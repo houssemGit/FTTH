@@ -50,14 +50,24 @@ export class AjoutCassetteComponent implements OnInit {
           this.allPositions[i]= this.cassettes[i].Num_cassette
         }
         this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
-        },error => alert('pas de cassette!'));
-    }else if (localStorage.getItem('ID_sro') != null ){
+        },erro=>{this.rest=this.Nbsplts});
+
+    }else if (localStorage.getItem('ID_pri') != null ){
+      this.ftthService.getByPri(Number(localStorage.getItem('ID_pri'))).subscribe(data => {this.cassettes = data;
+        for (let i = 0; i < this.cassettes.length; i++) {
+          this.allPositions[i]= this.cassettes[i].Num_cassette
+        }
+        this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
+        },erro=>{this.rest=this.Nbsplts});
+    }else {
       this.ftthService.getBySro(Number(localStorage.getItem('ID_sro'))).subscribe(data => {this.cassettes = data;
         for (let i = 0; i < this.cassettes.length; i++) {
           this.allPositions[i]= this.cassettes[i].Num_cassette
         }
         this.rest= this.Nbsplts.filter(item => this.allPositions.indexOf(item) < 0)
-        },error => alert('pas de cassette!'));
+        },erro=>{this.rest=this.Nbsplts});
+
+
     }
 
 
@@ -108,18 +118,13 @@ export class AjoutCassetteComponent implements OnInit {
 
   annuler(){
     if (localStorage.getItem('ID_olt') != null){
-      localStorage.clear()
       this.router.navigateByUrl('pages/zones/gerer-olt')
     }
-    if (localStorage.getItem('ID_sro') != null){
-      localStorage.clear()
-      this.router.navigateByUrl('pages/zones/gerer-sro')
-
+    else if (localStorage.getItem('ID_pri') != null){
+      this.router.navigateByUrl('pages/immeubles/gerer-pri')
     }
-    //a verifier!!
-    if (localStorage.getItem('ID_immeuble') != null){
-      localStorage.clear()
-      this.router.navigateByUrl('pages/zones/gerer-immeuble')
+    else {
+      this.router.navigateByUrl('pages/zones/gerer-sro')
     }
   }
 
@@ -148,19 +153,18 @@ export class AjoutCassetteComponent implements OnInit {
 
     if (localStorage.getItem('ID_olt') != null){
     this.cassette.ID_olt=Number(localStorage.getItem('ID_olt'))
-    this.cassette.ID_immeuble=null
+    this.cassette.ID_pri=null
     this.cassette.ID_sro=null
     }
-    if (localStorage.getItem('ID_sro') != null){
-    this.cassette.ID_sro=Number(localStorage.getItem('ID_sro'))
-    this.cassette.ID_immeuble=null
-    this.cassette.ID_olt=null
-    }
-
-    if (localStorage.getItem('ID_immeuble') != null){
-    this.cassette.ID_immeuble=Number(localStorage.getItem('ID_immeuble'))
+    else if (localStorage.getItem('ID_pri') != null){
+    this.cassette.ID_pri=Number(localStorage.getItem('ID_pri'))
     this.cassette.ID_sro=null
     this.cassette.ID_olt=null
+    }
+    else {
+      this.cassette.ID_sro=Number(localStorage.getItem('ID_sro'))
+      this.cassette.ID_pri=null
+      this.cassette.ID_olt=null
     }
 
     this.cassette.Num_cassette = this.registerForm.controls["NmCasete"].value;
@@ -176,7 +180,7 @@ export class AjoutCassetteComponent implements OnInit {
       this.splitter.Position=i+1;
       this.ftthService.AjoutSplitter(this.splitter).subscribe(data =>
        { this.port.ID_splitter=data.ID_splitter
-          this.port.Position_tiroir= "Non Raccodé"
+          this.port.Position_tiroir= "Non Raccordé"
             this.port.Etat = "Libre"
             this.port.Position = 0
             this.port.Type = "IN"

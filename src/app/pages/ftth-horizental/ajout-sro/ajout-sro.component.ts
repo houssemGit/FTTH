@@ -60,7 +60,7 @@ export class AjoutSroComponent implements OnInit {
         this.ch1[i]=this.sros[i].Num_cable_transport
       }
       this.rest= this.n_c_ts.filter(item => this.ch1.indexOf(item) < 0)
-    })
+    },error => this.rest=this.n_c_ts)
 
   }
 

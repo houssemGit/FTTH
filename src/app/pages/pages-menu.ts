@@ -43,8 +43,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/immeubles/consulter-zone-pri',
       },
       {
-        title: 'Gestion Immeuble',
-        link: '/pages/immeubles/consulter-zone-immeuble-mono-apart',
+        title: 'Gestion Monosite',
+        link: '/pages/immeubles/consulter-zone-mono',
+      },
+      {
+        title: 'Gestion Appartement',
+        link: '/pages/immeubles/consulter-zone-apart',
       },
       {
         title: 'Gestion Client',
@@ -63,7 +67,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/consulter-immeubles/consulter-zone-residence',
   },
 
-
+  {
+    title: 'iot-dashboard',
+    icon: 'bar-chart-outline',
+    link: '/pages/iot-dashboard',
+  },
+  {
+    title: 'ecommerce-dashboard',
+    icon: 'bar-chart-outline',
+    link: '/pages/ecommerce-dashboard',
+  },
 
   {
     title: 'E-commerce',

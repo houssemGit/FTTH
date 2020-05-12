@@ -1,11 +1,14 @@
-export class Monosite {
+import { Immeuble } from './immeuble';
+
+export class Monosite extends Immeuble  {
   ID_monosite: number;
-  Nom_monosite: string
-  Position_tiroir_distribution: string;
-  IsRaccorde: string
+  Nom_monosite: string;
+  Pos_tiroir_distribution: string
+  Num_plan: number
+  ID_sro: number
 
   constructor(){
-
+    super()
   }
 
 }

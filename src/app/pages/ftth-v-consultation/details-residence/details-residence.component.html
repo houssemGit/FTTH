@@ -1,3 +1,106 @@
-<p>
-  details-residence works!
-</p>
+
+
+<div class="accordions-container row">
+          <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+            <nb-accordion >
+              <nb-accordion-item   *ngFor="let app of concat; " >
+                <nb-accordion-item-header (click)="clickacco(app)"  >
+                   <a>Bloc:{{app.Nom_bloc}}, N°etage:{{app.Num_etage}},N°appartement:{{app.Num_appartement}} </a>
+                </nb-accordion-item-header>
+
+                      <nb-accordion-item-body *ngFor="let p of pto">
+                        <a>Point de Terminaison Optique (PTO) </a>
+                        <span><button nbButton status="primary" *ngIf="p && p != 'Non raccordé' "  style="float: right;"  (click)=crspRes(app)   data-toggle="modal" data-target="#exampleModalLong" nbPopover="Voir Correspondance OLT-SRO-PRI" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+                        </span>
+
+                        <div  id="P2Ports">
+                          <label   class="switch grid-item">
+                            <div style=" height:20px"  nbPopover={{p}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
+                            <div *ngIf="p && p != 'Non raccordé' ; else Libre ">
+                            <input  type="checkbox" checked="true" disabled/><span class="slider"></span>
+                           </div>
+                          <ng-template #Libre>
+                            <input type="checkbox" disabled/><span class="slider"></span>
+                          </ng-template>
+                        </div>
+                          </label>
+                        </div>
+
+                        <br />
+                        <a>Numero steg: {{app.Num_steg}}</a><br>
+                        <a>Adresse: {{app.Adresse}}</a><br>
+                        <a>Numero Boitier d'etage: {{app.Num_BE}}</a>
+
+                            <div>
+                              <button style="float: right;" (click)=showClient(app) nbButton status="success"
+                              data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Voir informations client"
+                            nbPopoverTrigger="hint" nbPopoverPlacement="bottom" ><i class="far fa-user"></i> </button>
+                            </div>
+
+                    </nb-accordion-item-body>
+
+              </nb-accordion-item>
+            </nb-accordion>
+          </div>
+  </div>
+
+
+<!-- Modal correspondance PRI-SRO-OLT -->
+<div  class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Correspondance PRI-SRO-OLT </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Tiroir Transport {{posTT}}</h6>
+        <h6>Nom OLT: {{nomOLT}}</h6>
+        <h6>N°Cassette: {{posCo}}</h6>
+        <h6>N°Splitter: {{posSo}}</h6>
+        <h6>N°Port: {{posPo}}</h6>
+        <br>
+        <h6>Tiroir Distribution {{posTD}}</h6>
+        <h6>Nom SRO: {{nomSRO}}</h6>
+        <h6>N°Cassette: {{posCs}}</h6>
+        <h6>N°Splitter: {{posSs}}</h6>
+        <h6>N°Port: {{posPs}}</h6>
+        <br>
+        <h6>Tiroir colonne montante {{PosTM}}</h6>
+        <h6>Nom pri: {{nomPRI}}</h6>
+        <h6>N°Cassette: {{posCp}}</h6>
+        <h6>N°Splitter: {{posSp}}</h6>
+        <h6>N°Port: {{posPp}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal crsp client -->
+<div class="modal fade" id="exampleModalLongclient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> Client Monosite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="introuvable==false">
+          <h6>Num serie ONT: {{nsONT}}</h6>
+        <h6>Num telephone: {{Ntel}}</h6>
+        <h6>Solution de raccordement: {{SR}}</h6>
+        <h6>Budget optique: {{Bo}}</h6>
+        <h6>Type: {{type}}</h6>
+        </div>
+        <div *ngIf="introuvable==true">
+          <h6>N'est pas encore un client!</h6>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

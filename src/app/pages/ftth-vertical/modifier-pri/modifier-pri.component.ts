@@ -24,33 +24,36 @@ export class ModifierPriComponent implements OnInit {
   ch: Array<String> = new Array
   ch1: Array<number> = new Array
   n_c_ds: any = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
-  c_c_ds : number
 
 
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-
     private ftthService: FtthService,private toastrService: NbToastrService
   ) {}
 
   ngOnInit() {
-
-    this.registerForm.controls['Nom_pri'].setValue(localStorage.getItem('Nom_pri'))
-    this.registerForm.controls['Nom_residence'].setValue(localStorage.getItem('Nom_residence'))
-    this.registerForm.controls['N_C_D'].setValue(localStorage.getItem('N_c_d'))
-    this.registerForm.controls['C_C_D'].setValue(localStorage.getItem('C_c_d'))
-    //lezem api id pri taatik id sro
-    //this.ftthService.getSroByPri().subscribe(data => {this.registerForm.controls['sro'].setValue(data.Nom_sro)},error => {alert('sro not found ')})
-
     this.registerForm = this.formBuilder.group({
       Nom_pri: ["", Validators.required],
       Nom_residence: ["", Validators.required],
       N_C_D: ["", [Validators.required]],
-      C_C_D: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Nb_prise : ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Num_plan : ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Nom_syndique: ["", [Validators.required]],
+      Num_syndique: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}')])],
       sro: ["", [Validators.required]],
     });
+
+    this.registerForm.controls['Nom_pri'].setValue(localStorage.getItem('Nom_pri'))
+    this.registerForm.controls['Nom_residence'].setValue(localStorage.getItem('Nom_residence'))
+    this.registerForm.controls['N_C_D'].setValue(localStorage.getItem('N_c_d'))
+    this.registerForm.controls['Nb_prise'].setValue(localStorage.getItem('Nb_prise'))
+    this.registerForm.controls['Num_plan'].setValue(localStorage.getItem('Num_plan'))
+    this.registerForm.controls['Nom_syndique'].setValue(localStorage.getItem('Nom_syndique'))
+    this.registerForm.controls['Num_syndique'].setValue(localStorage.getItem('Num_syndique'))
+    this.ftthService.getSroById(localStorage.getItem('ID_sro')).subscribe(data => {
+    this.registerForm.controls['sro'].setValue(data.Nom_sro)},error => {alert('sro not found ')})
 
 
     this.ftthService.AllSro().subscribe(data => {
@@ -60,13 +63,14 @@ export class ModifierPriComponent implements OnInit {
       }
     })
 
-    this.ftthService.getPriByZone(localStorage.getItem('choixzone')).subscribe(data => {
+    this.ftthService.getPriByZone(localStorage.getItem('ID_sro')).subscribe(data => {
       this.pris=data
       for (let i = 0; i < this.pris.length; i++) {
-        this.ch1[i]=this.pris[i].Num_cable_distribustion
+        this.ch1[i]=this.pris[i].Num_cable_distribution
       }
       this.rest= this.n_c_ds.filter(item => this.ch1.indexOf(item) < 0)
-    })
+    },error => this.rest=this.n_c_ds)
+
 
   }
 
@@ -103,8 +107,11 @@ export class ModifierPriComponent implements OnInit {
 
     this.pri.Nom_pri = this.registerForm.controls["Nom_pri"].value;
     this.pri.Nom_residence = this.registerForm.controls["Nom_residence"].value;
-    this.pri.Num_cable_distribustion = this.registerForm.controls["N_C_D"].value;
-    this.pri.Capacite_cable_distribution= this.registerForm.controls["C_C_T"].value;
+    this.pri.Num_cable_distribution = this.registerForm.controls["N_C_D"].value;
+    this.pri.Nb_prise = this.registerForm.controls["Nb_prise"].value;
+    this.pri.Num_plan = this.registerForm.controls["Num_plan"].value;
+    this.pri.Nom_syndique = this.registerForm.controls["Nom_syndique"].value;
+    this.pri.Num_syndique = this.registerForm.controls["Num_syndique"].value;
     this.nomSRO= this.registerForm.controls["sro"].value;
 
     this.ftthService.AllSro().subscribe(data =>
@@ -114,11 +121,12 @@ export class ModifierPriComponent implements OnInit {
             this.pri.ID_sro=this.sros[i].ID_olt
           }
         }
+
     this.ftthService.updatePri(localStorage.getItem('ID_pri'),this.pri).subscribe(data => {
 
       this.status="success"
       this.toastrService.show(``,`PRI ajouté avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
-      this.router.navigate(['pages/zones/gerer-pri']);
+      this.router.navigate(['pages/immeubles/gerer-pri']);
 
   },error => alert("error pri ajout"));
 

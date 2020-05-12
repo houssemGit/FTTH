@@ -48,7 +48,9 @@ export class AjoutSplitterComponent implements OnInit {
       this.allPositions[i]= this.splitters[i].Position
     }
     this.rest= this.Positions.filter(item => this.allPositions.indexOf(item) < 0)
-    },error => console.log('pas de splitter!'));
+    },error => this.rest=this.Positions);
+
+
   }
 
   get position() {
@@ -90,23 +92,16 @@ export class AjoutSplitterComponent implements OnInit {
 //  }
 
 
- annuler(){
+annuler(){
   if (localStorage.getItem('ID_olt') != null){
-    localStorage.clear()
     this.router.navigateByUrl('pages/zones/gerer-olt')
   }
-  if (localStorage.getItem('ID_sro') != null){
-    localStorage.clear()
+  else if (localStorage.getItem('ID_pri') != null){
+    this.router.navigateByUrl('pages/immeubles/gerer-pri')
+  }
+  else {
     this.router.navigateByUrl('pages/zones/gerer-sro')
-
   }
-  //a verifier!!
-  if (localStorage.getItem('ID_immeuble') != null){
-    localStorage.clear()
-    this.router.navigateByUrl('pages/zones/gerer-immeuble')
-
-  }
-
 }
 
   onFormSubmit() {
@@ -135,7 +130,7 @@ export class AjoutSplitterComponent implements OnInit {
 
         this.ftthService.AjoutSplitter(this.splitter).subscribe(data =>
          { this.port.ID_splitter=data.ID_splitter
-            this.port.Position_tiroir= "Non Raccodé"
+            this.port.Position_tiroir= "Non Raccordé"
             this.port.Etat = "Libre"
             this.port.Position = 0
             this.port.Type = "IN"

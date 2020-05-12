@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FtthService } from '../../../_service/ftth.service';
 import { Sro } from '../../../_models/sro';
+import { NbComponentStatus, NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-consulter-zone-immeuble',
@@ -10,18 +11,23 @@ import { Sro } from '../../../_models/sro';
 })
 export class ConsulterZoneImmeubleComponent implements OnInit {
 
-  constructor(private router: Router, private ftthService: FtthService) { }
+  constructor(private toastrService: NbToastrService,private router: Router, private ftthService: FtthService) { }
 
   sros: Array<Sro>
+  status: NbComponentStatus ;
+
 
   viewZone(e){
     localStorage.setItem('choixzone',e.Nom_zone)
-    this.router.navigateByUrl('pages/consulter-zones/details')
+    localStorage.setItem('ID_sro',e.ID_sro)
+    this.router.navigateByUrl('pages/consulter-immeubles/details-immeuble')
   }
   ngOnInit() {
+    localStorage.clear()
     this.ftthService.AllSro().subscribe(data=>{
       this.sros=data
-    },error => {alert('error chargement des zones')})
+    },error => {this.status="warning"
+    this.toastrService.show(``,`Aucun Sro`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});})
   }
 
 }

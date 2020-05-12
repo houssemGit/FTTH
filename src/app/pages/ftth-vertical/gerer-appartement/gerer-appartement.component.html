@@ -1,3 +1,175 @@
-<p>
-  gerer-appartement works!
-</p>
+
+<button routerLink="../ajout-appartement" nbButton status="success"  style="width:200px; float:right;"><i class="far fa-plus-square"></i>  Ajouter Appartement </button>
+<br>
+<br>
+<div class="accordions-container row">
+  <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+    <nb-accordion >
+      <nb-accordion-item  *ngFor="let appart of concat;let i = index "    >
+        <nb-accordion-item-header (click)="clickacco(appart)">
+          {{appart.Adresse}}
+          <div style=" position: absolute; right: 5%">
+            <button nbButton status="danger"  (click)="deleteAppart(appart)" data-toggle="modal" data-target="#confsupr" >  <i class="far fa-trash-alt"></i>   </button>
+            <button nbButton status="warning" (click)="editApart(appart)" style="margin-left: 20px;" > <i class="far fa-edit"></i> </button>
+          </div>
+        </nb-accordion-item-header>
+
+          <nb-accordion-item-body *ngFor="let p of pto">
+            <a>Point de Terminaison Optique (PTO) </a>
+            <span><button nbButton status="primary" *ngIf="p != 'Non raccordé' && p "  style="float: right;"  (click)=showCrsp(appart)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO-PRI" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+            </span>
+
+            <div  id="P2Ports">
+              <label   class="switch grid-item">
+                <div style=" height:20px"  nbPopover={{p}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
+                <div *ngIf="p != 'Non raccordé' && p  ; else Libre ">
+                <input  type="checkbox" checked="true" (click)="chekyracIN(appart,i)" data-toggle="modal" data-target="#déraccordéIN"/><span class="slider"></span>
+               </div>
+              <ng-template #Libre>
+                <input type="checkbox"  (click)="chekyracIN(appart,i)" data-toggle="modal" data-target="#raccordéIN" /><span class="slider"></span>
+              </ng-template>
+            </div>
+              </label>
+            </div>
+
+            <br />
+          <a>Num steg: {{appart.Num_steg}}</a><br />
+          <a>Nom bloc: {{appart.Nom_bloc}}</a><br />
+          <a>Num etage: {{appart.Num_etage}}</a><br />
+          <a>Num BE: {{appart.Num_BE}}</a>
+          </nb-accordion-item-body>
+
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+</div>
+
+<!-- Modal déraccordé IN -->
+<div data-backdrop="static" class="modal fade" id="déraccordéIN" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6>Etes vous sûr de déraccorder ce port?</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerRIN()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="DeraccordeIN()" nbButton status="warning" data-dismiss="modal">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal raccordé IN-->
+<div  data-backdrop="static" class="modal fade" id="raccordéIN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form [formGroup]="FormRacIn" (ngSubmit)="SubRaccordeIN()">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Raccordement Tiroir Colone montante </h5>
+        <button  (click)="annulerRIN()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <button #closeModal hidden type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="n_c_c">Numero tiroir colone montante</label>
+          <input
+            type="text"
+            formControlName="n_c_c"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval1.n_c_c.errors }"
+            placeholder="Entrer Numero Tiroir colone montante ici"
+          />
+          <div *ngIf="submitted && fval1.n_c_c.errors" class="invalid-feedback">
+            <div *ngIf="fval1.n_c_c.errors.required">Numero tiroir colone montante est obligatoire</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="P_t_c">Position Tiroir colone montante</label>
+          <input
+            type="text"
+            formControlName="P_t_c"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval1.P_t_c.errors }"
+            placeholder="Entrer Position Tiroir colone montante ici"
+          />
+          <div *ngIf="submitted && fval1.P_t_c.errors" class="invalid-feedback">
+            <div *ngIf="fval1.P_t_c.errors.required">Position Tiroir colone montante est obligatoire</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group" class="modal-footer">
+        <button type="button"  (click)="annulerRIN()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button  type="button" (click)="SubRaccordeIN()"   nbButton status="warning">Modifier</button>
+      </div>
+    </div>
+  </form>
+
+  </div>
+</div>
+
+
+<!-- Modal confsup -->
+<div data-backdrop="static" class="modal fade" id="confsupr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+      </div>
+      <div class="modal-body">
+        <h6 style="text-align: center;">Merci de confirmez la suppression</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="annulerSup()" nbButton status="secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" (click)="ConfirmeSupR()" nbButton status="warning" data-dismiss="modal">Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal correspondance OLT-SRO-PRI -->
+<div  class="modal fade" id="exampleModalLongcrs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Correspondance OLT-SRO-PRI </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Tiroir Transport {{posTT}}</h6>
+        <h6>Nom OLT: {{nomOLT}}</h6>
+        <h6>N°Cassette: {{posCo}}</h6>
+        <h6>N°Splitter: {{posSo}}</h6>
+        <h6>N°Port: {{posPo}}</h6>
+        <br>
+        <h6>Tiroir Distribution {{posTD}}</h6>
+        <h6>Nom SRO: {{nomSRO}}</h6>
+        <h6>N°Cassette: {{posCs}}</h6>
+        <h6>N°Splitter: {{posSs}}</h6>
+        <h6>N°Port: {{posPs}}</h6>
+        <br>
+        <h6>Tiroir colonne montante {{PosTM}}</h6>
+        <h6>Nom PRI: {{nomPRI}}</h6>
+        <h6>N°Cassette: {{posCp}}</h6>
+        <h6>N°Splitter: {{posSp}}</h6>
+        <h6>N°Port: {{posPp}}</h6>
+      </div>
+    </div>
+  </div>
+</div>

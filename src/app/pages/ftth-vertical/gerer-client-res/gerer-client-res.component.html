@@ -1,0 +1,34 @@
+<button routerLink="../ajout-client" class="btn btn-success" style="width:200px"><i class="far fa-plus-square"></i>  Ajouter Client </button>
+<button nbButton status="warning" routerLink="../modifier-client" (click)="editClient(e)" > <i class="far fa-edit"></i> </button>
+
+<br>
+<br>
+
+<table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th>Num serie ONT </th>
+      <th>Solution raccordement</th>
+      <th>Budget optique</th>
+      <th>Type client</th>
+      <th>Num telephone</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of client">
+
+    <td>{{e.Num_serie_ONT}}</td>
+    <td>{{e.Solution_raccordement}}</td>
+    <td>{{e.Budget_optique}}</td>
+    <td>{{e.Type_client}}</td>
+    <td>{{e.Num_telephone}}</td>
+   <td >
+      <div style=" display:flex;flex-direction:row; position: relative; left: 40px">
+     <button nbButton status="warning"  (click)="editClient(e)" > <i class="far fa-edit"></i> </button>
+     <button nbButton status="danger"   (click)="deleteClient(e)" style="margin-left: 20px;">  <i class="far fa-trash-alt"></i>  </button>
+      </div>
+    </td>
+    </tr>
+  </tbody>
+</table>

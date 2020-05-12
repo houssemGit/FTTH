@@ -41,6 +41,12 @@ export class FtthService {
   deletePri(id: number){
     return this.http.delete("http://localhost:8000/api/pris/"+id.toString())
   }
+  deleteAppart(id: string){
+    return this.http.delete("http://localhost:8000/api/appartements/"+id)
+  }
+  deleteMono(id: string){
+    return this.http.delete("http://localhost:8000/api/monosites/"+id)
+  }
 
 
 
@@ -50,6 +56,13 @@ export class FtthService {
   }
   raccorder(id: string , port:Port){
     return this.http.put<Port>("http://localhost:8000/api/ports/raccorder/"+id,port)
+  }
+  //hantess
+  raccorderPtoM(id: string , mono:Monosite){
+    return this.http.put<Monosite>("http://localhost:8000/api/monosites/raccorder/"+id,mono)
+  }
+  raccorderPtoA(id: string , app:Appartement){
+    return this.http.put<Appartement>("http://localhost:8000/api/appartements/raccorder/"+id,app)
   }
   updateOlt(id: string , olt : Olt){
     return this.http.put("http://localhost:8000/api/olts/"+id,olt)
@@ -66,6 +79,12 @@ export class FtthService {
   updatePri(id: string , pri : Pri){
     return this.http.put("http://localhost:8000/api/pris/"+id,pri)
   }
+  updateAppart(id: string , appart : Appartement){
+    return this.http.put<Appartement>("http://localhost:8000/api/appartements/"+id,appart)
+  }
+  updateMono(id: string , mono : Monosite){
+    return this.http.put<Monosite>("http://localhost:8000/api/monosites/"+id,mono)
+  }
 
 
 
@@ -75,6 +94,12 @@ export class FtthService {
   }
   AllSro(){
     return this.http.get<Array<Sro>>("http://localhost:8000/api/sros");
+  }
+  AllPri(){
+    return this.http.get<Array<Pri>>("http://localhost:8000/api/pris");
+  }
+  AllImmeuble(){
+    return this.http.get<Array<Immeuble>>("http://localhost:8000/api/immeubles");
   }
 
 
@@ -86,7 +111,7 @@ export class FtthService {
     return this.http.get<Array<Cassette>>("http://localhost:8000/api/cassettes/sro/"+id.toString());
   }
   getByPri(id: number){
-    return this.http.get<Array<Cassette>>("http://localhost:8000/api/cassettes/pri/"+id.toString());
+    return this.http.get<Array<Cassette>>("http://localhost:8000/api/cassettes/residence/"+id.toString());
   }
 
   getByCassette(id: number){
@@ -112,6 +137,31 @@ export class FtthService {
   }
   getPriById(id: string){
     return this.http.get<Pri>("http://localhost:8000/api/pris/"+id)
+  }
+
+  getAppartByResidence(id: string){
+    return this.http.get<Array<Appartement>>("http://localhost:8000/api/appartements/pri/"+id)
+  }
+  getAppartByID(id: number){
+    return this.http.get<Appartement>("http://localhost:8000/api/appartements/"+id.toString())
+  }
+
+  getPriByResidence(id: string){
+    return this.http.get<Pri>("http://localhost:8000/api/pri/residence"+id)
+  }
+
+  getMonositeByZone(id: string){
+    return this.http.get<Array<Monosite>>("http://localhost:8000/api/monosites/sro/"+id)
+  }
+  getMonoByID(id:number){
+    return this.http.get<Monosite>("http://localhost:8000/api/monosites/"+id.toString())
+  }
+
+  getResidenceByNom(id: string){
+    return this.http.get<Pri>("http://localhost:8000/api/pri/nom"+id)
+  }
+  getImmeubleByNom(id: string){
+    return this.http.get<Immeuble>("http://localhost:8000/api/immeuble/nom"+id)
   }
 
   // getImmeubleById(id: string){
@@ -145,8 +195,41 @@ export class FtthService {
     return this.http.get<Sro>("http://localhost:8000/api/sros/zone/"+id.toString())
 
   }
+  getClientsMono(id:string){
+    return this.http.get<Client>("http://localhost:8000/api/monosites/client/"+id.toString())
+
+  }
+  getClientsMonotest(id:string){
+    return this.http.get<Array<Client>>("http://localhost:8000/api/monosites/client/"+id.toString())
+
+  }
+  getClientsResidencetest(id:string){
+    return this.http.get<Array<Client>>("http://localhost:8000/api/appartements/client/"+id.toString())
+
+  }
+
+  getClientsByRes(id:string){
+    return this.http.get<Client>("http://localhost:8000/api/appartements/client/"+id.toString())
+
+  }
+
+
   getClientsByZone(id:string){
     return this.http.get<Array<Client>>("http://localhost:8000/api/clients/zone/"+id.toString())
+
+  }
+  //gerer client mono
+  getClientImmeuble(id:number){
+    return this.http.get<Client>("http://localhost:8000/api/immeubles/client/"+id.toString())
+
+  }
+  //gerer client apartement
+  getClientsResByID(id:string){
+    return this.http.get<Array<Client>>("http://localhost:8000/api/clients/residence/"+id.toString())
+
+  }
+  getClientsByImmeuble(id:string){
+    return this.http.get<Client>("http://localhost:8000/api/immeubles/client/"+id.toString())
 
   }
   getImmeublesByZone(id:string){
@@ -154,9 +237,11 @@ export class FtthService {
 
   }
   getPriByZone(id:string){
-    return this.http.get<Array<Pri>>("http://localhost:8000/api/pris/zone/"+id.toString())
+    return this.http.get<Array<Pri>>("http://localhost:8000/api/pris/sro/"+id.toString())
 
   }
+
+
   getSroByPri(id:string){
     //return this.http.get<Array<Pri>>("http://localhost:8000/api/pris/zone/"+id.toString())
 
@@ -183,6 +268,12 @@ export class FtthService {
   }
   AjoutPri(pri: any){
     return this.http.post<Pri>("http://localhost:8000/api/pris", pri);
+  }
+  AjoutAppart(appart: any){
+    return this.http.post<Appartement>("http://localhost:8000/api/appartements", appart);
+  }
+  AjoutMono(appart: any){
+    return this.http.post<Monosite>("http://localhost:8000/api/monosites", appart);
   }
 
 }

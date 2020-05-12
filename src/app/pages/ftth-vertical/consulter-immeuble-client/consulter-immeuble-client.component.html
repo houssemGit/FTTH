@@ -1,0 +1,21 @@
+
+<button style=" float:right " nbButton status="info"   (click)="routecmono()" >  <i class="fas fa-search"></i>Client Monosite</button>
+
+<div class="lists row">
+  <div class="col-md-12 col-lg-6 col-xxxl-6">
+    <nb-card class="list-card">
+      <nb-card-header>Residences de la zone {{zoni}}</nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item *ngFor="let res of pris" (click)="viewResidence(res)">
+            <button style=" float:right " nbButton status="info"   (click)="viewResidence(res)" >  <i class="fas fa-search"></i>  </button>
+
+           {{ res.Nom_residence }}
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+

@@ -1,14 +1,15 @@
-export class Appartement {
-  ID_appartement: number;
-  Num_appartement: number
-  Num_etage: number;
+import { Immeuble } from './immeuble';
+
+export class Appartement extends Immeuble {
+  Num_appartement: string
+  Num_etage: string;
   Num_BE: number;
-  Nom_bloc: string;
-  Position_tiroir_colmontante: string;
-  IsRaccorde: string
+  Nom_bloc: number;
+  Pos_tiroir_col_montante: string;
+  ID_pri: number;
 
   constructor(){
-
+      super()
   }
 
 }

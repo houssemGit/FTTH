@@ -3,7 +3,7 @@ export class Cassette {
   Num_cassette: number;
   ID_olt: number;
   ID_sro: number;
-  ID_immeuble: number;
+  ID_pri: number;
   Nom_cassette: string;
 
   constructor(){

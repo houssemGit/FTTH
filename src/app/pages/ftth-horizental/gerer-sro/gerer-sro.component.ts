@@ -169,7 +169,7 @@ export class GererSroComponent implements OnInit {
     },(error)=>{alert('error modification!!');})
     },(error)=>{alert("error port in ")})
 
-    this.ftthService.getSroById(localStorage.getItem("ID_SRO")).subscribe((data)=>{
+    this.ftthService.getSroById(localStorage.getItem("ID_sro")).subscribe((data)=>{
         this.sro=data
         this.num=this.sro.Num_cable_transport
         localStorage.setItem("n_c_t",this.sro.Num_cable_transport.toString())
@@ -205,7 +205,7 @@ export class GererSroComponent implements OnInit {
 
   }
   DeraccordeIN(){
-    this.porto.Position_tiroir="Non Raccodé"
+    this.porto.Position_tiroir="Non Raccordé"
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     localStorage.setItem("ID_port",'')
@@ -259,7 +259,7 @@ export class GererSroComponent implements OnInit {
   }
 
   DeraccordeOUT(){
-    this.porto.Position_tiroir="Non Raccodé"
+    this.porto.Position_tiroir="Non Raccordé"
     this.pos= Number(localStorage.getItem('Port_position'))-1
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})

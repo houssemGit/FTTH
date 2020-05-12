@@ -1,3 +1,84 @@
-<p>
-  ajout-monosite works!
-</p>
+<div class="card">
+  <div class="card-header">
+    <h3>Ajouter Monosite</h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+      <div class="form-group">
+        <label for="Num_steg">Numero steg </label>
+        <input
+          type="text"
+          formControlName="Num_steg"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }"
+          placeholder="Entrer Numero steg  ici"
+        />
+        <div *ngIf="submitted && fval.Num_steg.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_steg.errors.required">Numero steg est obligatoire</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="Adresse">Adresse</label>
+        <input
+          type="text"
+          formControlName="Adresse"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Adresse.errors }"
+          placeholder="Entrer Adresse ici"
+        />
+        <div *ngIf="submitted && fval.Adresse.errors" class="invalid-feedback">
+          <div *ngIf="fval.Adresse.errors.required">Adresse est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Nom">Nom </label>
+        <input
+          type="text"
+          formControlName="Nom"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom.errors }"
+          placeholder="Entrer Nom ici"
+        />
+        <div *ngIf="submitted && fval.Nom.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom.errors.required">Nom est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Num_plan">Numero plan</label>
+        <input
+          type="text"
+          formControlName="Num_plan"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Num_plan.errors }"
+          placeholder="Entrer Num plan ici"
+        />
+        <div *ngIf="submitted && fval.Num_plan.errors" class="invalid-feedback">
+          <div *ngIf="fval.Num_plan.errors.required">Numero plan est obligatoire</div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="form-group">
+        <a routerLink="../gerer-monosite" class="btn btn-link">Annuler</a>
+        <button style="float:right" [disabled]="loading" nbButton status="primary">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Ajouter
+        </button>
+
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+

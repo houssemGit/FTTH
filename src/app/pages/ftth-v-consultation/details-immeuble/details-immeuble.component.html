@@ -1,3 +1,256 @@
-<p>
-  details-immeuble works!
-</p>
+
+
+<div class="accordions-container row">
+<div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+  <nb-accordion >
+    <nb-accordion-item     >
+      <nb-accordion-item-header (click)="openRes()">
+        Residences
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+
+
+    <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+      <nb-accordion >
+        <nb-accordion-item  *ngFor="let pri of pris; "    >
+          <nb-accordion-item-header  >
+            {{pri.Nom_residence}}
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+
+            <a>Nombre de prises: {{pri.Nb_prise}}</a><br>
+            <a>Numero plan: {{pri.Num_plan}}</a><br>
+            <a>Nom syndique: {{pri.Nom_syndique}}</a><br>
+            <a>Num syndique: {{pri.Num_syndique}}</a><br>
+
+            <br>
+
+            <a>PRI correspondant: </a><br><br>
+
+            <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+              <nb-accordion >
+                <nb-accordion-item>
+                    <nb-accordion-item-header (click)="openC(pri)">
+                    {{pri.Nom_pri}}
+                  </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+
+                      <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+                        <nb-accordion>
+                          <nb-accordion-item *ngFor="let cassette of cassettes"  >
+                            <nb-accordion-item-header (click)=openS(cassette) >
+                              cassette{{cassette.Num_cassette}}
+                            </nb-accordion-item-header>
+                            <nb-accordion-item-body>
+                              <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6">
+                                <nb-accordion >
+                                <nb-accordion-item *ngFor="let splitter of splitters" >
+                                  <nb-accordion-item-header (click)=openP(splitter)>
+                                    splitter{{splitter.Position}}
+                                  </nb-accordion-item-header>
+                                  <nb-accordion-item-body>
+
+
+                                    <a>Port IN:</a>
+                                    <span><button *ngIf="itat=='Raccorde' ;" style="position: absolute; margin-left: 50px;"  (click)=showCrspPri(splitter) nbButton status="primary"  data-toggle="modal" data-target="#exampleModalLongres" nbPopover="Voir Correspondance OLT-SRO" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" ><i class="fas fa-search"></i> </button>
+                                    </span>
+
+                                    <div id="P2Ports">
+                                      <label *ngFor="let port of porti; "  class="switch grid-item">
+                                        <div style=" height:20px" *ngIf="port.Position_tiroir " nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
+                                        <div *ngIf="port.Etat== 'Raccorde'; else Libre ">
+                                        <input  type="checkbox" checked="true" disabled /><span class="slider"></span>
+                                      </div>
+                                      <ng-template #Libre>
+                                        <input type="checkbox" disabled /><span class="slider"></span>
+                                      </ng-template>
+                                    </div>
+                                      </label>
+                                    </div>
+                                    <br />
+                                    <a>Ports OUT:</a>
+                                    <div id="P2Ports">
+                                      <label *ngFor="let port of portss; let i = index "  class="switch grid-item">
+                                        <div style=" height:20px" *ngIf="port.Position_tiroir != null" nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="top">
+                                        <br /><br />
+                                        <div style="text-align: center ; ">{{ i + 1 }}</div>
+                                      <input  type="checkbox"  *ngIf="port.Etat=='Raccorde' ; " checked="true" disabled /><span class="slider"></span>
+                                        </div>
+                                      </label>
+                                    </div>
+
+
+                                  </nb-accordion-item-body>
+                                </nb-accordion-item>
+                              </nb-accordion>
+                              </div>
+
+
+                            </nb-accordion-item-body>
+                          </nb-accordion-item>
+                        </nb-accordion>
+                        </div>
+
+
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+              </nb-accordion>
+            </div>
+
+            <br>
+            <a>Details Appartements: </a>
+            <span><button  style="float: right;" (click)="Appartdetails(pri)"
+              nbButton status="info"  nbPopover="Voir details appartements"
+              nbPopoverTrigger="hint" nbPopoverPlacement="bottom" ><i class="fas fa-search"></i> </button>
+            </span>
+
+
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </div>
+
+
+
+      </nb-accordion-item-body>
+      </nb-accordion-item>
+  </nb-accordion>
+</div>
+</div>
+
+
+<div class="accordions-container row">
+  <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+    <nb-accordion >
+      <nb-accordion-item     >
+        <nb-accordion-item-header (click)="openMono()" >
+          Monosites
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+
+          <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
+            <nb-accordion >
+              <nb-accordion-item   *ngFor="let mono of concat; " >
+                <nb-accordion-item-header (click)="clickacco(mono)" >
+                  {{mono.Nom_monosite}}
+                </nb-accordion-item-header>
+                <nb-accordion-item-body *ngFor="let p of pto">
+                  <a>Point de Terminaison Optique (PTO) </a>
+                  <span><button nbButton status="primary" *ngIf="p && p != 'Non raccordé' "  style="float: right;"  (click)=crspMono(mono)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+                  </span>
+
+                  <div  id="P2Ports">
+                    <label   class="switch grid-item">
+                      <div style=" height:20px"  nbPopover={{p}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
+                      <div *ngIf="p && p != 'Non raccordé' ; else Libre ">
+                      <input  type="checkbox" checked="true" disabled/><span class="slider"></span>
+                     </div>
+                    <ng-template #Libre>
+                      <input type="checkbox" disabled/><span class="slider"></span>
+                    </ng-template>
+                  </div>
+                    </label>
+                  </div>
+
+                  <br />
+                  <a>Num steg: {{mono.Num_steg}}</a><br />
+                  <a>Adresse: {{mono.Adresse}}</a><br />
+                  <a>Num plan: {{mono.Num_plan}}</a>
+
+                      <div>
+                        <button style="float: right;" (click)=showClient(mono) nbButton status="success" data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Voir informations client"
+                      nbPopoverTrigger="hint" nbPopoverPlacement="bottom" ><i class="far fa-user"></i> </button>
+                      </div>
+                </nb-accordion-item-body>
+              </nb-accordion-item>
+            </nb-accordion>
+          </div>
+
+        </nb-accordion-item-body>
+        </nb-accordion-item>
+    </nb-accordion>
+  </div>
+  </div>
+
+<!-- Modal correspondance SRO-OLT monosite -->
+<div  class="modal fade" id="exampleModalLongcrs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Correspondance SRO-OLT </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Tiroir Transport {{posTT}}</h6>
+        <h6>Nom OLT: {{nomOLT}}</h6>
+        <h6>N°Cassette: {{posCo}}</h6>
+        <h6>N°Splitter: {{posSo}}</h6>
+        <h6>N°Port: {{posPo}}</h6>
+        <br>
+        <h6>Tiroir Distribution {{posTD}}</h6>
+        <h6>Nom SRO: {{nomSRO}}</h6>
+        <h6>N°Cassette: {{posCs}}</h6>
+        <h6>N°Splitter: {{posSs}}</h6>
+        <h6>N°Port: {{posPs}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal correspondance SRO-OLT residence -->
+<div  class="modal fade" id="exampleModalLongres" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Correspondance SRO-OLT </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Tiroir Transport {{posTT}}</h6>
+        <h6>Nom OLT: {{nomOLT}}</h6>
+        <h6>N°Cassette: {{posCo}}</h6>
+        <h6>N°Splitter: {{posSo}}</h6>
+        <h6>N°Port: {{posPo}}</h6>
+        <br>
+        <h6>Tiroir Distribution {{posTD}}</h6>
+        <h6>Nom SRO: {{nomSRO}}</h6>
+        <h6>N°Cassette: {{posCs}}</h6>
+        <h6>N°Splitter: {{posSs}}</h6>
+        <h6>N°Port: {{posPs}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal crsp client -->
+<div class="modal fade" id="exampleModalLongclient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> Client Monosite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="introuvable==false">
+        <h6>Num serie ONT: {{nsONT}}</h6>
+        <h6>Num SN: {{nsn}}</h6>
+        <h6>Num telephone: {{Ntel}}</h6>
+        <h6>Solution de raccordement: {{SR}}</h6>
+        <h6>Budget optique: {{Bo}}</h6>
+        <h6>Type: {{type}}</h6>
+        </div>
+        <div *ngIf="introuvable==true">
+          <h6>N'est pas encore un client!</h6>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -7,6 +7,7 @@ import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { AjoutCassetteComponent } from './cassette/ajout-cassette/ajout-cassette.component';
 import { AjoutSplitterComponent } from './cassette/ajout-splitter/ajout-splitter.component';
+import { TableaudebordComponent } from './tableaudebord/tableaudebord.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,7 +15,7 @@ const routes: Routes = [{
   children: [
     {
       path: 'dashboard',
-      component: ECommerceComponent,
+      component: TableaudebordComponent,
     },
     {
       path: 'zones/ajout-cassette',
@@ -53,6 +54,10 @@ const routes: Routes = [{
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
+    },
+    {
+      path: 'ecommerce-dashboard',
+      component: ECommerceComponent,
     },
     {
       path: 'layout',
