@@ -39,6 +39,7 @@ export class GererSroComponent implements OnInit {
 
     this.FormRacIn = this.formBuilder.group({
       Pos_TTin : ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.pattern('^[0-9]*$')])],
+      Num_TTin : ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.pattern('^[0-9]*$')])],
     });
 
   }
@@ -54,8 +55,7 @@ export class GererSroComponent implements OnInit {
     localStorage.setItem("ID_sro", e.ID_sro.toString());
     localStorage.setItem("Nom_zone", e.Nom_zone.toString());
     localStorage.setItem("Nom_sro", e.Nom_sro.toString());
-    localStorage.setItem("Num_cable_transport", e.Num_cable_transport.toString());
-    localStorage.setItem("Capacite_cable_transport", e.Capacite_cable_transport.toString());
+    localStorage.setItem("N_N_C_T", e.Nom_Cpacite_cable_transport.toString());
     localStorage.setItem("ID_olt", e.ID_olt.toString());
     this.router.navigateByUrl("pages/zones/modifier-sro");
   }
@@ -146,7 +146,9 @@ export class GererSroComponent implements OnInit {
   openP(e) {
     this.ports=[]
     this.porti=[]
-    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.ports = data; },error => alert('error ports'));
+    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.ports = data; console.log(this.ports);
+
+     },error => alert('error ports'));
     this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => { this.porti = data; this.itat=this.porti[0].Etat},error=>{alert('error')});
 
   }
@@ -169,12 +171,6 @@ export class GererSroComponent implements OnInit {
     },(error)=>{alert('error modification!!');})
     },(error)=>{alert("error port in ")})
 
-    this.ftthService.getSroById(localStorage.getItem("ID_sro")).subscribe((data)=>{
-        this.sro=data
-        this.num=this.sro.Num_cable_transport
-        localStorage.setItem("n_c_t",this.sro.Num_cable_transport.toString())
-
-    },(error)=>{alert('error sro');})
   }
 
   porta: Array<Port>
@@ -196,12 +192,11 @@ export class GererSroComponent implements OnInit {
     }
     this.loading = true;
 
-    this.porto.Position_tiroir= "TT N°: "+localStorage.getItem('n_c_t')+" Position: "+this.FormRacIn.controls["Pos_TTin"].value;
+    this.porto.Position_tiroir= "TT N°: "+this.FormRacIn.controls["Num_TTin"].value+" Position: "+this.FormRacIn.controls["Pos_TTin"].value;
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     this.closeModal.nativeElement.click()
     localStorage.setItem("ID_port",'')
-    localStorage.setItem("n_c_t",'')
 
   }
   DeraccordeIN(){
@@ -209,13 +204,11 @@ export class GererSroComponent implements OnInit {
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     localStorage.setItem("ID_port",'')
-    localStorage.setItem("n_c_t",'')
 
    }
    annulerRIN(){
     this.ftthService.updatePort(localStorage.getItem("ID_port") , this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat},(error)=>{alert('error modification!!');})
     localStorage.setItem("ID_port",'')
-    localStorage.setItem("n_c_t",'')
 
   }
 

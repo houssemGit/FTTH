@@ -62,53 +62,28 @@
         </div>
       </div>
 
-       <!-- select item -->
-       <div class="form-group">
-        <div class="group-gap">
-          <div class="d-block my-3">
-            <div class="mb-3">
-              <label style="margin-right: 2rem;">Numero cable transport</label>
-              <select
-                class="custom-select "
-                (change)="N_C_T($event)"
-                formControlName="N_C_T"
-                class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && fval.N_C_T.errors }"
-                placeholder="Entrer N_C_T ici"
-              >
-                <option value="">Entrer Numero cable transport ici</option>
-                <option *ngFor="let N_C_T of n_c_ts" [value]="N_C_T">{{N_C_T}}</option>
-              </select>
-              <!--  error block -->
-              <div
-                class="invalid-feedback"
-                *ngIf="submitted && fval.N_C_T.errors"
-              >
-                <div *ngIf="fval.N_C_T.errors.required">
-                  Numero est obligatoire
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
       <div class="form-group">
-        <label for="C_C_T">Capacite cable transport</label>
+        <label for="N_N_C_T">Nom capacite cable transport</label>
         <input
           type="text"
-          formControlName="C_C_T"
+          formControlName="N_N_C_T"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && fval.C_C_T.errors }"
-          placeholder="Entrer Capacite cable transport ici"
+          [ngClass]="{ 'is-invalid': submitted && fval.N_N_C_T.errors }"
+          placeholder="Entrer Nom capacite cable transport ici"
         />
-        <div *ngIf="submitted && fval.C_C_T.errors" class="invalid-feedback">
-          <div *ngIf="fval.C_C_T.errors.required">Capacite cable transport est obligatoire</div>
+        <div *ngIf="submitted && fval.N_N_C_T.errors" class="invalid-feedback">
+          <div *ngIf="fval.N_N_C_T.errors.required">Nom capacite cable transport est obligatoire</div>
         </div>
       </div>
 
 
+
+
+
       <div class="form-group">
-        <a  (click)="Annuler()" class="btn btn-link">Annuler</a>
+        <a routerLink="../gerer-sro" class="btn btn-link">Annuler</a>
         <button style="float:right" [disabled]="loading" nbButton status="warning">
           <span
             *ngIf="loading"

@@ -20,6 +20,20 @@
       </div>
 
       <div class="form-group">
+        <label for="Adresse">Adresse</label>
+        <input
+          type="text"
+          formControlName="Adresse"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Adresse.errors }"
+          placeholder="Entrer Adresse ici"
+        />
+        <div *ngIf="submitted && fval.Adresse.errors" class="invalid-feedback">
+          <div *ngIf="fval.Adresse.errors.required">Adresse est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="Nom_pri">Nom PRI </label>
         <input
           type="text"
@@ -64,50 +78,19 @@
         </div>
       </div>
 
-       <!-- select item -->
-       <div class="form-group">
-        <div class="group-gap">
-          <div class="d-block my-3">
-            <div class="mb-3">
-              <label style="margin-right: 2rem;">Numero cable distribution</label>
-              <select
-                class="custom-select "
-                (change)="N_C_D($event)"
-                formControlName="N_C_D"
-                class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && fval.N_C_D.errors }"
-                placeholder="Entrer cable distribution ici"
-              >
-                <option value="">Entrer Numero cable distribution ici</option>
-                <option *ngFor="let N_C_D of rest" [value]="N_C_D">{{N_C_D}}</option>
-              </select>
-              <!--  error block -->
-              <div
-                class="invalid-feedback"
-                *ngIf="submitted && fval.N_C_D.errors"
-              >
-                <div *ngIf="fval.N_C_D.errors.required">
-                  Numero est obligatoire
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="form-group">
-        <label for="C_C_D">Capacite cable distribution</label>
+      <div class="form-group">
+        <label for="N_C_C_D">Nom et capacité cable distribution </label>
         <input
           type="text"
-          formControlName="C_C_D"
+          formControlName="N_C_C_D"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && fval.C_C_D.errors }"
-          placeholder="Entrer capacite cable distribution ici"
+          [ngClass]="{ 'is-invalid': submitted && fval.N_C_C_D.errors }"
+          placeholder="Entrer Nom et capacité cable distribution ici"
         />
-        <div *ngIf="submitted && fval.C_C_D.errors" class="invalid-feedback">
-          <div *ngIf="fval.C_C_D.errors.required">Capacite cable distribution est obligatoire</div>
+        <div *ngIf="submitted && fval.N_C_C_D.errors" class="invalid-feedback">
+          <div *ngIf="fval.N_C_C_D.errors.required">Nom et capacité cable distribution est obligatoire</div>
         </div>
-      </div> -->
+      </div>
 
 
       <div class="form-group">
@@ -162,6 +145,51 @@
           <div *ngIf="fval.Num_syndique.errors.required">Numero syndique est obligatoire</div>
         </div>
       </div>
+
+        <!-- select item -->
+        <div class="form-group">
+          <div class="group-gap">
+            <div class="d-block my-3">
+              <div class="mb-3">
+                <label style="margin-right: 2rem;">Convention signée</label>
+                <select
+                  class="custom-select "
+                  (change)="convention($event)"
+                  formControlName="convention"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && fval.convention.errors }"
+                  placeholder="Entrer Convention ici"
+                >
+                  <option value="">Entrer nom Convention ici</option>
+                  <option *ngFor="let c of con" [value]="c" >{{c}}</option>
+                </select>
+                <!--  error block -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && fval.convention.errors"
+                >
+                  <div *ngIf="fval.convention.errors.required">
+                    etat convention est obligatoire
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="delai">Delai raccordement</label>
+          <input
+            type="text"
+            formControlName="delai"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval.delai.errors }"
+            placeholder="Entrer Delai raccordement ici"
+          />
+          <div *ngIf="submitted && fval.delai.errors" class="invalid-feedback">
+            <div *ngIf="fval.delai.errors.required">Delai raccordement est obligatoire</div>
+          </div>
+        </div>
 
       <div class="form-group">
         <a routerLink="../gerer-pri" class="btn btn-link">Annuler</a>

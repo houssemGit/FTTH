@@ -197,6 +197,7 @@ export class DetailsImmeubleComponent implements OnInit {
 
   nsONT:string
   nsn:string
+  code:string
   Ntel:number
   SR:string
   Bo:string
@@ -207,7 +208,8 @@ export class DetailsImmeubleComponent implements OnInit {
     this.ftthService.getClientsByImmeuble(mono.ID_immeuble).subscribe(data => {this.client= data
       this.introuvable=false
       this.nsONT=this.client[0].Num_serie_ONT
-      this.nsn=this.client[0].Num_SN
+      this.nsn=this.client[0].MSISDN
+      this.code=this.client[0].Code_site
       this.Ntel=this.client[0].Num_telephone
       this.SR=this.client[0].Solution_raccordement
       this.Bo=this.client[0].Budget_optique

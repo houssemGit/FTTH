@@ -6,6 +6,7 @@ import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { Sro } from '../../_models/sro';
 import { Pri } from '../../_models/pri';
 import { Immeuble } from '../../_models/immeuble';
+import { Monosite } from '../../_models/monosite';
 
 @Component({
   selector: 'ngx-tableaudebord',
@@ -17,6 +18,11 @@ export class TableaudebordComponent implements OnInit {
   colorScheme: any;
   themeSubscription: any;
   options: any = {};
+  Fvalue: string
+  zone="Générales"
+  nbclient:number
+  b2b:number
+  b2c:number
 
   results = [
     { name: 'Total prises', value: 8940   },
@@ -97,12 +103,20 @@ export class TableaudebordComponent implements OnInit {
     }
     sros : Array<Sro> = new Array
     pris : Array<Pri> = new Array
-    imms : Array<Immeuble> = new Array
+    imms : Array<Monosite> = new Array
     ch: Array<String> = new Array
     sro:Sro
     pri: Pri
     Imm : Immeuble
   ngOnInit() {
+    //stat géneral
+    //this.ftthservice.AllSro().subscribe(data => {this.results[0].value=data. })
+    //this.ftthservice.AllSro().subscribe(data => {this.results[1].value=value=data.})
+    //this.ftthservice.AllSro().subscribe(data => {this.results[2].value=data.})
+    //this.ftthservice.AllSro().subscribe(data => {this.nbclient==data.})
+    //this.ftthservice.AllSro().subscribe(data => {this.b2b=data.})
+    //this.ftthservice.AllSro().subscribe(data => {this.b2c==data.  })
+
       this.ftthservice.AllSro().subscribe(data => {
         this.sros=data
         for (let i = 0; i < this.sros.length; i++) {
@@ -116,7 +130,7 @@ export class TableaudebordComponent implements OnInit {
           this.ch.push(this.pris[i].Nom_residence)
         }
    })
-      this.ftthservice.AllImmeuble().subscribe(data => {
+      this.ftthservice.AllMonosite().subscribe(data => {
         this.imms=data
         for (let i = 0; i < this.imms.length; i++) {
           this.ch.push(this.imms[i].Adresse)
@@ -125,6 +139,8 @@ export class TableaudebordComponent implements OnInit {
 
 
   }
+
+
   public model: any;
   erreur: string
 
@@ -140,26 +156,58 @@ export class TableaudebordComponent implements OnInit {
     )
     verif(){
       this.erreur=""
-      if (this.ch.indexOf(this.model)==-1) {this.erreur="'"+ this.model+"' n'existe pas!! merci de vérifier si la localité fournie est ajoutée."}
-      else {
-        this.ftthservice.getSroByZone(this.model).subscribe(data => {this.sro=data
-        },error => {
-          this.ftthservice.getResidenceByNom(this.model).subscribe(data => {this.pri=data
-          },error => {
-            this.ftthservice.getImmeubleByNom(this.model).subscribe(data => {this.Imm=data
-             },error => {
-             })
-          })
-        })
-      }
+      if(this.Fvalue){
+          if(this.model==null){this.erreur=" Merci de saisir un mot de recherche."}
+          else if (this.ch.indexOf(this.model)==-1) {this.erreur="'"+ this.model+"' n'existe pas!! merci de vérifier si la localité fournie est ajoutée."}
+          else {
+            switch (this.Fvalue) {
+              case '1':
+                this.erreur=this.model+" éligible!";
+                this.ftthservice.zoneracstat(this.model).subscribe(data => {
+                  this.results[0].value=Number(data[1])+Number(data[0])
+                  this.results[1].value=Number(data[1])
+                  this.results[2].value=Number(data[0])
+                }, error => {alert("error serveur affichage stat");
+                })
+                this.ftthservice.zoneclientstat(this.model).subscribe(data => {
+                  this.results[0].value=Number(data[1])+Number(data[0])
+                  this.results[1].value=Number(data[1])
+                  this.results[2].value=Number(data[0])
+                  this.nbclient=Number(data[1])+Number(data[0])
+                  this.b2b=Number(data[0])
+                  this.b2c=Number(data[1])
+                }, error => {alert("error serveur affichage stat");
+                })
 
+
+                break;
+              case '2':
+                //éligible si port false raccordé si port true
+                // get by adresse
+                console.log("monosite");
+                this.ftthservice.getMonoByAdresse(this.model).subscribe(data => {
+                  if(data.IsRaccorde)
+                  this.erreur=this.model+" raccordé!"
+                  else this.erreur=this.model+" éligible!"
+                }, error =>{})
+                break;
+              case '3':
+                //console.log("residence");
+                //this.ftthservice.eligibresidence(this.model).subscribe(data => {
+                  //if (data)
+                  this.erreur=this.model+" éligible!"
+
+                //}, error =>{})
+
+                break;
+
+              default:
+                break;
+            }
+          }
+          }
+      else{this.erreur="Merci de saisir un filtre de recherche."}
     }
-
-
-
-
-
-
 
     ngOnDestroy(): void {
       this.themeSubscription.unsubscribe();

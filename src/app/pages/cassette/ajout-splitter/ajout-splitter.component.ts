@@ -127,6 +127,8 @@ annuler(){
        this.splitter.Type_splitter=this.registerForm.controls["Typespt"].value;
        this.splitter.Position=this.registerForm.controls["Position"].value;
        this.splitter.ID_cassette=Number(localStorage.getItem('ID_cassette'))
+       var f= Number(this.splitter.Type_splitter)
+
 
         this.ftthService.AjoutSplitter(this.splitter).subscribe(data =>
          { this.port.ID_splitter=data.ID_splitter
@@ -137,7 +139,7 @@ annuler(){
             this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
 
           this.port.Type="OUT"
-          for(var m=0;m<this.splitter.Type_splitter ;m++ )
+          for(var m=0;m<f ;m++ )
           { this.port.Position = m+1
            this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
           }

@@ -38,9 +38,10 @@ export class AjoutClientComponent implements OnInit {
     monoc : Monosite
     appart : Appartement
     concat: Array<any>=new Array
-
+    asb : string
 
   ngOnInit() {
+
     this.registerForm = this.formBuilder.group({
       Num_serie_ONT: ['', Validators.required],
       Solution_raccordement: [''],
@@ -48,7 +49,8 @@ export class AjoutClientComponent implements OnInit {
       Type_client: ['', Validators.required],
       Num_telephone: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}')])],
       Num_steg: ['', Validators.required],
-      Num_SN: ['', Validators.required],
+      Code_site: ['', Validators.required],
+      MSISDN: ['', Validators.required],
 
   });
 
@@ -110,7 +112,6 @@ export class AjoutClientComponent implements OnInit {
     })
 
   }
-
   }
 
   client=new Client
@@ -140,8 +141,11 @@ export class AjoutClientComponent implements OnInit {
 
     this.loading = true;
 
+
+
     this.client.Num_serie_ONT = this.registerForm.controls["Num_serie_ONT"].value;
-    this.client.Num_SN = this.registerForm.controls["Num_SN"].value;
+    this.client.MSISDN = this.registerForm.controls["MSISDN"].value;
+    this.client.Code_site = this.registerForm.controls["Code_site"].value;
     this.client.Solution_raccordement = this.registerForm.controls["Solution_raccordement"].value;
     this.client.Budget_optique = this.registerForm.controls["Budget_optique"].value;
     this.client.Type_client = this.registerForm.controls["Type_client"].value;

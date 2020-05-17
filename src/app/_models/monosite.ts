@@ -6,6 +6,8 @@ export class Monosite extends Immeuble  {
   Pos_tiroir_distribution: string
   Num_plan: number
   ID_sro: number
+  Adresse: string
+  IsRaccorde: boolean
 
   constructor(){
     super()

@@ -7,7 +7,7 @@
     <nb-accordion >
       <nb-accordion-item  *ngFor="let appart of concat;let i = index "    >
         <nb-accordion-item-header (click)="clickacco(appart)">
-          {{appart.Adresse}}
+          BLOC:{{appart.Nom_bloc}}, ETAGE:{{appart.Num_etage}}-{{appart.Num_appartement}}
           <div style=" position: absolute; right: 5%">
             <button nbButton status="danger"  (click)="deleteAppart(appart)" data-toggle="modal" data-target="#confsupr" >  <i class="far fa-trash-alt"></i>   </button>
             <button nbButton status="warning" (click)="editApart(appart)" style="margin-left: 20px;" > <i class="far fa-edit"></i> </button>
@@ -16,13 +16,13 @@
 
           <nb-accordion-item-body *ngFor="let p of pto">
             <a>Point de Terminaison Optique (PTO) </a>
-            <span><button nbButton status="primary" *ngIf="p != 'Non raccordé' && p "  style="float: right;"  (click)=showCrsp(appart)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO-PRI" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+            <span><button nbButton status="primary" *ngIf="p && p!='Non Raccordé'  "  style="float: right;"  (click)=showCrsp(appart)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO-PRI" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
             </span>
 
             <div  id="P2Ports">
               <label   class="switch grid-item">
                 <div style=" height:20px"  nbPopover={{p}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
-                <div *ngIf="p != 'Non raccordé' && p  ; else Libre ">
+                <div *ngIf="p && p!='Non Raccordé'   ; else Libre ">
                 <input  type="checkbox" checked="true" (click)="chekyracIN(appart,i)" data-toggle="modal" data-target="#déraccordéIN"/><span class="slider"></span>
                </div>
               <ng-template #Libre>

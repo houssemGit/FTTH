@@ -41,8 +41,7 @@ export class AjoutSroComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       Nom: ["", Validators.required],
       Zone: ["", Validators.required],
-      N_C_T: ["", [Validators.required]],
-      C_C_T: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      N_N_C_T: ["", [Validators.required]],
       olt: ["", [Validators.required]],
     });
 
@@ -54,23 +53,11 @@ export class AjoutSroComponent implements OnInit {
       }
     })
 
-    this.ftthService.AllSro().subscribe(data => {
-      this.sros=data
-      for (let i = 0; i < this.sros.length; i++) {
-        this.ch1[i]=this.sros[i].Num_cable_transport
-      }
-      this.rest= this.n_c_ts.filter(item => this.ch1.indexOf(item) < 0)
-    },error => this.rest=this.n_c_ts)
+
 
   }
 
 
-  get n_c_t() {
-    return this.registerForm.get("N_C_T");
-  }
-  N_C_T(e) {
-    this.n_c_t.setValue(e.target.value, { onlySelf: true });
-  }
    get otl() {
     return this.registerForm.get("olt");
   }
@@ -97,8 +84,7 @@ export class AjoutSroComponent implements OnInit {
 
     this.sro.Nom_sro = this.registerForm.controls["Nom"].value;
     this.sro.Nom_zone = this.registerForm.controls["Zone"].value;
-    this.sro.Num_cable_transport = this.registerForm.controls["N_C_T"].value;
-    this.sro.Capacite_cable_transport= this.registerForm.controls["C_C_T"].value;
+    this.sro.Nom_Cpacite_cable_transport = this.registerForm.controls["N_N_C_T"].value;
     this.nomOlt= this.registerForm.controls["olt"].value;
 
     this.ftthService.AllOlt().subscribe(data =>

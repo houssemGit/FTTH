@@ -1,0 +1,29 @@
+<h6>Eligibilité zone {{zone}}</h6>
+<table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th>Nom Immeuble</th>
+      <th>Adresse</th>
+      <th>Nombre prises</th>
+      <th>Nom syndique</th>
+      <th>Contact syndique</th>
+      <th>Raccordement horizental</th>
+      <th>Immeuble raccordé</th>
+      <th>Convention signée (oui/encours/non) et delai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of mix">
+
+    <td>{{e.Nom_residence}} {{e.Nom_monosite}}</td>
+    <td>{{e.Adresse}}</td>
+    <td>{{e.Nb_prise}} {{e.nb_prise_mono}}</td>
+    <td>{{e.Nom_syndique}} </td>
+    <td>{{e.Num_syndique}}  </td>
+    <td>oui</td>
+    <td>oui non</td>
+    <td>{{e.Etat}}</td>
+
+    </tr>
+  </tbody>
+</table>

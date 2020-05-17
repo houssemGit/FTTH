@@ -88,7 +88,7 @@ export class FtthService {
 
 
 
-  //get
+  //get ALL
   AllOlt(){
     return this.http.get<Array<Olt>>("http://localhost:8000/api/olts");
   }
@@ -98,8 +98,34 @@ export class FtthService {
   AllPri(){
     return this.http.get<Array<Pri>>("http://localhost:8000/api/pris");
   }
-  AllImmeuble(){
-    return this.http.get<Array<Immeuble>>("http://localhost:8000/api/immeubles");
+
+  AllMonosite(){
+    return this.http.get<Array<Monosite>>("http://localhost:8000/api/monosites");
+  }
+
+  //search
+  SearchZone(ch:string){
+    return this.http.get<Sro>("http://localhost:8000/api/sros/zone/"+ch);
+  }
+  getMonoByAdresse(ch:string){
+    return this.http.get<Monosite>("http://localhost:8000/api/monosites/"+ch);
+  }
+  eligibresidence(ch:string){
+    return this.http.get<Pri>("http://localhost:8000/api/pris/"+ch);
+  }
+
+  //stat
+  zoneracstat(ch:string){
+    return this.http.get("http://localhost:8000/api/zone/raccordement/"+ch);
+  }
+  resracstat(ch:string){
+    return this.http.get("http://localhost:8000/api/residence/raccordement/"+ch);
+  }
+  zoneclientstat(ch:string){
+    return this.http.get("http://localhost:8000/api/zone/client/"+ch);
+  }
+  resclientstat(ch:string){
+    return this.http.get("http://localhost:8000/api/residence/client/"+ch);
   }
 
 

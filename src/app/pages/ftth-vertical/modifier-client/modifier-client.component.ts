@@ -48,69 +48,73 @@ export class ModifierClientComponent implements OnInit {
     appart : Appartement
     concat: Array<any>=new Array ;
     ID_imm : Array<number>=new Array
+    ch : string
 
 
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       Num_serie_ONT: ['', Validators.required],
-      Num_SN: ['', Validators.required],
       Solution_raccordement: [''],
       Budget_optique: [''],
       Type_client: ['', Validators.required],
       Num_telephone: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}')])],
-     // Num_steg: ['', Validators.required],
+      Code_site: ['', Validators.required],
+      MSISDN: ['', Validators.required],
+      Num_steg: ['', Validators.required],
 
   });
 
   this.registerForm.controls['Num_serie_ONT'].setValue(localStorage.getItem('Num_serie_ONT'))
-  this.registerForm.controls['Num_SN'].setValue(localStorage.getItem('Num_SN'))
+  this.registerForm.controls['Code_site'].setValue(localStorage.getItem('Code_site'))
+  this.registerForm.controls['MSISDN'].setValue(localStorage.getItem('MSISDN'))
   this.registerForm.controls['Solution_raccordement'].setValue(localStorage.getItem('Solution_raccordement'))
   this.registerForm.controls['Budget_optique'].setValue(localStorage.getItem('Budget_optique'))
   this.registerForm.controls['Type_client'].setValue(localStorage.getItem('Type_client'))
   this.registerForm.controls['Num_telephone'].setValue(localStorage.getItem('Num_telephone'))
-  //this.registerForm.controls['Num_steg'].setValue(localStorage.getItem('Num_steg'))
+  this.registerForm.controls['Num_steg'].setValue(localStorage.getItem('Num_steg'))
+  this.ch=localStorage.getItem('Num_steg')
 
 
-//   if (localStorage.getItem('choixresidence') != null){
+  if (localStorage.getItem('choixresidence') != null){
 
-//     // affichage des num steg des appartement dans residence
-//     this.ftthservice.getAppartByResidence(localStorage.getItem('ID_pri')).subscribe(data => {
-//      this.apparts=data
-//      for (let i = 0; i < this.apparts.length; i+=2) {
-//        this.concat.push(Object.assign(this.apparts[i+1][0],this.apparts[i]))
-//        this.Num_stegs.push(this.apparts[i+1][0].Num_steg)
-//        this.ID_imm.push(this.apparts[i+1][0].ID_immeuble)
-//      }
-//    })
+    // affichage des num steg des appartement dans residence
+    this.ftthservice.getAppartByResidence(localStorage.getItem('ID_pri')).subscribe(data => {
+     this.apparts=data
+     for (let i = 0; i < this.apparts.length; i+=2) {
+       this.concat.push(Object.assign(this.apparts[i+1][0],this.apparts[i]))
+       this.Num_stegs.push(this.apparts[i+1][0].Num_steg)
+       this.ID_imm.push(this.apparts[i+1][0].ID_immeuble)
+     }
+   })
 
-//    for (let i = 0; i < this.concat.length; i++) {
-//      this.ftthservice.getClientImmeuble(this.concat[i].ID_immeuble).subscribe(data =>{
-//        this.Num_stegs.splice(this.Num_stegs.indexOf(this.concat[i].Num_steg),1)
-//      });
-//  }
+   for (let i = 0; i < this.concat.length; i++) {
+     this.ftthservice.getClientImmeuble(this.concat[i].ID_immeuble).subscribe(data =>{
+       this.Num_stegs.splice(this.Num_stegs.indexOf(this.concat[i].Num_steg),1)
+     });
+ }
 
-// }
-// else{
+}
+else{
 
-//  // affichage des num steg des monosites dans zone
-//  this.ftthservice.getMonositeByZone(localStorage.getItem('ID_sro')).subscribe(data => {
-//  this.monos = data;
-//    for (let i = 0; i < this.monos.length; i+=2) {
-//      this.concat.push(Object.assign(this.monos[i+1][0],this.monos[i]))
-//      this.Num_stegs.push(this.monos[i+1][0].Num_steg)
-//      this.ID_imm.push(this.monos[i+1][0].ID_immeuble)
-//    }
+ // affichage des num steg des monosites dans zone
+ this.ftthservice.getMonositeByZone(localStorage.getItem('ID_sro')).subscribe(data => {
+ this.monos = data;
+   for (let i = 0; i < this.monos.length; i+=2) {
+     this.concat.push(Object.assign(this.monos[i+1][0],this.monos[i]))
+     this.Num_stegs.push(this.monos[i+1][0].Num_steg)
+     this.ID_imm.push(this.monos[i+1][0].ID_immeuble)
+   }
 
-//    for (let i = 0; i < this.concat.length; i++) {
-//        this.ftthservice.getClientImmeuble(this.concat[i].ID_immeuble).subscribe(data =>{
-//          this.Num_stegs.splice(this.Num_stegs.indexOf(this.concat[i].Num_steg),1)
-//        });
-//    }
+   for (let i = 0; i < this.concat.length; i++) {
+       this.ftthservice.getClientImmeuble(this.concat[i].ID_immeuble).subscribe(data =>{
+         this.Num_stegs.splice(this.Num_stegs.indexOf(this.concat[i].Num_steg),1)
+       });
+   }
 
-//  })
+ })
 
-// }
+}
 
   }
 
@@ -125,20 +129,21 @@ export class ModifierClientComponent implements OnInit {
     }
     this.loading = true;
 
-    // var i=0 ; var stop=true;
-    // while( i < this.Num_stegs.length && stop){
-    //   if (this.Num_stegs[i]==this.registerForm.controls["Num_steg"].value)
-    //   {this.client.ID_immeuble=this.ID_imm[i];
-    //   stop=false}
-    //   else i++
-    // }
-    // if (i == this.Num_stegs.length) {
-    // this.status="danger"
-    // this.toastrService.show(``,`Numero steg introuvable!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
-    // return console.log(" invalid");}
+    var i=0 ; var stop=true;
+    while( i < this.Num_stegs.length && stop){
+      if (this.Num_stegs[i]==this.registerForm.controls["Num_steg"].value)
+      {this.client.ID_immeuble=this.ID_imm[i];
+      stop=false}
+      else i++
+    }
+    if (i == this.Num_stegs.length) {
+    this.status="danger"
+    this.toastrService.show(``,`Numero steg introuvable!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    return console.log(" invalid");}
 
     this.client.Num_serie_ONT = this.registerForm.controls["Num_serie_ONT"].value;
-    this.client.Num_SN = this.registerForm.controls["Num_SN"].value;
+    this.client.MSISDN = this.registerForm.controls["MSISDN"].value;
+    this.client.Code_site = this.registerForm.controls["Code_site"].value;
     this.client.Solution_raccordement = this.registerForm.controls["Solution_raccordement"].value;
     this.client.Budget_optique = this.registerForm.controls["Budget_optique"].value;
     this.client.Type_client = this.registerForm.controls["Type_client"].value;
@@ -167,13 +172,13 @@ export class ModifierClientComponent implements OnInit {
   }
 
 
-  // search = (text$: Observable<string>) =>
-  // text$.pipe(
-  //   debounceTime(200),
-  //   distinctUntilChanged(),
-  //   map(term => term === '' ? []
-  //     : this.Num_stegs.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-  // )
+  search = (text$: Observable<string>) =>
+  text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map(term => term === '' ? []
+      : this.Num_stegs.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+  )
 
 
 

@@ -1,4 +1,5 @@
-<button routerLink="../ajout-client" class="btn btn-success" style="width:200px"><i class="far fa-plus-square"></i>  Ajouter Client </button>
+<button routerLink="../ajout-client" class="btn btn-success" style="float:right ;width:200px"><i class="far fa-plus-square"></i>  Ajouter Client </button>
+<br>
 <br>
 <br>
 
@@ -6,11 +7,12 @@
   <thead>
     <tr>
       <th>Num serie ONT </th>
-      <th>Num SN </th>
+      <th>MSISDN </th>
+      <th>Code_site </th>
       <th>Solution raccordement</th>
       <th>Budget optique</th>
       <th>Type client</th>
-      <th>Num telephone</th>
+      <th>Contact client</th>
       <th>Nom Immeuble</th>
       <th>Num steg</th>
       <th>Action</th>
@@ -20,7 +22,8 @@
     <tr *ngFor="let e of mix">
 
     <td>{{e.Num_serie_ONT}}</td>
-    <td>{{e.Num_SN}}</td>
+    <td>{{e.MSISDN}}</td>
+    <td>{{e.Code_site}}</td>
     <td>{{e.Solution_raccordement}}</td>
     <td>{{e.Budget_optique}}</td>
     <td>{{e.Type_client}}</td>

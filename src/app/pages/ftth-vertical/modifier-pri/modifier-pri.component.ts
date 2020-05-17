@@ -23,8 +23,8 @@ export class ModifierPriComponent implements OnInit {
   pris:Array<Pri>= new Array
   ch: Array<String> = new Array
   ch1: Array<number> = new Array
-  n_c_ds: any = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
-
+  con = ['oui','en cours','non']
+  ssro : Sro
 
 
   constructor(
@@ -37,23 +37,34 @@ export class ModifierPriComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       Nom_pri: ["", Validators.required],
       Nom_residence: ["", Validators.required],
-      N_C_D: ["", [Validators.required]],
+      N_C_C_D: ["", [Validators.required]],
       Nb_prise : ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Num_plan : ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Nom_syndique: ["", [Validators.required]],
       Num_syndique: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}')])],
       sro: ["", [Validators.required]],
+      Adresse: ['', Validators.required],
+      convention:['', Validators.required],
+      delai:['', Validators.required]
     });
 
     this.registerForm.controls['Nom_pri'].setValue(localStorage.getItem('Nom_pri'))
     this.registerForm.controls['Nom_residence'].setValue(localStorage.getItem('Nom_residence'))
-    this.registerForm.controls['N_C_D'].setValue(localStorage.getItem('N_c_d'))
+    this.registerForm.controls['N_C_C_D'].setValue(localStorage.getItem('N_C_C_D'))
     this.registerForm.controls['Nb_prise'].setValue(localStorage.getItem('Nb_prise'))
     this.registerForm.controls['Num_plan'].setValue(localStorage.getItem('Num_plan'))
     this.registerForm.controls['Nom_syndique'].setValue(localStorage.getItem('Nom_syndique'))
     this.registerForm.controls['Num_syndique'].setValue(localStorage.getItem('Num_syndique'))
+    this.registerForm.controls['Adresse'].setValue(localStorage.getItem('Adresse'))
+    //split function verif
+    var splt = localStorage.getItem('Etat').split('-',2)
+    this.registerForm.controls['convention'].setValue(splt[0])
+    this.registerForm.controls['delai'].setValue(splt[1])
+
     this.ftthService.getSroById(localStorage.getItem('ID_sro')).subscribe(data => {
-    this.registerForm.controls['sro'].setValue(data.Nom_sro)},error => {alert('sro not found ')})
+      this.ssro= data
+    this.registerForm.controls['sro'].setValue(this.ssro.Nom_sro)
+  },error => {alert('sro not found ')})
 
 
     this.ftthService.AllSro().subscribe(data => {
@@ -63,29 +74,24 @@ export class ModifierPriComponent implements OnInit {
       }
     })
 
-    this.ftthService.getPriByZone(localStorage.getItem('ID_sro')).subscribe(data => {
-      this.pris=data
-      for (let i = 0; i < this.pris.length; i++) {
-        this.ch1[i]=this.pris[i].Num_cable_distribution
-      }
-      this.rest= this.n_c_ds.filter(item => this.ch1.indexOf(item) < 0)
-    },error => this.rest=this.n_c_ds)
 
 
   }
 
 
-  get n_c_t() {
-    return this.registerForm.get("N_C_D");
-  }
-  N_C_T(e) {
-    this.n_c_t.setValue(e.target.value, { onlySelf: true });
-  }
+
    get sor() {
     return this.registerForm.get("sro");
   }
   sro(e) {
     this.sor.setValue(e.target.value, { onlySelf: true });
+  }
+
+  get cc() {
+    return this.registerForm.get("convention");
+  }
+  convention(e) {
+    this.cc.setValue(e.target.value, { onlySelf: true });
   }
 
   get fval() {
@@ -107,12 +113,15 @@ export class ModifierPriComponent implements OnInit {
 
     this.pri.Nom_pri = this.registerForm.controls["Nom_pri"].value;
     this.pri.Nom_residence = this.registerForm.controls["Nom_residence"].value;
-    this.pri.Num_cable_distribution = this.registerForm.controls["N_C_D"].value;
+    this.pri.Nom_Capacite_cable_distribution = this.registerForm.controls["N_C_C_D"].value;
     this.pri.Nb_prise = this.registerForm.controls["Nb_prise"].value;
     this.pri.Num_plan = this.registerForm.controls["Num_plan"].value;
     this.pri.Nom_syndique = this.registerForm.controls["Nom_syndique"].value;
     this.pri.Num_syndique = this.registerForm.controls["Num_syndique"].value;
+    this.pri.Adresse = this.registerForm.controls["Adresse"].value;
     this.nomSRO= this.registerForm.controls["sro"].value;
+    this.pri.Etat=this.registerForm.controls["convention"].value +"-"+this.registerForm.controls["delai"].value;
+
 
     this.ftthService.AllSro().subscribe(data =>
       { this.sros=data

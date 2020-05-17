@@ -27,7 +27,6 @@ export class AjoutAppartementComponent implements OnInit {
 
     this.registerForm = this.formBuilder.group({
       Num_steg: ["", Validators.required],
-      Adresse: ["", Validators.required],
       Num_appartement: ["", [Validators.required]],
       Num_BE: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Num_etage: ["", [Validators.required]],
@@ -56,7 +55,6 @@ export class AjoutAppartementComponent implements OnInit {
     this.appart.Num_appartement = this.registerForm.controls["Num_appartement"].value;
     this.appart.Num_etage= this.registerForm.controls["Num_etage"].value;
     this.appart.Num_steg= this.registerForm.controls["Num_steg"].value;
-    this.appart.Adresse= this.registerForm.controls["Adresse"].value;
     this.appart.Nom_bloc= this.registerForm.controls["Nom_bloc"].value;
     this.appart.Type_immeuble= "Appartement"
     this.appart.IsRaccorde= false

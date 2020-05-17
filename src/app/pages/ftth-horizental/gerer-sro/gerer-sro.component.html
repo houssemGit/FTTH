@@ -141,8 +141,19 @@
       </div>
       <div class="modal-body">
 
-
-          <a>Numero cable transport: {{num}}</a>
+        <div class="form-group">
+          <label for="Num_TTin">Numero Tiroir Transport</label>
+          <input
+            type="text"
+            formControlName="Num_TTin"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval2.Num_TTin.errors }"
+            placeholder="Entrer Num Tiroir Transport ici"
+          />
+          <div *ngIf="submitted && fval2.Num_TTin.errors" class="invalid-feedback">
+            <div *ngIf="fval2.Num_TTin.errors.required">Numero Tiroir Transport est obligatoire</div>
+          </div>
+        </div>
           <div class="form-group">
             <label for="Pos_TTin">Position Tiroir Transport</label>
             <input

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DataTablesModule } from 'angular-datatables';
 import { DetailsResidenceComponent } from './details-residence/details-residence.component';
 import { ConsulterResidenceComponent } from './consulter-residence/consulter-residence.component';
 import { ConsulterZoneResidenceComponent } from './consulter-zone-residence/consulter-zone-residence.component';
@@ -8,9 +9,11 @@ import { DetailsImmeubleComponent } from './details-immeuble/details-immeuble.co
 import { HttpClientModule } from '@angular/common/http';
 import { FtthVConsultationRoutingModule,routedComponents } from './ftth-v-consultation-routing.module';
 import { NbAccordionModule, NbPopoverModule, NbButtonModule, NbIconModule, NbCardModule, NbListModule } from '@nebular/theme';
+import { ConsulterZoneEligibiliteComponent } from './consulter-zone-eligibilite/consulter-zone-eligibilite.component';
+import { DetailsEligibiliteComponent } from './details-eligibilite/details-eligibilite.component';
 
 @NgModule({
-  declarations: [routedComponents, DetailsResidenceComponent, ConsulterResidenceComponent, ConsulterZoneResidenceComponent, ConsulterZoneImmeubleComponent, DetailsImmeubleComponent],
+  declarations: [routedComponents, DetailsResidenceComponent, ConsulterResidenceComponent, ConsulterZoneResidenceComponent, ConsulterZoneImmeubleComponent, DetailsImmeubleComponent, ConsulterZoneEligibiliteComponent, DetailsEligibiliteComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -21,6 +24,7 @@ import { NbAccordionModule, NbPopoverModule, NbButtonModule, NbIconModule, NbCar
     NbIconModule,
     NbCardModule,
     NbListModule,
+    DataTablesModule,
   ]
 })
 export class FtthVConsultationModule { }

@@ -200,17 +200,21 @@ export class GererMonositeComponent implements OnInit {
     this.pto=[]
     this.pto.push(data.Pos_tiroir_distribution)
     this.status="success"
-    this.toastrService.show(``,`Monosite raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
+    this.toastrService.show(``,`Monosite raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    this.ngOnInit()}
+    ,(error)=>{alert('error modification!!');})
     this.closeModal.nativeElement.click()
   }
 
   DeraccordeIN(){
-    this.mono.Pos_tiroir_distribution='Non raccordé'
+    this.mono.Pos_tiroir_distribution='Non Raccordé'
     this.ftthService.raccorderPtoM(localStorage.getItem("ID_immeuble") ,this.mono).subscribe((data)=>{
       this.pto=[]
     this.pto.push(data.Pos_tiroir_distribution)
     this.status="success"
-    this.toastrService.show(``,`Monosite déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
+    this.toastrService.show(``,`Monosite déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+      this.ngOnInit();
+  },(error)=>{alert('error modification!!');})
    }
 
    annulerRIN(){

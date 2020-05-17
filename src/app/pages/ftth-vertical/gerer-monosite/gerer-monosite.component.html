@@ -15,13 +15,13 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body *ngFor="let p of pto">
           <a>Point de Terminaison Optique (PTO) </a>
-          <span><button nbButton status="primary" *ngIf="p && p!='Non raccordé' "  style="float: right;"  (click)=showCrsp(mono)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+          <span><button nbButton status="primary" *ngIf="p && p!='Non Raccordé' "  style="float: right;"  (click)=showCrsp(mono)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
           </span>
 
           <div  id="P2Ports">
             <label   class="switch grid-item">
               <div style=" height:20px"  nbPopover={{p}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
-              <div *ngIf="p && p!='Non raccordé' ; else Libre ">
+              <div *ngIf="p && p!='Non Raccordé' ; else Libre ">
               <input  type="checkbox" checked="true" (click)="chekyracIN(mono,i)" data-toggle="modal" data-target="#déraccordéIN"/><span class="slider"></span>
              </div>
             <ng-template #Libre>

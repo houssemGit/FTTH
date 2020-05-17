@@ -51,6 +51,11 @@ const routes: Routes = [{
       loadChildren: () => import('./ftth-v-consultation/ftth-v-consultation.module')
         .then(m => m.FtthVConsultationModule),
     },
+     {
+      path: 'consulter-eligibilite',
+      loadChildren: () => import('./ftth-v-consultation/ftth-v-consultation.module')
+        .then(m => m.FtthVConsultationModule),
+    },
     {
       path: 'iot-dashboard',
       component: DashboardComponent,

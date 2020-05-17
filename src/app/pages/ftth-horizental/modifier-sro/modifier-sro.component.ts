@@ -35,8 +35,7 @@ export class ModifierSroComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       Nom: ["", Validators.required],
       Zone: ["", Validators.required],
-      N_C_T: ["", [Validators.required]],
-      C_C_T: ["", [Validators.required]],
+      N_N_C_T: ["", [Validators.required]],
       olt: ["", [Validators.required]],
     });
   }
@@ -44,8 +43,7 @@ export class ModifierSroComponent implements OnInit {
   ngOnInit() {
     this.registerForm.controls['Nom'].setValue(localStorage.getItem('Nom_sro'))
     this.registerForm.controls['Zone'].setValue(localStorage.getItem('Nom_zone'))
-    this.registerForm.controls['N_C_T'].setValue(localStorage.getItem('Num_cable_transport'))
-    this.registerForm.controls['C_C_T'].setValue(localStorage.getItem('Capacite_cable_transport'))
+    this.registerForm.controls['N_N_C_T'].setValue(localStorage.getItem('N_N_C_T'))
     this.ftthService.getOltById(Number(localStorage.getItem('ID_olt'))).subscribe(data => {this.registerForm.controls['olt'].setValue(data.Nom_olt)},error => {alert('olt not found ')})
 
 
@@ -58,12 +56,7 @@ export class ModifierSroComponent implements OnInit {
     })
   }
 
-  get n_c_t() {
-    return this.registerForm.get("N_C_T");
-  }
-  N_C_T(e) {
-    this.n_c_t.setValue(e.target.value, { onlySelf: true });
-  }
+
    get otl() {
     return this.registerForm.get("olt");
   }
@@ -90,8 +83,7 @@ export class ModifierSroComponent implements OnInit {
 
     this.sro.Nom_sro = this.registerForm.controls["Nom"].value;
     this.sro.Nom_zone = this.registerForm.controls["Zone"].value;
-    this.sro.Num_cable_transport = this.registerForm.controls["N_C_T"].value;
-    this.sro.Capacite_cable_transport = this.registerForm.controls["C_C_T"].value;
+    this.sro.Nom_Cpacite_cable_transport = this.registerForm.controls["N_N_C_T"].value;
     this.nomOlt= this.registerForm.controls["olt"].value;
 
     //Allolt a effacer

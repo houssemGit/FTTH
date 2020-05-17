@@ -1,4 +1,15 @@
-<h6 for="typeahead-format">Eligibilité FTTH:</h6>
+
+<div style=" display: flex; justify-content: space-between;    ">
+  <h6 for="typeahead-format" >Eligibilité FTTH:</h6>
+  <a>
+    <nb-select   placeholder="Filtre" [size]="large" [(ngModel)]="Fvalue" >
+      <nb-option value="1">zone</nb-option>
+      <nb-option value="2">Monosite</nb-option>
+      <nb-option value="3">Residence</nb-option>
+    </nb-select>
+  </a>
+</div>
+
 
 <input  id="typeahead-format" type="text" class="form-control" [(ngModel)]="model"
  [ngbTypeahead]="search" [resultFormatter]="formatter" placeholder="Tapez içi nom zone, immeuble, adresse.."/>
@@ -13,13 +24,13 @@
 
 <hr>
 <!-- <pre>Localité: {{ model | json }}{{erreur}}</pre> -->
-
+<h6>Statistiques {{zone}}</h6>
 <div class="row">
   <div class="col-xl-3 col-sm-6 py-2">
     <nb-card status="success">
       <nb-card-header>B2B</nb-card-header>
     <nb-card-body>
-      <h1>500</h1>
+      <h1>{b2b}</h1>
     </nb-card-body>
   </nb-card>
 </div>
@@ -27,7 +38,7 @@
     <nb-card status="primary">
       <nb-card-header>B2C</nb-card-header>
     <nb-card-body>
-      <h1>500</h1>
+      <h1>{b2c}</h1>
     </nb-card-body>
   </nb-card>
 </div>

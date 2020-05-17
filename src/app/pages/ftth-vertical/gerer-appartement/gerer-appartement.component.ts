@@ -48,7 +48,6 @@ export class GererAppartementComponent implements OnInit {
   editApart(e) {
     localStorage.setItem("ID_immeuble", e.ID_immeuble.toString());
     localStorage.setItem("Num_steg", e.Num_steg.toString());
-    localStorage.setItem("Adresse", e.Adresse.toString());
     localStorage.setItem("Num_appartement", e.Num_appartement.toString());
     localStorage.setItem("Num_etage", e.Num_etage.toString());
     localStorage.setItem("Nom_bloc", e.Nom_bloc.toString());
@@ -205,11 +204,9 @@ export class GererAppartementComponent implements OnInit {
 
     this.appart.Pos_tiroir_col_montante= "TCM N°: "+this.FormRacIn.controls["n_c_c"].value+" Position: "+this.FormRacIn.controls["P_t_c"].value;
     this.ftthService.raccorderPtoA(localStorage.getItem("ID_appartement") ,this.appart).subscribe((data)=>{
-    //this.concat[Number(localStorage.getItem("num_monosite"))]= data
-    this.pto=[]
-    this.pto.push(data.Pos_tiroir_col_montante)
     this.status="success"
-    this.toastrService.show(``,`Appartement raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},
+    this.toastrService.show(``,`Appartement raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    this.ngOnInit()},
     (error)=>{alert('error modification!!');})
     this.closeModal.nativeElement.click()
 
@@ -217,13 +214,12 @@ export class GererAppartementComponent implements OnInit {
 
   DeraccordeIN(){
     this.appart.Pos_tiroir_col_montante='Non Raccordé'
-    this.appart.IsRaccorde= false
-    this.ftthService.raccorderPtoA(localStorage.getItem("ID_immeuble") ,this.appart).subscribe((data)=>{
-    //this.concat[Number(localStorage.getItem("num_monosite"))]= data
-    this.pto=[]
-    this.pto.push(data.Pos_tiroir_col_montante)
+    //this.appart.IsRaccorde= false
+    this.ftthService.raccorderPtoA(localStorage.getItem("ID_appartement") ,this.appart).subscribe((data)=>{
     this.status="success"
-    this.toastrService.show(``,`Appartement déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
+    this.toastrService.show(``,`Appartement déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    this.ngOnInit()}
+    ,(error)=>{alert('error modification!!');})
    }
 
    annulerRIN(){

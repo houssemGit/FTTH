@@ -39,6 +39,7 @@ export class GererPriComponent implements OnInit {
 
     this.FormRacIn = this.formBuilder.group({
       Pos_TDin : ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.pattern('^[0-9]*$')])],
+      Num_TDin : ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.pattern('^[0-9]*$')])],
     });
 
   }
@@ -51,13 +52,15 @@ export class GererPriComponent implements OnInit {
   editPri(e) {
     localStorage.setItem("ID_pri", e.ID_pri.toString());
     localStorage.setItem("Nom_pri", e.Nom_pri.toString());
+    localStorage.setItem("Adresse", e.Adresse.toString());
     localStorage.setItem("Nom_residence", e.Nom_residence.toString());
-    localStorage.setItem("N_c_d", e.Num_cable_distribution.toString());
+    localStorage.setItem("N_C_C_D", e.Nom_Capacite_cable_distribution.toString());
     localStorage.setItem("Num_plan", e.Num_plan.toString());
     localStorage.setItem("Nb_prise", e.Nb_prise.toString());
     localStorage.setItem("Num_syndique", e.Num_syndique.toString());
     localStorage.setItem("Nom_syndique", e.Nom_syndique.toString());
     localStorage.setItem("ID_sro", e.ID_sro.toString());
+    localStorage.setItem("Etat", e.Etat.toString());
     this.router.navigateByUrl("pages/immeubles/modifier-pri");
   }
 
@@ -146,7 +149,8 @@ export class GererPriComponent implements OnInit {
   openP(e) {
     this.ports=[]
     this.porti=[]
-    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.ports = data; },error => alert('error ports'));
+    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.ports = data; console.log(this.ports);
+    },error => alert('error ports'));
     this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => { this.porti = data; this.itat=this.porti[0].Etat},error=>{alert('error')});
 
   }
@@ -168,12 +172,6 @@ export class GererPriComponent implements OnInit {
     },(error)=>{alert('error modification!!');})
     },(error)=>{alert("error port in ")})
 
-    this.ftthService.getPriById(localStorage.getItem("ID_pri")).subscribe((data)=>{
-        this.pri=data
-        this.num=this.pri.Num_cable_distribution
-        localStorage.setItem("n_c_d",this.pri.Num_cable_distribution.toString())
-
-    },(error)=>{alert('error pri');})
   }
 
   porta: Array<Port>
@@ -195,12 +193,11 @@ export class GererPriComponent implements OnInit {
     }
     this.loading = true;
 
-    this.porto.Position_tiroir= "TD N°: "+localStorage.getItem('n_c_d')+" Position: "+this.FormRacIn.controls["Pos_TDin"].value;
+    this.porto.Position_tiroir= "TD N°: "+this.FormRacIn.controls["Num_TDin"].value+" Position: "+this.FormRacIn.controls["Pos_TDin"].value;
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     this.closeModal.nativeElement.click()
     localStorage.setItem("ID_port",'')
-    localStorage.setItem("n_c_d",'')
 
   }
   DeraccordeIN(){
@@ -208,13 +205,11 @@ export class GererPriComponent implements OnInit {
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
     localStorage.setItem("ID_port",'')
-    localStorage.setItem("n_c_d",'')
 
    }
    annulerRIN(){
     this.ftthService.updatePort(localStorage.getItem("ID_port") , this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat},(error)=>{alert('error modification!!');})
     localStorage.setItem("ID_port",'')
-    localStorage.setItem("n_c_d",'')
 
   }
 

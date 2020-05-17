@@ -13,7 +13,7 @@
           formControlName="Num_serie_ONT"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && fval.Num_serie_ONT.errors }"
-          placeholder="Enter Num_serie_ONT here"
+          placeholder="Entrer Num_serie_ONT ici"
         />
         <div *ngIf="submitted && fval.Num_serie_ONT.errors" class="invalid-feedback">
           <div *ngIf="fval.Num_serie_ONT.errors.required">Num serie ont est obligatoire</div>
@@ -21,16 +21,30 @@
       </div>
 
       <div class="form-group">
-        <label for="Num_SN">Num SN </label>
+        <label for="MSISDN">MSISDN </label>
         <input
           type="text"
-          formControlName="Num_SN"
+          formControlName="MSISDN"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && fval.Num_SN.errors }"
-          placeholder="Enter Num_SN here"
+          [ngClass]="{ 'is-invalid': submitted && fval.MSISDN.errors }"
+          placeholder="Entrer MSISDN ici"
         />
-        <div *ngIf="submitted && fval.Num_SN.errors" class="invalid-feedback">
-          <div *ngIf="fval.Num_SN.errors.required">Num SN est obligatoire</div>
+        <div *ngIf="submitted && fval.MSISDN.errors" class="invalid-feedback">
+          <div *ngIf="fval.MSISDN.errors.required">MSISDN est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Code_site">Code site </label>
+        <input
+          type="text"
+          formControlName="Code_site"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Code_site.errors }"
+          placeholder="Entrer Code site ici"
+        />
+        <div *ngIf="submitted && fval.Code_site.errors" class="invalid-feedback">
+          <div *ngIf="fval.Code_site.errors.required">Code site est obligatoire</div>
         </div>
       </div>
 
@@ -40,7 +54,7 @@
           type="text"
           formControlName="Solution_raccordement"
           class="form-control"
-          placeholder="Enter Solution_raccordement here"
+          placeholder="Entrer Solution_raccordement ici"
         />
       </div>
 
@@ -50,21 +64,21 @@
           type="text"
           formControlName="Budget_optique"
           class="form-control"
-          placeholder="Enter Budget_optique here"
+          placeholder="Entrer Budget_optique ici"
         />
       </div>
 
       <div class="form-group">
-        <label for="Num_telephone">Num Téléphone</label>
+        <label for="Num_telephone">Contact client</label>
         <input
           type="text"
           formControlName="Num_telephone"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && fval.Num_telephone.errors }"
-          placeholder="Enter Num telephone here"
+          placeholder="Entrer Contact client ici"
         />
         <div *ngIf="submitted && fval.Num_telephone.errors" class="invalid-feedback">
-          <div *ngIf="fval.Num_telephone.errors.required">Num telephone  est obligatoire</div>
+          <div *ngIf="fval.Num_telephone.errors.required">Contact client  est obligatoire</div>
         </div>
       </div>
 
@@ -80,9 +94,9 @@
                 formControlName="Type_client"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && fval.Type_client.errors }"
-                placeholder="Enter Type_client here"
+                placeholder="Entrer Type_client ici"
               >
-                <option value="">Entrer Type_client here</option>
+                <option value="">Entrer Type_client ici</option>
                 <option *ngFor="let Type_client of Type_clients" [value]="Type_client">{{Type_client}}</option>
               </select>
               <!--  error block -->
@@ -106,7 +120,7 @@
               formControlName="Num_steg"
               data-live-search="true"
               [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }">
-              <option value="">Entrer Num steg here</option>
+              <option value="">Entrer Num steg ici</option>
               <option *ngFor="let Num_steg of Num_stegs" [value]="Num_steg">{{Num_steg}}</option>
               </select>
 
@@ -130,7 +144,9 @@
                 class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }"
                 [ngbTypeahead]="search"
-                placeholder="Tapez içi num steg"/>
+                placeholder="Tapez içi num steg"
+                />
+
         <div class="invalid-feedback" *ngIf="submitted && fval.Num_steg.errors  ">
           <div *ngIf="fval.Num_steg.errors.required">Num steg est obligatoire</div>
        </div>

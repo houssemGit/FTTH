@@ -7,6 +7,7 @@ export class Appartement extends Immeuble {
   Nom_bloc: number;
   Pos_tiroir_col_montante: string;
   ID_pri: number;
+  IsRaccorde : boolean
 
   constructor(){
       super()

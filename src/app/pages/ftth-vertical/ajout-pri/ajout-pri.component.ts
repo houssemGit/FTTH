@@ -24,7 +24,7 @@ export class AjoutPriComponent implements OnInit {
   pris:Array<Pri>= new Array
   ch: Array<String> = new Array
   ch1: Array<number> = new Array
-  n_c_ds: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20,21];
+  con = ['oui','en cours','non']
 
 
 
@@ -39,13 +39,15 @@ export class AjoutPriComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       Nom_pri: ["", Validators.required],
       Nom_residence: ["", Validators.required],
-      N_C_D: ["", [Validators.required]],
-      //C_C_D: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      N_C_C_D: ["", [Validators.required]],
       sro: ["", [Validators.required]],
       Nb_prise: ["", Validators.required],
       Num_plan: ["", Validators.required],
       Nom_syndique: ["", Validators.required],
       Num_syndique: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}')])],
+      Adresse: ['', Validators.required],
+      convention:['', Validators.required],
+      delai:['', Validators.required]
     });
 
     // affichage des zones
@@ -56,29 +58,21 @@ export class AjoutPriComponent implements OnInit {
       }
     })
 
-    //affichage des des num cable distribution
-
-    this.ftthService.getPriByZone(localStorage.getItem('ID_sro')).subscribe(data => {
-      this.pris=data
-      for (let i = 0; i < this.pris.length; i++) {
-        this.ch1[i]=this.pris[i].Num_cable_distribution
-      }
-      this.rest= this.n_c_ds.filter(item => this.ch1.indexOf(item) < 0)
-    },error => this.rest=this.n_c_ds)
   }
 
 
-  get n_c_d() {
-    return this.registerForm.get("N_C_D");
-  }
-  N_C_D(e) {
-    this.n_c_d.setValue(e.target.value, { onlySelf: true });
-  }
+
    get sor() {
     return this.registerForm.get("sro");
   }
   sro(e) {
     this.sor.setValue(e.target.value, { onlySelf: true });
+  }
+   get cc() {
+    return this.registerForm.get("convention");
+  }
+  convention(e) {
+    this.cc.setValue(e.target.value, { onlySelf: true });
   }
 
   get fval() {
@@ -100,12 +94,15 @@ export class AjoutPriComponent implements OnInit {
 
     this.pri.Nom_pri = this.registerForm.controls["Nom_pri"].value;
     this.pri.Nom_residence = this.registerForm.controls["Nom_residence"].value;
-    this.pri.Num_cable_distribution = this.registerForm.controls["N_C_D"].value;
-    //this.pri.Capacite_cable_distribution= this.registerForm.controls["C_C_D"].value;
+    this.pri.Nom_Capacite_cable_distribution = this.registerForm.controls["N_C_C_D"].value;
     this.pri.Nb_prise= this.registerForm.controls["Nb_prise"].value;
     this.pri.Num_plan= this.registerForm.controls["Num_plan"].value;
     this.pri.Nom_syndique= this.registerForm.controls["Nom_syndique"].value;
     this.pri.Num_syndique= this.registerForm.controls["Num_syndique"].value;
+    this.pri.Adresse= this.registerForm.controls["Adresse"].value;
+    this.pri.Etat=this.registerForm.controls["convention"].value +"-"+this.registerForm.controls["delai"].value;
+
+
 
     this.nomSRO= this.registerForm.controls["sro"].value;
 

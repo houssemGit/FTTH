@@ -187,7 +187,7 @@ export class AjoutCassetteComponent implements OnInit {
             this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
 
           this.port.Type="OUT"
-          for(var m=0;m<this.splitter.Type_splitter ;m++ )
+          for(var m=0;m<f ;m++ )
           { this.port.Position = m+1
            this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
           }

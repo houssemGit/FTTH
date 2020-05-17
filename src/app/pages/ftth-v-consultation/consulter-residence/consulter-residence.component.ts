@@ -27,7 +27,7 @@ export class ConsulterResidenceComponent implements OnInit {
   }
   ngOnInit() {
     this.zoni= localStorage.getItem("choixzone")
-    this.ftthService.AllPri().subscribe(data=>{
+    this.ftthService.getPriByZone(localStorage.getItem("ID_sro")).subscribe(data=>{
       this.pris=data
     },error => {this.status="warning"
     this.toastrService.show(``,`Aucun PRI`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});}

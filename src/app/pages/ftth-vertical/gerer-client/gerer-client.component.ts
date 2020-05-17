@@ -96,7 +96,8 @@ export class GererClientComponent implements OnInit {
 
     localStorage.setItem('ID_client', e.ID_client.toString());
     localStorage.setItem('Num_serie_ONT',e.Num_serie_ONT);
-    localStorage.setItem('Num_SN',e.Num_SN);
+    localStorage.setItem('Code_site',e.Code_site);
+    localStorage.setItem('MSISDN',e.MSISDN);
     localStorage.setItem('Solution_raccordement', e.Solution_raccordement);
     localStorage.setItem('Budget_optique', e.Budget_optique);
     localStorage.setItem('Type_client', e.Type_client);

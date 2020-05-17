@@ -39,7 +39,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'flip-outline',
     children: [
       {
-        title: 'Gestion PRI',
+        title: 'Gestion Résidence',
         link: '/pages/immeubles/consulter-zone-pri',
       },
       {
@@ -65,6 +65,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Residences',
     icon: 'home-outline',
     link: '/pages/consulter-immeubles/consulter-zone-residence',
+  },
+  {
+    title: 'Eligibilité Immeuble',
+    icon: 'shuffle-2-outline',
+    link: '/pages/consulter-immeubles/consulter-zone-eligibilite',
   },
 
   {

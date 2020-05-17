@@ -136,13 +136,13 @@
                 </nb-accordion-item-header>
                 <nb-accordion-item-body *ngFor="let p of pto">
                   <a>Point de Terminaison Optique (PTO) </a>
-                  <span><button nbButton status="primary" *ngIf="p && p != 'Non raccordé' "  style="float: right;"  (click)=crspMono(mono)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
+                  <span><button nbButton status="primary" *ngIf="p && p != 'Non Raccordé' "  style="float: right;"  (click)=crspMono(mono)   data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir Correspondance OLT-SRO" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  ><i class="fas fa-search"></i> </button>
                   </span>
 
                   <div  id="P2Ports">
                     <label   class="switch grid-item">
                       <div style=" height:20px"  nbPopover={{p}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
-                      <div *ngIf="p && p != 'Non raccordé' ; else Libre ">
+                      <div *ngIf="p && p != 'Non Raccordé' ; else Libre ">
                       <input  type="checkbox" checked="true" disabled/><span class="slider"></span>
                      </div>
                     <ng-template #Libre>
@@ -239,14 +239,15 @@
       <div class="modal-body">
         <div *ngIf="introuvable==false">
         <h6>Num serie ONT: {{nsONT}}</h6>
-        <h6>Num SN: {{nsn}}</h6>
+        <h6>MSISDN: {{nsn}}</h6>
+        <h6>code site: {{code}}</h6>
         <h6>Num telephone: {{Ntel}}</h6>
         <h6>Solution de raccordement: {{SR}}</h6>
         <h6>Budget optique: {{Bo}}</h6>
         <h6>Type: {{type}}</h6>
         </div>
         <div *ngIf="introuvable==true">
-          <h6>N'est pas encore un client!</h6>
+          <h6>Pas encore un client!</h6>
         </div>
 
       </div>
