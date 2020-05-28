@@ -21,7 +21,7 @@
     <label class="label" for="input-email">Email:</label>
     <input nbInput
            fullWidth
-           [(ngModel)]="user.email"
+           [(ngModel)]="user.Email"
            #email="ngModel"
            name="email"
            id="input-email"
@@ -49,7 +49,7 @@
     </span>
     <input nbInput
            fullWidth
-           [(ngModel)]="user.password"
+           [(ngModel)]="user.Password"
            #password="ngModel"
            name="password"
            type="password"
@@ -80,7 +80,7 @@
           fullWidth
           status="primary"
           size="large"
-          [disabled]="submitted || !form.valid"
+
           [class.btn-pulse]="submitted">
       Se connecter
   </button>
@@ -90,6 +90,7 @@
 
 
 <!--
+  [disabled]="submitted || !form.valid"
 
   <form (ngSubmit)="login()" [formGroup]="loginForm" aria-labelledby="title">
 

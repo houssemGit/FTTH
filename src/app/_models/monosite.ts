@@ -8,6 +8,8 @@ export class Monosite extends Immeuble  {
   ID_sro: number
   Adresse: string
   IsRaccorde: boolean
+  Etat_raccordement:string
+  Etat_convention: string
 
   constructor(){
     super()

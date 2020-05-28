@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-      Created with ♥ by M&H 2020
+      Created with ♥ by <a target="_blank"  href="https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile">HE </a>&<a target="_blank"  href="https://www.linkedin.com/in/mehdi-hantous-549b5415a/?originalSubdomain=tn"> MH</a> 2020
     </span>
     <!--
     <div class="socials">

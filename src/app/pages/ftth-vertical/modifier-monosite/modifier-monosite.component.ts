@@ -17,6 +17,8 @@ export class ModifierMonositeComponent implements OnInit {
   loading = false;
   submitted = false;
   status: NbComponentStatus ;
+  ch1 =["Signée" , "Non signée", "En cours"]
+  ch2 =["Raccordé", "Autorisation", "Travaux en cours", "Non raccordé"]
 
 
   constructor(
@@ -32,17 +34,33 @@ export class ModifierMonositeComponent implements OnInit {
       Adresse: ["", Validators.required],
       Nom: ["", [Validators.required]],
       Num_plan: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Etat_con: ["", [Validators.required]],
+      Etat_racc: ["", [Validators.required]],
     });
 
     this.registerForm.controls['Num_steg'].setValue(localStorage.getItem('Num_steg'))
     this.registerForm.controls['Adresse'].setValue(localStorage.getItem('Adresse'))
     this.registerForm.controls['Nom'].setValue(localStorage.getItem('Nom_monosite'))
     this.registerForm.controls['Num_plan'].setValue(localStorage.getItem('Num_plan'))
+    this.registerForm.controls['Etat_con'].setValue(localStorage.getItem('Etat_con'))
+    this.registerForm.controls['Etat_racc'].setValue(localStorage.getItem('Etat_racc'))
 
   }
 
   get fval() {
     return this.registerForm.controls;
+  }
+  get etc() {
+    return this.registerForm.get("Etat_con");
+  }
+  Etat_con(e) {
+    this.etc.setValue(e.target.value, { onlySelf: true });
+  }
+  get etr() {
+    return this.registerForm.get("Etat_racc");
+  }
+  Etat_racc(e) {
+    this.etr.setValue(e.target.value, { onlySelf: true });
   }
 
   mono= new Monosite
@@ -61,6 +79,8 @@ export class ModifierMonositeComponent implements OnInit {
     this.mono.Nom_monosite = this.registerForm.controls["Nom"].value;
     this.mono.Num_steg= this.registerForm.controls["Num_steg"].value;
     this.mono.Adresse= this.registerForm.controls["Adresse"].value;
+    this.mono.Etat_convention= this.registerForm.controls["Etat_con"].value;
+    this.mono.Etat_raccordement= this.registerForm.controls["Etat_racc"].value;
     this.mono.Pos_tiroir_distribution=localStorage.getItem('Pos_tiroir_distribution')
     this.mono.Type_immeuble=localStorage.getItem('Type_immeuble')
 

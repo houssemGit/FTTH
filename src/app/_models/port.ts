@@ -7,6 +7,8 @@ export class Port {
    Position:number
    Position_tiroir: string
    Type: string
+   Couleur_tube:string
+   Couleur_fibre:string
 
   constructor(){
 

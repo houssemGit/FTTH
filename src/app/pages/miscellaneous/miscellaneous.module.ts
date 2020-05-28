@@ -5,6 +5,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { MiscellaneousRoutingModule } from './miscellaneous-routing.module';
 import { MiscellaneousComponent } from './miscellaneous.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { NotAuthComponent } from './not-auth/not-auth/not-auth.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
   declarations: [
     MiscellaneousComponent,
     NotFoundComponent,
+    NotAuthComponent,
   ],
 })
 export class MiscellaneousModule { }

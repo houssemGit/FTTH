@@ -127,8 +127,21 @@ export class FtthService {
   resclientstat(ch:string){
     return this.http.get("http://localhost:8000/api/residence/client/"+ch);
   }
-
-
+  prisezone(ch:string){
+    return this.http.get("http://localhost:8000/api/zone/prise/"+ch);
+  }
+  priseresidence(ch:string){
+    return this.http.get("http://localhost:8000/api/residence/prise/"+ch);
+  }
+  statByAdresse(ch:string){
+    return this.http.get("http://localhost:8000/api/adresse/"+ch);
+  }
+  total_client(){
+    return this.http.get("http://localhost:8000/api/total/client");
+  }
+  total_prise(){
+    return this.http.get("http://localhost:8000/api/total/prise");
+  }
 
   getByOlt(id: number){
     return this.http.get<Array<Cassette>>("http://localhost:8000/api/cassettes/olt/"+id.toString());
@@ -211,6 +224,29 @@ export class FtthService {
   getPortCorrespondantIn(ch: string){
     return this.http.get<Port>("http://localhost:8000/api/ports/CorIn/"+ch.toString())
 
+  }
+
+  //check
+  UniquePosOlt(id: string , pos : string){
+    return this.http.get("http://localhost:8000/api/ports/check/olt/"+id+"/"+pos)
+  }
+  UniquePosSro(id: string , pos : string){
+    return this.http.get("http://localhost:8000/api/ports/check/sro/"+id+"/"+pos)
+  }
+  UniquePosPri(id: string , pos : string){
+    return this.http.get("http://localhost:8000/api/ports/check/pri/"+id+"/"+pos)
+  }
+  UniquePosSroOut(id: string , pos : string){
+    return this.http.get("http://localhost:8000/api/ports/checkout/sro/"+id+"/"+pos)
+  }
+  UniquePosPriOut(id: string , pos : string){
+    return this.http.get("http://localhost:8000/api/ports/checkout/pri/"+id+"/"+pos)
+  }
+  UniquePosMonosite(id: string , pos : string){
+    return this.http.get("http://localhost:8000/api/monosites/check/"+id+"/"+pos)
+  }
+  UniquePosAppart(id: string , pos : string){
+    return this.http.get("http://localhost:8000/api/appartements/check/"+id+"/"+pos)
   }
   //--------------
 

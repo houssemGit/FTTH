@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MiscellaneousComponent } from './miscellaneous.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { NotAuthComponent } from './not-auth/not-auth/not-auth.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: '404',
         component: NotFoundComponent,
+      },
+      {
+        path: '403',
+        component: NotAuthComponent,
       },
     ],
   },

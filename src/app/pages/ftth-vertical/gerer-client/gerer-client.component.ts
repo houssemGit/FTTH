@@ -28,6 +28,10 @@ export class GererClientComponent implements OnInit {
   clientest : Array<Client>=new Array ;
   clientestjl : any
 
+  res : string
+  zoen : string
+  bool : string
+
 
 
   @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective;
@@ -44,8 +48,13 @@ export class GererClientComponent implements OnInit {
         'excel',
       ]
     };
+    this.res=localStorage.getItem('choixresidence')
+    this.zoen=localStorage.getItem('choixzone')
+    this.bool="monosite"
+
 
     if (localStorage.getItem('choixresidence') != null){
+      this.bool="residence"
 
       this.ftthservice.getAppartByResidence(localStorage.getItem('ID_pri')).subscribe(data => {
         this.apparts = data;
@@ -62,7 +71,10 @@ export class GererClientComponent implements OnInit {
                 }
 
                 this.dtTrigger.next();},
-                error => {});
+                error => {
+                  this.status="warning"
+      this.toastrService.show(``,`Aucun client!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+                });
         })
     }
     else{
@@ -79,12 +91,20 @@ export class GererClientComponent implements OnInit {
                   }
                 }
                 this.dtTrigger.next();},
-                error => {});
+                error => {
+                  this.status="warning"
+                  this.toastrService.show(``,`Aucun client!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+                });
 
 
 
         })
     }
+    localStorage.removeItem('ID_client');localStorage.removeItem('Num_serie_ONT');localStorage.removeItem('Code_site');
+    localStorage.removeItem('MSISDN');localStorage.removeItem('Solution_raccordement');
+    localStorage.removeItem('Budget_optique');localStorage.removeItem('Type_client');
+    localStorage.removeItem('Num_telephone');localStorage.removeItem('ID_immeuble');localStorage.removeItem('KCRM');
+    localStorage.removeItem('Debit');localStorage.removeItem('Nom_soustraitant');localStorage.removeItem('Etat_client');
 
   }
 
@@ -103,6 +123,10 @@ export class GererClientComponent implements OnInit {
     localStorage.setItem('Type_client', e.Type_client);
     localStorage.setItem('Num_telephone', e.Num_telephone);
     localStorage.setItem('ID_immeuble', e.ID_immeuble.toString());
+    localStorage.setItem('KCRM', e.KCRM.toString());
+    localStorage.setItem('Debit', e.Debit.toString());
+    localStorage.setItem('Nom_soustraitant', e.Nom_soustraitant.toString());
+    localStorage.setItem('Etat_client', e.Etat_client.toString());
     this.router.navigateByUrl('pages/immeubles/modifier-client');
   }
 

@@ -66,7 +66,7 @@
                       <a>Ports OUT:</a>
                        <div id="P2Ports">
                         <label *ngFor="let port of ports; let i = index "  class="switch grid-item">
-                          <div style=" height:20px" *ngIf="port.Position_tiroir " nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
+                          <div style=" height:20px" *ngIf="port.Position_tiroir " nbPopover={{port.Position_tiroir}}--Couleur_fibre:{{port.Couleur_fibre}}--Couleur_tube:{{port.Couleur_tube}} nbPopoverTrigger="hint" nbPopoverPlacement="bottom">
                           <br /><br />
                           <div style="text-align: center ; ">{{ i + 1 }} </div>
                           <div *ngIf="port.Etat== 'Raccorde'; else Libre ">
@@ -111,12 +111,16 @@
       <div class="modal-body">
 
         <h6>Tiroir Transport {{posTT}}</h6>
+        <h6>Couleur Tube: {{coultube1}}</h6>
+        <h6>Couleur Fibre: {{coulfibre1}}</h6>
         <h6>Nom OLT: {{nomOLT}}</h6>
         <h6>N°Cassette: {{posCo}}</h6>
         <h6>N°Splitter: {{posSo}}</h6>
         <h6>N°Port: {{posPo}}</h6>
         <br>
         <h6>Tiroir Distribution {{posTD}}</h6>
+        <h6>Couleur Tube: {{coultube}}</h6>
+        <h6>Couleur Fibre: {{coulfibre}}</h6>
         <h6>Nom SRO: {{nomSRO}}</h6>
         <h6>N°Cassette: {{posCs}}</h6>
         <h6>N°Splitter: {{posSs}}</h6>
@@ -228,6 +232,89 @@
             />
             <div *ngIf="submitted && fval1.Pos_TD.errors" class="invalid-feedback">
               <div *ngIf="fval1.Pos_TD.errors.required">Position Tiroir Colonne montante est obligatoire</div>
+            </div>
+          </div>
+
+           <!-- select item -->
+           <div class="form-group">
+            <div class="group-gap">
+              <div class="d-block my-3">
+                <div class="mb-3">
+                  <label style="margin-right: 2rem;">Couleur Fibre</label>
+                  <select
+                    class="custom-select "
+                    (change)="Coul_fib($event)"
+                    formControlName="Coul_fib"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && fval1.Coul_fib.errors }"
+                    placeholder="Entrer Coul_fib ici"
+                  >
+                    <option value="">Entrer Couleur Fibre ici</option>
+                    <option style="background-color: blue;" value="Bleu">Bleu</option>
+                    <option style="background-color: orangered;" value="Orange">Orange</option>
+                    <option style="background-color: green;" value="Vert">Vert</option>
+                    <option style="background-color: brown;" value="Marron">Marron</option>
+                    <option style="background-color: gray;" value="Gris">Gris</option>
+                    <option style="background-color: white;" value="Blanc">Blanc</option>
+                    <option style="background-color: red;" value="Rouge">Rouge</option>
+                    <option style="background-color: black;" value="Noir">Noir</option>
+                    <option style="background-color: yellow;" value="Jaune">Jaune</option>
+                    <option style="background-color: purple;" value="Violet">Violet</option>
+                    <option style="background-color: pink;" value="Rose">Rose</option>
+                    <option style="background-color: turquoise;" value="Turquoise">Turquoise</option>
+                  </select>
+                  <!--  error block -->
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && fval1.Coul_fib.errors"
+                  >
+                    <div *ngIf="fval1.Coul_fib.errors.required">
+                      Couleur Fibre est obligatoire
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- select item -->
+          <div class="form-group">
+            <div class="group-gap">
+              <div class="d-block my-3">
+                <div class="mb-3">
+                  <label style="margin-right: 2rem;">Couleur Tube</label>
+                  <select
+                    class="custom-select "
+                    (change)="Coul_tube($event)"
+                    formControlName="Coul_tube"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && fval1.Coul_tube.errors }"
+                    placeholder="Entrer Coul_tube ici"
+                  >
+                    <option value="">Entrer Couleur Tube ici</option>
+                    <option style="background-color: blue;" value="Bleu">Bleu</option>
+                    <option style="background-color: orangered;" value="Orange">Orange</option>
+                    <option style="background-color: green;" value="Vert">Vert</option>
+                    <option style="background-color: brown;" value="Marron">Marron</option>
+                    <option style="background-color: gray;" value="Gris">Gris</option>
+                    <option style="background-color: white;" value="Blanc">Blanc</option>
+                    <option style="background-color: red;" value="Rouge">Rouge</option>
+                    <option style="background-color: black;" value="Noir">Noir</option>
+                    <option style="background-color: yellow;" value="Jaune">Jaune</option>
+                    <option style="background-color: purple;" value="Violet">Violet</option>
+                    <option style="background-color: pink;" value="Rose">Rose</option>
+                    <option style="background-color: turquoise;" value="Turquoise">Turquoise</option>                  </select>
+                  <!--  error block -->
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && fval1.Coul_tube.errors"
+                  >
+                    <div *ngIf="fval1.Coul_tube.errors.required">
+                      Couleur Tube est obligatoire
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

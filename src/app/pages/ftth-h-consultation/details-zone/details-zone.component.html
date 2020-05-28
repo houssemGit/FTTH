@@ -25,7 +25,7 @@
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
                       <div id="P2Ports">
-                        <label *ngFor="let port of ports; let i = index " nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="top" class="switch grid-item" class="switch grid-item">
+                        <label *ngFor="let port of ports; let i = index " nbPopover={{port.Position_tiroir}}--Couleur_fibre:{{port.Couleur_fibre}}--Couleur_tube:{{port.Couleur_tube}} nbPopoverTrigger="hint" nbPopoverPlacement="top" class="switch grid-item" class="switch grid-item">
                           <br /><br />
                           <div style="text-align: center ; ">{{ i + 1 }}</div>
                          <input type="checkbox" (click)="cheky(i)" *ngIf="port.Etat=='Raccorde'" checked="true" disabled  /><span class="slider"></span>
@@ -94,7 +94,7 @@
                       <a>Ports OUT:</a>
                       <div id="P2Ports">
                         <label *ngFor="let port of portss; let i = index "  class="switch grid-item">
-                          <div style=" height:20px" *ngIf="port.Position_tiroir != null" nbPopover={{port.Position_tiroir}} nbPopoverTrigger="hint" nbPopoverPlacement="top">
+                          <div style=" height:20px" *ngIf="port.Position_tiroir != null" nbPopover={{port.Position_tiroir}}--Couleur_fibre:{{port.Couleur_fibre}}--Couleur_tube:{{port.Couleur_tube}} nbPopoverTrigger="hint" nbPopoverPlacement="top">
                           <br /><br />
                           <div style="text-align: center ; ">{{ i + 1 }}</div>
                          <input  type="checkbox"  *ngIf="port.Etat=='Raccorde' ; " checked="true" disabled /><span class="slider"></span>
@@ -138,6 +138,8 @@
       </div>
       <div class="modal-body">
         <h6>Tiroir Transport: {{posTT}}</h6>
+        <h6>Couleur Tube: {{coultube}}</h6>
+        <h6>Couleur Fibre: {{coulfibre}}</h6>
         <h6>Nom OLT: {{nomOLT}}</h6>
         <h6>N°Cassette: {{posC}}</h6>
         <h6>N°Splitter: {{posS}}</h6>

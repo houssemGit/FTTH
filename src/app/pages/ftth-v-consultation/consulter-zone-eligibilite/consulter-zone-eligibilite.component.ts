@@ -25,7 +25,7 @@ export class ConsulterZoneEligibiliteComponent implements OnInit {
     this.router.navigateByUrl('pages/consulter-immeubles/details-eligibilite')
   }
   ngOnInit() {
-    localStorage.clear()
+    //localStorage.clear()
     this.ftthService.AllSro().subscribe(data=>{
       this.sros=data
     },error => {this.status="warning"

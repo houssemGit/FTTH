@@ -25,21 +25,28 @@ export class GererSroComponent implements OnInit {
   rest = [1,2,3,4,5,6,7,8,9,10,11]
 
   ngOnInit() {
-    localStorage.clear();
+    localStorage.removeItem('ID_port');localStorage.removeItem('ID_olt');localStorage.removeItem('ID_pri');localStorage.removeItem('ID_sro')
+    localStorage.removeItem('ID_cassette')
     this.sros=[]
     this.ftthService.AllSro().subscribe(data => {this.sros = data;}, error => {this.status="warning"
     this.toastrService.show(``,`Aucun SRO`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
+    //clear storage
+    localStorage.removeItem("Nom_zone");localStorage.removeItem("Nom_sro");localStorage.removeItem("N_N_C_T")
+
   }
 
   constructor(private toastrService: NbToastrService,private formBuilder: FormBuilder, private router: Router, private ftthService: FtthService) {
     this.FormRacOut = this.formBuilder.group({
       Num_TT: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Pos_TT:['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Coul_fib:["", Validators.required],
+      Coul_tube:["", Validators.required],
     });
 
     this.FormRacIn = this.formBuilder.group({
-      Pos_TTin : ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.pattern('^[0-9]*$')])],
-      Num_TTin : ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.pattern('^[0-9]*$')])],
+      Pos_TTin :['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Num_TTin :['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+
     });
 
   }
@@ -154,6 +161,21 @@ export class GererSroComponent implements OnInit {
   }
 
 
+
+
+  get ctu() {
+    return this.FormRacOut.get("Coul_tube");
+  }
+  Coul_tube(e) {
+    this.ctu.setValue(e.target.value, { onlySelf: true });
+  }
+  get cfb() {
+    return this.FormRacOut.get("Coul_fib");
+  }
+  Coul_fib(e) {
+    this.cfb.setValue(e.target.value, { onlySelf: true });
+  }
+
   get fval1() {
     return this.FormRacOut.controls;
   }
@@ -186,29 +208,46 @@ export class GererSroComponent implements OnInit {
 
 
   SubRaccordeIN(){
+    this.bool=true
     this.submitted = true;
     if (this.FormRacIn.invalid) {
       return console.log("champs invalid");
     }
     this.loading = true;
-
     this.porto.Position_tiroir= "TT N°: "+this.FormRacIn.controls["Num_TTin"].value+" Position: "+this.FormRacIn.controls["Pos_TTin"].value;
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
-    this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
-    this.closeModal.nativeElement.click()
-    localStorage.setItem("ID_port",'')
+    this.ftthService.UniquePosSro(localStorage.getItem("ID_sro"),this.porto.Position_tiroir).subscribe(data=>{
+      if(data==true) {
+       this.bool=false
+       this.status="danger";
+       this.toastrService.show(``,`Position tiroire déjà raccordée!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 3000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+       this.closeModal.nativeElement.click()
+       this.annulerRIN()
+       return console.log("Non unique");}
+
+       if(this.bool){
+        this.porto.Couleur_fibre="none"
+        this.porto.Couleur_tube="none"
+        this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
+        this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
+        this.closeModal.nativeElement.click()
+        localStorage.removeItem("ID_port")
+       }
+    })
+
 
   }
   DeraccordeIN(){
+    this.porto.Couleur_fibre="none"
+    this.porto.Couleur_tube="none"
     this.porto.Position_tiroir="Non Raccordé"
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
-    localStorage.setItem("ID_port",'')
+    localStorage.removeItem("ID_port")
 
    }
    annulerRIN(){
     this.ftthService.updatePort(localStorage.getItem("ID_port") , this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat},(error)=>{alert('error modification!!');})
-    localStorage.setItem("ID_port",'')
+    localStorage.removeItem("ID_port")
 
   }
 
@@ -234,39 +273,55 @@ export class GererSroComponent implements OnInit {
 
   @ViewChild('closeModal2',{static: false}) private closeModal2: ElementRef;
   pos : number
+  bool: boolean
 
   SubRaccordeOUT(){
+    this.bool=true
     this.submitted = true;
     if (this.FormRacOut.invalid) {return console.log("champs invalid");}
     this.loading = true;
 
-    //this.porto=null
     this.porto.Position_tiroir= "TD N°: "+this.FormRacOut.controls["Num_TT"].value+" Position: "+this.FormRacOut.controls["Pos_TT"].value
-    this.pos= Number(localStorage.getItem('Port_position'))-1
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
-    this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
-    this.closeModal2.nativeElement.click()
-    localStorage.setItem("Port_position",'')
-    localStorage.setItem("ID_port",'')
+    this.ftthService.UniquePosSroOut(localStorage.getItem("ID_sro"),this.porto.Position_tiroir).subscribe(data=>{
+     if(data==true) {
+      this.bool=false
+      this.status="danger";
+      this.toastrService.show(``,`Position tiroire déjà raccordée!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 3000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+      this.closeModal2.nativeElement.click()
+      this.annulerROUT()
+      return console.log("Non unique");}
+
+      if(this.bool){
+        this.porto.Couleur_fibre=this.FormRacOut.controls["Coul_fib"].value
+        this.porto.Couleur_tube=this.FormRacOut.controls["Coul_tube"].value
+        this.pos= Number(localStorage.getItem('Port_position'))-1
+        this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
+        this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
+        this.closeModal2.nativeElement.click()
+        localStorage.removeItem("Port_position")
+        localStorage.removeItem("ID_port")
+       }
+    })
 
   }
 
   DeraccordeOUT(){
+    this.porto.Couleur_fibre="none"
+    this.porto.Couleur_tube="none"
     this.porto.Position_tiroir="Non Raccordé"
     this.pos= Number(localStorage.getItem('Port_position'))-1
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
-    localStorage.setItem("Port_position",'')
-    localStorage.setItem("ID_port",'')
+    localStorage.removeItem("Port_position")
+    localStorage.removeItem("ID_port")
 
    }
    annulerROUT(){
 
     this.pos= Number(localStorage.getItem('Port_position'))-1
-    console.log(this.pos);
     this.ftthService.updatePort(localStorage.getItem("ID_port") , this.porto).subscribe((data)=>{ this.ports[this.pos] = data;},(error)=>{alert('error modification!!');})
-    localStorage.setItem("Port_position",'')
-    localStorage.setItem("ID_port",'')
+    localStorage.removeItem("Port_position")
+    localStorage.removeItem("ID_port")
   }
 
 
@@ -282,6 +337,8 @@ export class GererSroComponent implements OnInit {
   posC : Number
   nomOLT : string
   posTT : string
+  coulfibre : string
+  coultube : string
 
   showCrsp(e){
 
@@ -294,6 +351,8 @@ export class GererSroComponent implements OnInit {
     this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
       this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
         this.posTT=this.portOUT[0].Position_tiroir
+        this.coulfibre=this.portOUT[0].Couleur_fibre
+        this.coultube=this.portOUT[0].Couleur_tube
         this.posP=this.portOUT[0].Position
         console.log(this.portOUT[0].ID_splitter);
 

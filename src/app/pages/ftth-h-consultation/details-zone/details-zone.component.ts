@@ -87,7 +87,10 @@ export class DetailsZoneComponent implements OnInit {
   posC : Number
   posTT : string
   nomOLT : string
+  coulfibre : string
+  coultube : string
   oloto: Olt
+
 
 
   showCrsp(e){
@@ -97,6 +100,8 @@ export class DetailsZoneComponent implements OnInit {
     this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
       this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
         this.posTT=this.portOUT[0].Position_tiroir
+        this.coulfibre=this.portOUT[0].Couleur_fibre
+        this.coultube=this.portOUT[0].Couleur_tube
         this.posP=this.portOUT[0].Position
 
         this.ftthService.getSplitterById(this.portOUT[0].ID_splitter).subscribe(data => {this.splt = data;

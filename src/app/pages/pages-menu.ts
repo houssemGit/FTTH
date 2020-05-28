@@ -71,6 +71,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'shuffle-2-outline',
     link: '/pages/consulter-immeubles/consulter-zone-eligibilite',
   },
+  /*
 
   {
     title: 'iot-dashboard',
@@ -323,6 +324,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  */
 
 
 ];

@@ -27,8 +27,12 @@ export class DetailsImmeubleComponent implements OnInit {
   porti: Array<Port>
   pris: Array<Pri>;
   monos : Array<Monosite>;
+  zoen:string
+
+
 
   ngOnInit() {
+    this.zoen=localStorage.getItem("choixzone")
   }
 
   openRes(){
@@ -77,8 +81,11 @@ export class DetailsImmeubleComponent implements OnInit {
   posCo:number
   portIN1: Array<Port>
   portOUT1: Port
-
   pri: Pri
+  coulfibre : string
+  coultube : string
+  coulfibre1 : string
+  coultube1 : string
 
 
   showCrspPri(e){this.ftthService.getPriById(localStorage.getItem("ID_pri")).subscribe((data)=>{this.pri= data
@@ -94,7 +101,9 @@ export class DetailsImmeubleComponent implements OnInit {
 
    this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
      this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
-       this.posTD=this.portOUT[0].Position_tiroir
+      this.coulfibre=this.portOUT[0].Couleur_fibre
+      this.coultube=this.portOUT[0].Couleur_tube
+      this.posTD=this.portOUT[0].Position_tiroir
        this.posPs=this.portOUT[0].Position
 
       // position spliter cassette SRO
@@ -109,8 +118,9 @@ export class DetailsImmeubleComponent implements OnInit {
 
             this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
              this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
-
-               this.posTT=this.portOUT1[0].Position_tiroir
+              this.coulfibre1=this.portOUT1[0].Couleur_fibre
+              this.coultube1=this.portOUT1[0].Couleur_tube
+              this.posTT=this.portOUT1[0].Position_tiroir
                this.posPo=this.portOUT1[0].Position
 
                // position spliter cassette OLT
@@ -157,7 +167,9 @@ export class DetailsImmeubleComponent implements OnInit {
         }, (error)=>{})
 
        this.ftthService.getPortCorrespondantIn(e.Pos_tiroir_distribution).subscribe(data => {this.portOUT = data;
-         this.posTD=this.portOUT[0].Position_tiroir
+        this.coulfibre=this.portOUT[0].Couleur_fibre
+        this.coultube=this.portOUT[0].Couleur_tube
+        this.posTD=this.portOUT[0].Position_tiroir
          this.posPs=this.portOUT[0].Position
 
 
@@ -172,7 +184,8 @@ export class DetailsImmeubleComponent implements OnInit {
 
               this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
                this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
-
+                this.coulfibre1=this.portOUT1[0].Couleur_fibre
+                this.coultube1=this.portOUT1[0].Couleur_tube
                  this.posTT=this.portOUT1[0].Position_tiroir
                  this.posPo=this.portOUT1[0].Position
 

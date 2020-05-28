@@ -1,4 +1,5 @@
-<button routerLink="../ajout-client" class="btn btn-success" style="float:right ;width:200px"><i class="far fa-plus-square"></i>  Ajouter Client </button>
+<a style="font-weight:bold ;font-size: medium ">Gestion clients {{bool}}>{{zoen}}>{{res}}</a>
+<button routerLink="../ajout-client" nbButton status="success" style="float:right ;width:200px"><i class="far fa-plus-square"></i>  Ajouter Client </button>
 <br>
 <br>
 <br>
@@ -13,7 +14,11 @@
       <th>Budget optique</th>
       <th>Type client</th>
       <th>Contact client</th>
-      <th>Nom Immeuble</th>
+      <th>KCRM</th>
+      <th>Debit</th>
+      <th>Nom_soustraitant</th>
+      <th>Adresse immeuble</th>
+      <!-- <th>Etat</th> -->
       <th>Num steg</th>
       <th>Action</th>
     </tr>
@@ -28,6 +33,10 @@
     <td>{{e.Budget_optique}}</td>
     <td>{{e.Type_client}}</td>
     <td>{{e.Num_telephone}}</td>
+    <td>{{e.KCRM}}</td>
+    <td>{{e.Debit}}</td>
+    <td>{{e.Nom_soustraitant}}</td>
+    <!-- <td>{{e.Etat}}</td> -->
     <td>{{e.Adresse}}</td>
     <td>{{e.Num_steg}}</td>
    <td >

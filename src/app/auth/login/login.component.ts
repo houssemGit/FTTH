@@ -22,6 +22,7 @@ export class LoginComponent extends NbLoginComponent  {
 
   ) {
     super(service, options, cd, router);
+    localStorage.clear();
   }
 
 
@@ -30,13 +31,24 @@ export class LoginComponent extends NbLoginComponent  {
       this.messages = [];
       this.submitted = true;
 
-      this.authService.login(this.user.email, this.user.password)
-        .toPromise()
-        .then(res => {
-          this.authService.authorize(res);
-        })
-        .then(() => alert ("login sucess ") )
-        .catch(() => alert ("login echoue "));
+      this.authService.login(this.user).subscribe(data=> {
+        localStorage.setItem('token',data['token']);
+        let jwtData = data['token'].split('.')[1]
+        let decodedJwtJsonData = window.atob(jwtData)
+        let decodedJwtData = JSON.parse(decodedJwtJsonData)
+        this.authService.getUserById(decodedJwtData.sub).subscribe(data => {
+        localStorage.setItem('role',data.Role);
+        localStorage.setItem('username',data.Nom+' '+data.Prenom);
+        this.router.navigateByUrl('/pages/dashboard')})
+  });
+
+      // this.authService.login(this.user)
+      //   .toPromise()
+      //   .then(res => {
+      //     this.authService.authorize(res);
+      //   })
+      //   .then(() => alert ("login sucess ") )
+      //   .catch(() => alert ("login echoue "));
     }
 
 

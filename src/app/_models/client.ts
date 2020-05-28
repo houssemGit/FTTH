@@ -8,7 +8,10 @@ export class Client {
   Num_telephone: number
   MSISDN: string
   Code_site: string
-
+  KCRM:string
+  Debit:string
+  Nom_soustraitant:string
+  Etat_client:string
 
   constructor(){
 

@@ -40,11 +40,13 @@ export class GererMonositeComponent implements OnInit {
   submitted = false;
 
   concat: Array<any>
-
-
+  zoen:string
 
   ngOnInit() {
-
+    this.zoen=localStorage.getItem("choixzone")
+    localStorage.removeItem("ID_immeuble")
+    localStorage.removeItem("num_monosite")
+    localStorage.removeItem("Pos_tiroir_distribution")
     this.concat=[]
     this.ftthService.getMonositeByZone(localStorage.getItem('ID_sro')).subscribe(data => {
       this.monos = data;
@@ -54,6 +56,8 @@ export class GererMonositeComponent implements OnInit {
     }, error => {
     this.status="warning"
     this.toastrService.show(``,`Aucun Monosite`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
+    localStorage.removeItem("Etat_con");localStorage.removeItem("Etat_racc");localStorage.removeItem("Num_steg");localStorage.removeItem("Adresse");localStorage.removeItem("Nom_monosite");localStorage.removeItem("Num_plan");localStorage.removeItem("Type_immeuble");
+
   }
 
   editmono(e) {
@@ -66,17 +70,17 @@ export class GererMonositeComponent implements OnInit {
     {localStorage.setItem("Pos_tiroir_distribution", e.Pos_tiroir_distribution.toString())}
     localStorage.setItem("Num_plan", e.Num_plan.toString());
     localStorage.setItem("Type_immeuble", e.Type_immeuble.toString());
-
-
+    localStorage.setItem("Etat_con", e.Etat_convention.toString());
+    localStorage.setItem("Etat_racc", e.Etat_raccordement.toString());
     this.router.navigateByUrl("pages/immeubles/modifier-monosite");
   }
 
   deletemono(e) {
-    localStorage.setItem("ID_monosite",e.ID_immeuble)
+    localStorage.setItem("ID_immeuble",e.ID_immeuble)
   }
 
   ConfirmeSupR(){
-    this.ftthService.deleteMono(localStorage.getItem("ID_monosite")).subscribe(
+    this.ftthService.deleteMono(localStorage.getItem("ID_immeuble")).subscribe(
       Response => {
         this.status="danger"
         this.toastrService.show(``,`Monosite supprimée avec sucess!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
@@ -87,7 +91,7 @@ export class GererMonositeComponent implements OnInit {
   }
 
   annulerSup(){
-    localStorage.setItem("ID_monosite",'')
+    localStorage.setItem("ID_immeuble",'')
   }
 
   portpriOUT: Port
@@ -118,6 +122,10 @@ export class GererMonositeComponent implements OnInit {
   olt : Olt
   nomSRO: string
   nomOLT: string
+  coulfibre : string
+  coultube : string
+  coulfibre1 : string
+  coultube1 : string
 
   showCrsp(e){//nom équipements
     this.ftthService.getSroById(e.ID_sro).subscribe((data)=>{this.sro= data
@@ -128,8 +136,8 @@ export class GererMonositeComponent implements OnInit {
       }, (error)=>{})
 
      this.ftthService.getPortCorrespondantIn(e.Pos_tiroir_distribution).subscribe(data => {this.portOUT = data;
-      console.log(this.portOUT[0].Position_tiroir);
-
+      this.coulfibre=this.portOUT[0].Couleur_fibre
+      this.coultube=this.portOUT[0].Couleur_tube
        this.posTD=this.portOUT[0].Position_tiroir
        this.posPs=this.portOUT[0].Position
 
@@ -145,7 +153,8 @@ export class GererMonositeComponent implements OnInit {
 
             this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
              this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
-
+              this.coulfibre1=this.portOUT1[0].Couleur_fibre
+              this.coultube1=this.portOUT1[0].Couleur_tube
                this.posTT=this.portOUT1[0].Position_tiroir
                this.posPo=this.portOUT1[0].Position
 
@@ -187,7 +196,9 @@ export class GererMonositeComponent implements OnInit {
 
   }
 
+  bool: boolean
   SubRaccordeIN(){
+    this.bool=true
     this.submitted = true;
     if (this.FormRacIn.invalid) {
       return console.log("champs invalid");
@@ -195,15 +206,27 @@ export class GererMonositeComponent implements OnInit {
     this.loading = true;
 
     this.mono.Pos_tiroir_distribution= "TD N°: "+this.FormRacIn.controls["n_t_d"].value+" Position: "+this.FormRacIn.controls["P_t_d"].value;
-    this.ftthService.raccorderPtoM(localStorage.getItem("ID_immeuble") ,this.mono).subscribe((data)=>{
-    //this.concat[Number(localStorage.getItem("num_monosite"))]= data
-    this.pto=[]
-    this.pto.push(data.Pos_tiroir_distribution)
-    this.status="success"
-    this.toastrService.show(``,`Monosite raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
-    this.ngOnInit()}
-    ,(error)=>{alert('error modification!!');})
-    this.closeModal.nativeElement.click()
+    this.ftthService.UniquePosMonosite(localStorage.getItem("ID_immeuble"),this.mono.Pos_tiroir_distribution).subscribe(data=>{
+      if(data==true) {
+       this.bool=false
+       this.status="danger";
+       this.toastrService.show(``,`Position tiroire déjà raccordée!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 3000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+       this.closeModal.nativeElement.click()
+       this.annulerRIN()
+       return console.log("Non unique");}
+
+       if(this.bool){
+        this.ftthService.raccorderPtoM(localStorage.getItem("ID_immeuble") ,this.mono).subscribe((data)=>{
+          //this.concat[Number(localStorage.getItem("num_monosite"))]= data
+          this.pto=[]
+          this.pto.push(data.Pos_tiroir_distribution)
+          this.status="success"
+          this.toastrService.show(``,`Monosite raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+          this.ngOnInit()}
+          ,(error)=>{alert('error modification!!');})
+          this.closeModal.nativeElement.click()
+        }
+     })
   }
 
   DeraccordeIN(){
@@ -213,19 +236,17 @@ export class GererMonositeComponent implements OnInit {
     this.pto.push(data.Pos_tiroir_distribution)
     this.status="success"
     this.toastrService.show(``,`Monosite déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+
       this.ngOnInit();
   },(error)=>{alert('error modification!!');})
    }
 
    annulerRIN(){
-// ngfor trefreshi k addi wala removi wala reordri element mel array
-
     this.pto=[]
     this.pto.push(localStorage.getItem("Pos_tiroir_distribution"))
 
-    localStorage.setItem("ID_monosite", "")
-    localStorage.setItem("num_monosite", "")
-    localStorage.setItem("Pos_tiroir_distribution", "")
+    localStorage.removeItem("num_monosite")
+    localStorage.removeItem("Pos_tiroir_distribution")
   }
 
   pto: Array<string>

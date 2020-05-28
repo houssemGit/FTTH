@@ -11,7 +11,7 @@
           formControlName="Num_steg"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }"
-          placeholder="Entrer Numero steg  ici"
+          placeholder="Entrer Numero steg  içi"
         />
         <div *ngIf="submitted && fval.Num_steg.errors" class="invalid-feedback">
           <div *ngIf="fval.Num_steg.errors.required">Numero steg est obligatoire</div>
@@ -26,7 +26,7 @@
           formControlName="Adresse"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && fval.Adresse.errors }"
-          placeholder="Entrer Adresse ici"
+          placeholder="Entrer Adresse içi"
         />
         <div *ngIf="submitted && fval.Adresse.errors" class="invalid-feedback">
           <div *ngIf="fval.Adresse.errors.required">Adresse est obligatoire</div>
@@ -40,7 +40,7 @@
           formControlName="Nom"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && fval.Nom.errors }"
-          placeholder="Entrer Nom ici"
+          placeholder="Entrer Nom içi"
         />
         <div *ngIf="submitted && fval.Nom.errors" class="invalid-feedback">
           <div *ngIf="fval.Nom.errors.required">Nom est obligatoire</div>
@@ -53,10 +53,70 @@
           formControlName="Num_plan"
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && fval.Num_plan.errors }"
-          placeholder="Entrer Num plan ici"
+          placeholder="Entrer Num plan içi"
         />
         <div *ngIf="submitted && fval.Num_plan.errors" class="invalid-feedback">
           <div *ngIf="fval.Num_plan.errors.required">Numero plan est obligatoire</div>
+        </div>
+      </div>
+      <!-- select item -->
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Etat Convention</label>
+              <select
+                class="custom-select "
+                (change)="Etat_con($event)"
+                formControlName="Etat_con"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.Etat_con.errors }"
+                placeholder="Entrer Etat Convention içi"
+              >
+                <option value="" >Entrer Etat_con içi</option>
+                <option *ngFor="let Etat_con of ch1" [value]="Etat_con" >{{Etat_con}}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && fval.Etat_con.errors"
+              >
+                <div *ngIf="fval.Etat_con.errors.required">
+                  Etat Convention est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- select item -->
+      <div class="form-group">
+        <div class="group-gap">
+          <div class="d-block my-3">
+            <div class="mb-3">
+              <label style="margin-right: 2rem;">Etat Raccordement</label>
+              <select
+                class="custom-select "
+                (change)="Etat_racc($event)"
+                formControlName="Etat_racc"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.Etat_racc.errors }"
+                placeholder="Entrer Etat Raccordement içi"
+              >
+                <option value="" >Entrer Etat Raccordement içi</option>
+                <option *ngFor="let Etat_racc of ch2" [value]="Etat_racc" >{{Etat_racc}}</option>
+              </select>
+              <!--  error block -->
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && fval.Etat_racc.errors"
+              >
+                <div *ngIf="fval.Etat_racc.errors.required">
+                  Etat Raccordement est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

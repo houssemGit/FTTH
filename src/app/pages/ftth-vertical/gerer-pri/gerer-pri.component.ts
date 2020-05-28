@@ -25,16 +25,25 @@ export class GererPriComponent implements OnInit {
   rest = [1,2,3,4,5,6,7,8,9,10,11]
 
   ngOnInit() {
+    localStorage.removeItem('ID_port')
+    localStorage.removeItem('ID_olt')
+    localStorage.removeItem('ID_pri')
+    localStorage.removeItem('ID_cassette')
     this.pris=[]
     this.ftthService.getPriByZone(localStorage.getItem('ID_sro')).subscribe(data => {this.pris = data;}, error => {
     this.status="warning"
     this.toastrService.show(``,`Aucun PRI`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
+    // clear storage
+    localStorage.removeItem("Adresse");localStorage.removeItem("Nom_residence");localStorage.removeItem("Nom_pri");localStorage.removeItem("N_C_C_D");localStorage.removeItem("Num_plan");localStorage.removeItem("Nb_prise");localStorage.removeItem("Num_syndique");localStorage.removeItem("Nom_syndique");localStorage.removeItem("Etat_convention");localStorage.removeItem("Etat_raccordement");
+
   }
 
   constructor(private toastrService: NbToastrService,private formBuilder: FormBuilder, private router: Router, private ftthService: FtthService) {
     this.FormRacOut = this.formBuilder.group({
       Num_TD: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Pos_TD:['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Coul_fib:["", Validators.required],
+      Coul_tube:["", Validators.required],
     });
 
     this.FormRacIn = this.formBuilder.group({
@@ -59,8 +68,10 @@ export class GererPriComponent implements OnInit {
     localStorage.setItem("Nb_prise", e.Nb_prise.toString());
     localStorage.setItem("Num_syndique", e.Num_syndique.toString());
     localStorage.setItem("Nom_syndique", e.Nom_syndique.toString());
-    localStorage.setItem("ID_sro", e.ID_sro.toString());
-    localStorage.setItem("Etat", e.Etat.toString());
+    localStorage.setItem("Etat_convention", e.Etat_convention.toString());
+    localStorage.setItem("Etat_raccordement", e.Etat_raccordement.toString());
+
+
     this.router.navigateByUrl("pages/immeubles/modifier-pri");
   }
 
@@ -118,7 +129,6 @@ export class GererPriComponent implements OnInit {
   }
 
   AjoutC(e){
-    //localStorage.setItem("ID_pri", e.ID_pri.toString());
     this.router.navigateByUrl("pages/zones/ajout-cassette");
   }
   AjoutS(e){
@@ -149,10 +159,23 @@ export class GererPriComponent implements OnInit {
   openP(e) {
     this.ports=[]
     this.porti=[]
-    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.ports = data; console.log(this.ports);
+    this.ftthService.getBySplitterOut(e.ID_splitter).subscribe(data => {this.ports = data;
     },error => alert('error ports'));
     this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => { this.porti = data; this.itat=this.porti[0].Etat},error=>{alert('error')});
 
+  }
+
+  get ctu() {
+    return this.FormRacOut.get("Coul_tube");
+  }
+  Coul_tube(e) {
+    this.ctu.setValue(e.target.value, { onlySelf: true });
+  }
+  get cfb() {
+    return this.FormRacOut.get("Coul_fib");
+  }
+  Coul_fib(e) {
+    this.cfb.setValue(e.target.value, { onlySelf: true });
   }
 
   get fval1() {
@@ -187,20 +210,37 @@ export class GererPriComponent implements OnInit {
 
 
   SubRaccordeIN(){
+    this.bool=true
     this.submitted = true;
     if (this.FormRacIn.invalid) {
       return console.log("champs invalid");
     }
     this.loading = true;
-
     this.porto.Position_tiroir= "TD N°: "+this.FormRacIn.controls["Num_TDin"].value+" Position: "+this.FormRacIn.controls["Pos_TDin"].value;
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
-    this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
-    this.closeModal.nativeElement.click()
-    localStorage.setItem("ID_port",'')
+    this.ftthService.UniquePosPri(localStorage.getItem("ID_pri"),this.porto.Position_tiroir).subscribe(data=>{
+      if(data==true) {
+       this.bool=false
+       this.status="danger";
+       this.toastrService.show(``,`Position tiroire déjà raccordée!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 3000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+       this.closeModal.nativeElement.click()
+       this.annulerRIN()
+       return console.log("Non unique");}
+
+       if(this.bool){
+        this.porto.Couleur_fibre="none"
+        this.porto.Couleur_tube="none"
+        this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
+        this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
+        this.closeModal.nativeElement.click()
+        localStorage.removeItem("ID_port")
+        }
+    })
+
 
   }
   DeraccordeIN(){
+    this.porto.Couleur_fibre="none"
+    this.porto.Couleur_tube="none"
     this.porto.Position_tiroir="Non Raccordé"
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{this.porti[0] = data;this.itat=this.porti[0].Etat;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
@@ -231,39 +271,55 @@ export class GererPriComponent implements OnInit {
 
   @ViewChild('closeModal2',{static: false}) private closeModal2: ElementRef;
   pos : number
+  bool: boolean
+
 
   SubRaccordeOUT(){
+    this.bool=true
     this.submitted = true;
     if (this.FormRacOut.invalid) {return console.log("champs invalid");}
     this.loading = true;
 
-    //this.porto=null
     this.porto.Position_tiroir= "TCM N°: "+this.FormRacOut.controls["Num_TD"].value+" Position: "+this.FormRacOut.controls["Pos_TD"].value
-    this.pos= Number(localStorage.getItem('Port_position'))-1
-    this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
-    this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
-    this.closeModal2.nativeElement.click()
-    localStorage.setItem("Port_position",'')
-    localStorage.setItem("ID_port",'')
+    this.ftthService.UniquePosPriOut(localStorage.getItem("ID_pri"),this.porto.Position_tiroir).subscribe(data=>{
+      if(data==true) {
+       this.bool=false
+       this.status="danger";
+       this.toastrService.show(``,`Position tiroire déjà raccordée!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 3000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+       this.closeModal2.nativeElement.click()
+       this.annulerROUT()
+       return console.log("Non unique");}
 
+       if(this.bool){
+        this.porto.Couleur_fibre=this.FormRacOut.controls["Coul_fib"].value
+        this.porto.Couleur_tube=this.FormRacOut.controls["Coul_tube"].value
+        this.pos= Number(localStorage.getItem('Port_position'))-1
+        this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
+        this.toastrService.show(``,`Port raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
+        this.closeModal2.nativeElement.click()
+        localStorage.removeItem("Port_position")
+        localStorage.removeItem("ID_port")
+        }
+     })
   }
 
   DeraccordeOUT(){
+    this.porto.Couleur_fibre="none"
+    this.porto.Couleur_tube="none"
     this.porto.Position_tiroir="Non Raccordé"
     this.pos= Number(localStorage.getItem('Port_position'))-1
     this.ftthService.raccorder(localStorage.getItem("ID_port") ,this.porto).subscribe((data)=>{ this.ports[this.pos] = data;this.status="success"
     this.toastrService.show(``,`Port déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});},(error)=>{alert('error modification!!');})
-    localStorage.setItem("Port_position",'')
-    localStorage.setItem("ID_port",'')
+    localStorage.removeItem("Port_position")
+    localStorage.removeItem("ID_port")
 
    }
 
    annulerROUT(){
     this.pos= Number(localStorage.getItem('Port_position'))-1
-    console.log(this.pos);
     this.ftthService.updatePort(localStorage.getItem("ID_port") , this.porto).subscribe((data)=>{ this.ports[this.pos] = data;},(error)=>{alert('error modification!!');})
-    localStorage.setItem("Port_position",'')
-    localStorage.setItem("ID_port",'')
+    localStorage.removeItem("Port_position")
+    localStorage.removeItem("ID_port")
   }
 
   portIN : Array<Port>
@@ -287,8 +343,10 @@ export class GererPriComponent implements OnInit {
   posCo:number
   portIN1: Array<Port>
   portOUT1: Port
-
-
+  coulfibre : string
+  coultube : string
+  coulfibre1 : string
+  coultube1 : string
 
   showCrsp(e){ //nom équipements
     this.ftthService.getPriById(localStorage.getItem("ID_pri")).subscribe((data)=>{this.pri= data
@@ -304,7 +362,9 @@ export class GererPriComponent implements OnInit {
 
      this.ftthService.getBySplitterIn(e.ID_splitter).subscribe(data => {this.portIN = data;
        this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
-         this.posTD=this.portOUT[0].Position_tiroir
+        this.coulfibre=this.portOUT[0].Couleur_fibre
+        this.coultube=this.portOUT[0].Couleur_tube
+        this.posTD=this.portOUT[0].Position_tiroir
          this.posPs=this.portOUT[0].Position
 
         // position spliter cassette SRO
@@ -319,7 +379,8 @@ export class GererPriComponent implements OnInit {
 
               this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
                this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
-
+                this.coulfibre1=this.portOUT1[0].Couleur_fibre
+                this.coultube1=this.portOUT1[0].Couleur_tube
                  this.posTT=this.portOUT1[0].Position_tiroir
                  this.posPo=this.portOUT1[0].Position
 

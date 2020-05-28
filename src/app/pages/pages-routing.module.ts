@@ -8,6 +8,12 @@ import { NotFoundComponent } from './miscellaneous/not-found/not-found.component
 import { AjoutCassetteComponent } from './cassette/ajout-cassette/ajout-cassette.component';
 import { AjoutSplitterComponent } from './cassette/ajout-splitter/ajout-splitter.component';
 import { TableaudebordComponent } from './tableaudebord/tableaudebord.component';
+import { TableaudebordZoneResidenceComponent } from './tableaudebord-zone-residence/tableaudebord-zone-residence.component';
+import { AdminGuard } from '../guards/roles/admin.guard.service';
+import { ExpertFtthHGuardService } from '../guards/roles/expert.ftth.h.guard.service';
+import { ExpertFtthVGuardService } from '../guards/roles/expert.ftth.v.guard.service';
+import { CommercialGuardService } from '../guards/roles/commercial.guard.service';
+import { AuthGuard } from '../guards/auth.guard.service';
 
 const routes: Routes = [{
   path: '',
@@ -16,46 +22,68 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: TableaudebordComponent,
+
+
+
+    },
+    {
+      path: 'dashboard-zone-residence',
+      component: TableaudebordZoneResidenceComponent,
+
     },
     {
       path: 'zones/ajout-cassette',
       component: AjoutCassetteComponent,
+      canActivate : [CommercialGuardService]
     },
     {
       path: 'zones/ajout-splitter',
       component: AjoutSplitterComponent,
+      canActivate : [CommercialGuardService]
+
     },
 
     {
       path: 'utilisateurs',
       loadChildren: () => import('./users/users.module')
         .then(m => m.UsersModule),
+      canActivate : [AdminGuard]
     },
     {
       path: 'zones',
       loadChildren: () => import('./ftth-horizental/ftth-horizental.module')
         .then(m => m.FtthHorizentalModule),
+        canActivate : [ExpertFtthHGuardService]
+
     },
      {
       path: 'immeubles',
       loadChildren: () => import('./ftth-vertical/ftth-vertical.module')
         .then(m => m.FtthVerticalModule),
+        canActivate : [ExpertFtthVGuardService]
     },
      {
       path: 'consulter-zones',
       loadChildren: () => import('./ftth-h-consultation/ftth-h-consultation.module')
         .then(m => m.FtthHConsultationModule),
+        canActivate : [CommercialGuardService]
     },
      {
       path: 'consulter-immeubles',
       loadChildren: () => import('./ftth-v-consultation/ftth-v-consultation.module')
         .then(m => m.FtthVConsultationModule),
+
+
+
     },
      {
       path: 'consulter-eligibilite',
       loadChildren: () => import('./ftth-v-consultation/ftth-v-consultation.module')
         .then(m => m.FtthVConsultationModule),
+
+
     },
+    /*
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
@@ -109,11 +137,13 @@ const routes: Routes = [{
       loadChildren: () => import('./tables/tables.module')
         .then(m => m.TablesModule),
     },
+    */
     {
       path: 'miscellaneous',
       loadChildren: () => import('./miscellaneous/miscellaneous.module')
         .then(m => m.MiscellaneousModule),
     },
+
     {
       path: '',
       redirectTo: 'dashboard',

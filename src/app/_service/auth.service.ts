@@ -17,28 +17,22 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
 
-  authorize = perf => {
-    /*
-      this.authorized.next(true);
-      const token = perf;
-      const payload = jwt_decode(token);
-      localStorage.setItem('apiToken', token);
-      localStorage.setItem('role', payload.scopes.authority);
-      */
-    localStorage.setItem("token", perf["token"]);
-    let jwtData = perf["token"].split(".")[1];
-    let decodedJwtJsonData = window.atob(jwtData);
-    let decodedJwtData = JSON.parse(decodedJwtJsonData);
-    console.log(decodedJwtData.sub);
-    this.userService.roleuser(decodedJwtData.sub).subscribe(data=>
-       {if (data=="Admin") alert("admin authorisé"); this.router.navigate(["/pages/main/dashboard"]);
-       });
-       //this.toastService.success('Вы вошли в систему!');
 
-  };
+  login(user : User) {
+    return this.http.post("http://localhost:8000/api/login", user);
+  }
+  getUserRoleById(id:number){
+     return this.http.get("http://localhost:8000/api/users/role/"+id.toString());
+  }
+  getUserById(id:number){
+     return this.http.get<User>("http://localhost:8000/api/users/user/"+id.toString());
+  }
 
-  login(login: string, password: string) {
-    return this.http.post("http://localhost:8000/api/login", {login, password});
+  getRole(){
+    return localStorage.getItem('role');
+  }
+  checkAvailability(): boolean {
+    return !!localStorage.getItem('token') && !!localStorage.getItem('role') && !!localStorage.getItem('username') ;
   }
 
   public logout() {
@@ -48,6 +42,6 @@ export class AuthService {
     this.router.navigate(["/login"]);
   }
   resetemail(data) {
-    return this.http.post("http://localhost:8000/api/resetemail", data);
+    return this.http.post("http://localhost:8000/api/users/reset", data);
   }
 }

@@ -152,43 +152,59 @@
           <div class="group-gap">
             <div class="d-block my-3">
               <div class="mb-3">
-                <label style="margin-right: 2rem;">Convention signée</label>
+                <label style="margin-right: 2rem;">Etat convention</label>
                 <select
                   class="custom-select "
-                  (change)="convention($event)"
-                  formControlName="convention"
+                  (change)="Etat_convention($event)"
+                  formControlName="Etat_convention"
                   class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && fval.convention.errors }"
-                  placeholder="Entrer Convention ici"
+                  [ngClass]="{ 'is-invalid': submitted && fval.Etat_convention.errors }"
+                  placeholder="Entrer Etat_convention ici"
                 >
-                  <option value="">Entrer nom Convention ici</option>
+                  <option value="">Entrer Etat convention ici</option>
                   <option *ngFor="let c of con" [value]="c" >{{c}}</option>
                 </select>
                 <!--  error block -->
                 <div
                   class="invalid-feedback"
-                  *ngIf="submitted && fval.convention.errors"
+                  *ngIf="submitted && fval.Etat_convention.errors"
                 >
-                  <div *ngIf="fval.convention.errors.required">
-                    etat convention est obligatoire
+                  <div *ngIf="fval.Etat_convention.errors.required">
+                  Etat convention est obligatoire
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
+        <!-- select item -->
         <div class="form-group">
-          <label for="delai">Delai raccordement</label>
-          <input
-            type="text"
-            formControlName="delai"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && fval.delai.errors }"
-            placeholder="Entrer Delai raccordement ici"
-          />
-          <div *ngIf="submitted && fval.delai.errors" class="invalid-feedback">
-            <div *ngIf="fval.delai.errors.required">Delai raccordement est obligatoire</div>
+          <div class="group-gap">
+            <div class="d-block my-3">
+              <div class="mb-3">
+                <label style="margin-right: 2rem;">Etat raccordement</label>
+                <select
+                  class="custom-select "
+                  (change)="Etat_raccordement($event)"
+                  formControlName="Etat_raccordement"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && fval.Etat_raccordement.errors }"
+                  placeholder="Entrer Etat_raccordement ici"
+                >
+                  <option value="">Entrer Etat raccordement ici</option>
+                  <option *ngFor="let c of racc" [value]="c" >{{c}}</option>
+                </select>
+                <!--  error block -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && fval.Etat_raccordement.errors"
+                >
+                  <div *ngIf="fval.Etat_raccordement.errors.required">
+                  Etat raccordement est obligatoire
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

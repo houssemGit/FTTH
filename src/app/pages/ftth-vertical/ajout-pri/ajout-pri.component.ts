@@ -24,7 +24,8 @@ export class AjoutPriComponent implements OnInit {
   pris:Array<Pri>= new Array
   ch: Array<String> = new Array
   ch1: Array<number> = new Array
-  con = ['oui','en cours','non']
+  con =["Signée" , "Non signée", "En cours"]
+  racc =["Raccordé", "Autorisation", "Travaux en cours", "Non raccordé"]
 
 
 
@@ -46,8 +47,8 @@ export class AjoutPriComponent implements OnInit {
       Nom_syndique: ["", Validators.required],
       Num_syndique: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}')])],
       Adresse: ['', Validators.required],
-      convention:['', Validators.required],
-      delai:['', Validators.required]
+      Etat_convention:['', Validators.required],
+      Etat_raccordement:['', Validators.required],
     });
 
     // affichage des zones
@@ -68,11 +69,18 @@ export class AjoutPriComponent implements OnInit {
   sro(e) {
     this.sor.setValue(e.target.value, { onlySelf: true });
   }
+
    get cc() {
-    return this.registerForm.get("convention");
+    return this.registerForm.get("Etat_convention");
   }
-  convention(e) {
+  Etat_convention(e) {
     this.cc.setValue(e.target.value, { onlySelf: true });
+  }
+   get ce() {
+    return this.registerForm.get("Etat_raccordement");
+  }
+  Etat_raccordement(e) {
+    this.ce.setValue(e.target.value, { onlySelf: true });
   }
 
   get fval() {
@@ -100,7 +108,8 @@ export class AjoutPriComponent implements OnInit {
     this.pri.Nom_syndique= this.registerForm.controls["Nom_syndique"].value;
     this.pri.Num_syndique= this.registerForm.controls["Num_syndique"].value;
     this.pri.Adresse= this.registerForm.controls["Adresse"].value;
-    this.pri.Etat=this.registerForm.controls["convention"].value +"-"+this.registerForm.controls["delai"].value;
+    this.pri.Etat_convention=this.registerForm.controls["Etat_convention"].value
+    this.pri.Etat_raccordement=this.registerForm.controls["Etat_raccordement"].value
 
 
 

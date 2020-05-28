@@ -18,7 +18,8 @@ import { Appartement } from '../../../_models/appartement';
 export class AjoutClientComponent implements OnInit {
 
 
- Type_clients = ['B2B', 'B2C']
+ Type_clients = ['B2B', 'B2C','Pro','P2P','OIAB']
+ Etat_clients = ['Raccordé','Non Raccordé','Résilié']
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -51,6 +52,10 @@ export class AjoutClientComponent implements OnInit {
       Num_steg: ['', Validators.required],
       Code_site: ['', Validators.required],
       MSISDN: ['', Validators.required],
+      KCRM: ['', Validators.required],
+      Debit: ['', Validators.required],
+      Nom_soustraitant: ['', Validators.required],
+      Etat_client: ['', Validators.required],
 
   });
 
@@ -128,8 +133,7 @@ export class AjoutClientComponent implements OnInit {
     while( i < this.Num_stegs.length && stop){
       if (this.Num_stegs[i]==this.registerForm.controls["Num_steg"].value)
       {this.client.ID_immeuble=this.ID_imm[i];
-        console.log(this.ID_imm[i]);
-        console.log(this.Num_stegs[i]);
+
 
       stop=false}
       else i++
@@ -150,6 +154,11 @@ export class AjoutClientComponent implements OnInit {
     this.client.Budget_optique = this.registerForm.controls["Budget_optique"].value;
     this.client.Type_client = this.registerForm.controls["Type_client"].value;
     this.client.Num_telephone = this.registerForm.controls["Num_telephone"].value;
+    this.client.KCRM = this.registerForm.controls["KCRM"].value;
+    this.client.Debit = this.registerForm.controls["Debit"].value;
+    this.client.Nom_soustraitant = this.registerForm.controls["Nom_soustraitant"].value;
+    this.client.Etat_client = this.registerForm.controls["Etat_client"].value;
+
 
     this.ftthservice.AjoutClient(this.client).subscribe(
       (data)=>{
@@ -173,11 +182,11 @@ export class AjoutClientComponent implements OnInit {
     this.type_c.setValue(e.target.value, {onlySelf: true})
   }
 
-    get num_s() {
-      return this.registerForm.get('Num_steg');
+    get etc() {
+      return this.registerForm.get('Etat_client');
     }
-   changeNum_steg(e) {
-    this.num_s.setValue(e.target.value, {onlySelf: true})
+    changeEtat_client(e) {
+    this.etc.setValue(e.target.value, {onlySelf: true})
 
   }
 

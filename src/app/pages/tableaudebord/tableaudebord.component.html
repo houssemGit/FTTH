@@ -4,7 +4,7 @@
   <a>
     <nb-select   placeholder="Filtre" [size]="large" [(ngModel)]="Fvalue" >
       <nb-option value="1">zone</nb-option>
-      <nb-option value="2">Monosite</nb-option>
+      <nb-option value="2">Adresse</nb-option>
       <nb-option value="3">Residence</nb-option>
     </nb-select>
   </a>
@@ -17,7 +17,7 @@
  <span style="float: right; ">
   <button (click)="verif()" nbButton status="primary"><i class="fas fa-search"></i>verifier</button>
 </span>
-<div  style="color: red;">{{erreur}}</div>
+<div  style="color: rgba(255, 0, 106, 0.959);">{{erreur}}</div>
 <br>
 <br>
 
@@ -26,34 +26,47 @@
 <!-- <pre>Localité: {{ model | json }}{{erreur}}</pre> -->
 <h6>Statistiques {{zone}}</h6>
 <div class="row">
-  <div class="col-xl-3 col-sm-6 py-2">
+  <div class="col-xl-2 col-sm-4 py-2">
     <nb-card status="success">
-      <nb-card-header>B2B</nb-card-header>
+      <nb-card-header>Clients B2B</nb-card-header>
     <nb-card-body>
-      <h1>{b2b}</h1>
+      <h1>{{b2b}}</h1>
     </nb-card-body>
   </nb-card>
 </div>
-  <div class="col-xl-3 col-sm-6 py-2">
+  <div class="col-xl-2 col-sm-4 py-2">
     <nb-card status="primary">
-      <nb-card-header>B2C</nb-card-header>
+      <nb-card-header>Clients B2C</nb-card-header>
     <nb-card-body>
-      <h1>{b2c}</h1>
+      <h1>{{b2c}}</h1>
     </nb-card-body>
   </nb-card>
 </div>
-  <div class="col-xl-3 col-sm-6 py-2">
-    <nb-card status="warning">
-      <nb-card-header>Mixte</nb-card-header>    <nb-card-body>
-      <h1>500</h1>
-    </nb-card-body>
-  </nb-card>
-</div>
-  <div class="col-xl-3 col-sm-6 py-2">
+  <div class="col-xl-2 col-sm-4 py-2">
     <nb-card status="danger">
-      <nb-card-header>Total</nb-card-header>
-    <nb-card-body>
-      <h1>500</h1>
+      <nb-card-header>Clients P2P</nb-card-header>    <nb-card-body>
+      <h1>{{p2p}}</h1>
+    </nb-card-body>
+  </nb-card>
+</div>
+  <div class="col-xl-2 col-sm-4 py-2">
+    <nb-card status="info">
+      <nb-card-header>Clients PRO</nb-card-header>    <nb-card-body>
+      <h1>{{pro}}</h1>
+    </nb-card-body>
+  </nb-card>
+</div>
+  <div class="col-xl-2 col-sm-4 py-2">
+    <nb-card status="warning">
+      <nb-card-header>Clients OIAB</nb-card-header>    <nb-card-body>
+      <h1>{{oiab}}</h1>
+    </nb-card-body>
+  </nb-card>
+</div>
+  <div class="col-xl-2 col-sm-4 py-2">
+    <nb-card status="success">
+      <nb-card-header>Total Clients</nb-card-header>    <nb-card-body>
+      <h1>{{nbclient}}</h1>
     </nb-card-body>
   </nb-card>
 </div>
@@ -65,7 +78,7 @@
 <div class="row">
 <div class="col-lg-7">
   <nb-card>
-    <nb-card-header>Charguia I</nb-card-header>
+    <nb-card-header>Total Prises</nb-card-header>
     <nb-card-body>
       <div class="echart">
       <ngx-charts-bar-vertical

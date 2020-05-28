@@ -59,7 +59,66 @@
           <div *ngIf="fval.Num_plan.errors.required">Numero plan est obligatoire</div>
         </div>
       </div>
-
+          <!-- select item -->
+          <div class="form-group">
+            <div class="group-gap">
+              <div class="d-block my-3">
+                <div class="mb-3">
+                  <label style="margin-right: 2rem;">Etat Convention</label>
+                  <select
+                    class="custom-select "
+                    (change)="Etat_con($event)"
+                    formControlName="Etat_con"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && fval.Etat_con.errors }"
+                    placeholder="Entrer Etat Convention içi"
+                  >
+                    <option value="" >Entrer Etat_con içi</option>
+                    <option *ngFor="let Etat_con of ch1" [value]="Etat_con" >{{Etat_con}}</option>
+                  </select>
+                  <!--  error block -->
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && fval.Etat_con.errors"
+                  >
+                    <div *ngIf="fval.Etat_con.errors.required">
+                      Etat Convention est obligatoire
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- select item -->
+          <div class="form-group">
+            <div class="group-gap">
+              <div class="d-block my-3">
+                <div class="mb-3">
+                  <label style="margin-right: 2rem;">Etat Raccordement</label>
+                  <select
+                    class="custom-select "
+                    (change)="Etat_racc($event)"
+                    formControlName="Etat_racc"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && fval.Etat_racc.errors }"
+                    placeholder="Entrer Etat Raccordement içi"
+                  >
+                    <option value="" >Entrer Etat Raccordement içi</option>
+                    <option *ngFor="let Etat_racc of ch2" [value]="Etat_racc" >{{Etat_racc}}</option>
+                  </select>
+                  <!--  error block -->
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && fval.Etat_racc.errors"
+                  >
+                    <div *ngIf="fval.Etat_racc.errors.required">
+                      Etat Raccordement est obligatoire
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
 

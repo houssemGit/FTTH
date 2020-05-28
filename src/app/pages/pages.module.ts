@@ -25,6 +25,7 @@ import { AjoutCassetteComponent } from './cassette/ajout-cassette/ajout-cassette
 import { AjoutSplitterComponent } from './cassette/ajout-splitter/ajout-splitter.component';
 import { TableaudebordComponent } from './tableaudebord/tableaudebord.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TableaudebordZoneResidenceComponent } from './tableaudebord-zone-residence/tableaudebord-zone-residence.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AjoutCassetteComponent,
     AjoutSplitterComponent,
     TableaudebordComponent,
+    TableaudebordZoneResidenceComponent,
 
   ],
 

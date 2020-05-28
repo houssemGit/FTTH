@@ -23,7 +23,8 @@ export class ModifierPriComponent implements OnInit {
   pris:Array<Pri>= new Array
   ch: Array<String> = new Array
   ch1: Array<number> = new Array
-  con = ['oui','en cours','non']
+  con =["Signée" , "Non signée", "En cours"]
+  racc =["Raccordé", "Autorisation", "Travaux en cours", "Non raccordé"]
   ssro : Sro
 
 
@@ -44,8 +45,8 @@ export class ModifierPriComponent implements OnInit {
       Num_syndique: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{8}')])],
       sro: ["", [Validators.required]],
       Adresse: ['', Validators.required],
-      convention:['', Validators.required],
-      delai:['', Validators.required]
+      Etat_convention:['', Validators.required],
+      Etat_raccordement:['', Validators.required],
     });
 
     this.registerForm.controls['Nom_pri'].setValue(localStorage.getItem('Nom_pri'))
@@ -56,10 +57,10 @@ export class ModifierPriComponent implements OnInit {
     this.registerForm.controls['Nom_syndique'].setValue(localStorage.getItem('Nom_syndique'))
     this.registerForm.controls['Num_syndique'].setValue(localStorage.getItem('Num_syndique'))
     this.registerForm.controls['Adresse'].setValue(localStorage.getItem('Adresse'))
-    //split function verif
-    var splt = localStorage.getItem('Etat').split('-',2)
-    this.registerForm.controls['convention'].setValue(splt[0])
-    this.registerForm.controls['delai'].setValue(splt[1])
+    this.registerForm.controls['Etat_convention'].setValue(localStorage.getItem('Etat_convention'))
+    this.registerForm.controls['Etat_raccordement'].setValue(localStorage.getItem('Etat_raccordement'))
+
+
 
     this.ftthService.getSroById(localStorage.getItem('ID_sro')).subscribe(data => {
       this.ssro= data
@@ -88,10 +89,16 @@ export class ModifierPriComponent implements OnInit {
   }
 
   get cc() {
-    return this.registerForm.get("convention");
+    return this.registerForm.get("Etat_convention");
   }
-  convention(e) {
+  Etat_convention(e) {
     this.cc.setValue(e.target.value, { onlySelf: true });
+  }
+   get ce() {
+    return this.registerForm.get("Etat_raccordement");
+  }
+  Etat_raccordement(e) {
+    this.ce.setValue(e.target.value, { onlySelf: true });
   }
 
   get fval() {
@@ -120,8 +127,8 @@ export class ModifierPriComponent implements OnInit {
     this.pri.Num_syndique = this.registerForm.controls["Num_syndique"].value;
     this.pri.Adresse = this.registerForm.controls["Adresse"].value;
     this.nomSRO= this.registerForm.controls["sro"].value;
-    this.pri.Etat=this.registerForm.controls["convention"].value +"-"+this.registerForm.controls["delai"].value;
-
+    this.pri.Etat_convention=this.registerForm.controls["Etat_convention"].value
+    this.pri.Etat_raccordement=this.registerForm.controls["Etat_raccordement"].value
 
     this.ftthService.AllSro().subscribe(data =>
       { this.sros=data
@@ -133,8 +140,8 @@ export class ModifierPriComponent implements OnInit {
 
     this.ftthService.updatePri(localStorage.getItem('ID_pri'),this.pri).subscribe(data => {
 
-      this.status="success"
-      this.toastrService.show(``,`PRI ajouté avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+      this.status="warning"
+      this.toastrService.show(``,`PRI modifié avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
       this.router.navigate(['pages/immeubles/gerer-pri']);
 
   },error => alert("error pri ajout"));

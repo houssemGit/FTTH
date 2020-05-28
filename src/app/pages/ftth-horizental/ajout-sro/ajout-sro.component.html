@@ -45,7 +45,7 @@
                 [ngClass]="{ 'is-invalid': submitted && fval.olt.errors }"
                 placeholder="Entrer olt ici"
               >
-                <option value="">Entrer OLT ici</option>
+                <option value="" >Entrer OLT ici</option>
                 <option *ngFor="let olt of ch" [value]="olt" >{{olt}}</option>
               </select>
               <!--  error block -->

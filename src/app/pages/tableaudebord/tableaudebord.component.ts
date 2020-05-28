@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FtthService } from '../../_service/ftth.service';
-import { NbToastrService, NbThemeService } from '@nebular/theme';
+import { NbToastrService, NbThemeService, NbGlobalPhysicalPosition, NbComponentStatus } from '@nebular/theme';
 import { Sro } from '../../_models/sro';
 import { Pri } from '../../_models/pri';
 import { Immeuble } from '../../_models/immeuble';
 import { Monosite } from '../../_models/monosite';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-tableaudebord',
@@ -20,9 +21,11 @@ export class TableaudebordComponent implements OnInit {
   options: any = {};
   Fvalue: string
   zone="Générales"
-  nbclient:number
-  b2b:number
-  b2c:number
+  nbclient:number ;b2b: number ;b2c: number ;p2p: number ; pro: number ; oiab: number
+  status: NbComponentStatus ;
+
+  dynam : Array<any>=new Array
+
 
   results = [
     { name: 'Total prises', value: 8940   },
@@ -34,15 +37,37 @@ export class TableaudebordComponent implements OnInit {
   showYAxis = true;
   xAxisLabel = 'Country';
   yAxisLabel = 'Prises';
-  constructor(    private ftthservice: FtthService,
+
+
+  constructor(    private ftthservice: FtthService,private router: Router,
     private toastrService: NbToastrService,private theme: NbThemeService) {
       this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
         const colors: any = config.variables;
         this.colorScheme = {
-          domain: [colors.primary, colors.warning , colors.success, colors.info , colors.danger],
+          domain: [colors.primary, colors.warning , colors.success, colors.info , colors.danger, ],
         };
       });
 
+  //     this.ftthservice.AllSro().subscribe(data => {
+  //       this.sros=data
+  //       for (let i = 0; i < this.sros.length; i++) {
+  //         this.ftthservice.prisezone(this.sros[i].Nom_zone).subscribe(data=>{
+  //           localStorage.setItem("aa",data.toString())
+  //           localStorage.setItem("bb",this.sros[i].Nom_zone)
+  //           this.dynam.push({value: Number(localStorage.getItem("aa")),name:localStorage.getItem("bb")})
+
+  //         })
+  //       }
+
+
+  //  })
+  //  localStorage.removeItem("aa")
+  //   localStorage.removeItem("bb")
+
+
+
+this.dynam.push({ value: 8940, name: "CUN"  },{ value: 5000, name: "CHARGUIA" })
+console.log(this.dynam);
 
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
@@ -59,7 +84,7 @@ export class TableaudebordComponent implements OnInit {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: ['Total prises', 'Raccordable'],
+          //data: this.dynamss,
           textStyle: {
             color: echarts.textColor,
           },
@@ -70,11 +95,8 @@ export class TableaudebordComponent implements OnInit {
             type: 'pie',
             radius: '80%',
             center: ['50%', '50%'],
-            data: [
-              { value: 8940, name: 'Total '  },
-              { value: 5000, name: 'Raccordable' },
-
-            ],
+            //** dunamic
+            data: this.dynam,
             itemStyle: {
               emphasis: {
                 shadowBlur: 10,
@@ -100,6 +122,7 @@ export class TableaudebordComponent implements OnInit {
         ],
       };
     });
+
     }
     sros : Array<Sro> = new Array
     pris : Array<Pri> = new Array
@@ -109,18 +132,26 @@ export class TableaudebordComponent implements OnInit {
     pri: Pri
     Imm : Immeuble
   ngOnInit() {
-    //stat géneral
-    //this.ftthservice.AllSro().subscribe(data => {this.results[0].value=data. })
-    //this.ftthservice.AllSro().subscribe(data => {this.results[1].value=value=data.})
-    //this.ftthservice.AllSro().subscribe(data => {this.results[2].value=data.})
-    //this.ftthservice.AllSro().subscribe(data => {this.nbclient==data.})
-    //this.ftthservice.AllSro().subscribe(data => {this.b2b=data.})
-    //this.ftthservice.AllSro().subscribe(data => {this.b2c==data.  })
 
+    //localStorage.clear()
+    // total client général
+    this.ftthservice.total_client().subscribe(data=>{
+      this.b2b=data[0];this.b2c=data[1];this.p2p=data[2];this.pro=data[3];this.oiab=data[4];this.nbclient=data[0]+data[1]+data[2]+data[3]+data[4]
+    })
+    // total prise général
+    this.ftthservice.total_prise().subscribe(data=>{
+      localStorage.setItem("aa",data[0]);localStorage.setItem("bb",data[4]);localStorage.setItem("cc",data[3])
+    })
+    this.results[0].value=Number(localStorage.getItem("aa"))
+    this.results[1].value=Number(localStorage.getItem("bb"))
+    this.results[2].value=Number(localStorage.getItem("cc"))
+    localStorage.removeItem("aa");localStorage.removeItem("bb");localStorage.removeItem("cc");
+
+
+    // liste ch de recherche
       this.ftthservice.AllSro().subscribe(data => {
         this.sros=data
         for (let i = 0; i < this.sros.length; i++) {
-
           this.ch.push(this.sros[i].Nom_zone)
         }
    })
@@ -143,6 +174,7 @@ export class TableaudebordComponent implements OnInit {
 
   public model: any;
   erreur: string
+  sum : number
 
   formatter = (result: string) => result.toUpperCase();
 
@@ -162,43 +194,59 @@ export class TableaudebordComponent implements OnInit {
           else {
             switch (this.Fvalue) {
               case '1':
+                this.zone = this.model
                 this.erreur=this.model+" éligible!";
                 this.ftthservice.zoneracstat(this.model).subscribe(data => {
                   this.results[0].value=Number(data[1])+Number(data[0])
                   this.results[1].value=Number(data[1])
                   this.results[2].value=Number(data[0])
+                  this.sum=Number(data[1])+Number(data[0])
+                  localStorage.setItem('zone-res',this.model)
+                  localStorage.setItem('totprise',this.sum.toString())
+                  localStorage.setItem('raccordable',Number(data[1]).toString())
+                  localStorage.setItem('raccorde',Number(data[0]).toString())
+
+                  this.ftthservice.zoneclientstat(this.model).subscribe(data => {
+                    this.b2b=Number(data[0])
+                    this.b2c=Number(data[1])
+                    this.p2p=Number(data[2])
+                    this.pro=Number(data[3])
+                    this.oiab=Number(data[4])
+                    this.nbclient=this.b2b+this.b2c+this.p2p+this.pro+this.oiab
+
+                    localStorage.setItem('b2b',this.b2b.toString())
+                    localStorage.setItem('b2c',this.b2c.toString())
+                    localStorage.setItem('p2p',this.p2p.toString())
+                    localStorage.setItem('pro',this.pro.toString())
+                    localStorage.setItem('oiab',this.oiab.toString())
+                    localStorage.setItem('totclient',this.nbclient.toString())
+                    this.router.navigateByUrl('pages/dashboard-zone-residence')
+
+                  }, error => {alert("error serveur affichage stat");
+                  })
                 }, error => {alert("error serveur affichage stat");
                 })
-                this.ftthservice.zoneclientstat(this.model).subscribe(data => {
-                  this.results[0].value=Number(data[1])+Number(data[0])
-                  this.results[1].value=Number(data[1])
-                  this.results[2].value=Number(data[0])
-                  this.nbclient=Number(data[1])+Number(data[0])
-                  this.b2b=Number(data[0])
-                  this.b2c=Number(data[1])
-                }, error => {alert("error serveur affichage stat");
-                })
+
 
 
                 break;
+
               case '2':
-                //éligible si port false raccordé si port true
-                // get by adresse
-                console.log("monosite");
-                this.ftthservice.getMonoByAdresse(this.model).subscribe(data => {
-                  if(data.IsRaccorde)
-                  this.erreur=this.model+" raccordé!"
-                  else this.erreur=this.model+" éligible!"
-                }, error =>{})
+                  this.ftthservice.statByAdresse(this.model).subscribe(data => {
+
+                    if(data==true) {this.erreur=this.model+" éligible!"
+                    this.showstatresidence()
+                    }
+                    else if(data==false) this.erreur=this.model+" non raccordé!"
+                    else {if(data[0].IsRaccorde==1) this.erreur=this.model+" éligble!"
+                          else this.erreur=this.model+" non raccordé!"}
+                  }, error =>{})
                 break;
+
               case '3':
-                //console.log("residence");
-                //this.ftthservice.eligibresidence(this.model).subscribe(data => {
-                  //if (data)
-                  this.erreur=this.model+" éligible!"
-
-                //}, error =>{})
-
+                console.log("residence");
+                this.erreur=this.model+" éligible!"
+                this.showstatresidence()
                 break;
 
               default:
@@ -212,5 +260,38 @@ export class TableaudebordComponent implements OnInit {
     ngOnDestroy(): void {
       this.themeSubscription.unsubscribe();
     }
+    showstatresidence(){
+      this.ftthservice.resracstat(this.model).subscribe(data => {
+        this.results[0].value=Number(data[1])+Number(data[0])
+        this.results[1].value=Number(data[1])
+        this.results[2].value=Number(data[0])
+        this.sum=Number(data[1])+Number(data[0])
+        localStorage.setItem('zone-res',this.model)
+        localStorage.setItem('totprise',this.sum.toString())
+        localStorage.setItem('raccordable',Number(data[1]).toString())
+        localStorage.setItem('raccorde',Number(data[0]).toString())
 
+        //clients
+        this.ftthservice.resclientstat(this.model).subscribe(data => {
+          this.b2b=Number(data[0])
+          this.b2c=Number(data[1])
+          this.p2p=Number(data[2])
+          this.pro=Number(data[3])
+          this.oiab=Number(data[4])
+          this.nbclient=this.b2b+this.b2c+this.p2p+this.pro+this.oiab
+
+          localStorage.setItem('b2b',this.b2b.toString())
+          localStorage.setItem('b2c',this.b2c.toString())
+          localStorage.setItem('p2p',this.p2p.toString())
+          localStorage.setItem('pro',this.pro.toString())
+          localStorage.setItem('oiab',this.oiab.toString())
+          localStorage.setItem('totclient',this.nbclient.toString())
+          this.router.navigateByUrl('pages/dashboard-zone-residence')
+
+        }, error => {this.status="danger"
+        this.toastrService.show(``,`Erreur serveur affichage statistique`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT})})
+
+      }, error => {this.status="danger"
+      this.toastrService.show(``,`Erreur serveur affichage statistique`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT})})
+    }
 }

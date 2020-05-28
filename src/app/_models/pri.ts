@@ -9,8 +9,8 @@ export class Pri {
   Nom_syndique : string
   Num_syndique : number
   Adresse: string
-  Etat:string
-
+  Etat_raccordement : string
+  Etat_convention	: string
   constructor(){
 
   }

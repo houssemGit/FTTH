@@ -23,7 +23,7 @@ export class ConsulterZoneImmeubleComponent implements OnInit {
     this.router.navigateByUrl('pages/consulter-immeubles/details-immeuble')
   }
   ngOnInit() {
-    localStorage.clear()
+    //localStorage.clear()
     this.ftthService.AllSro().subscribe(data=>{
       this.sros=data
     },error => {this.status="warning"

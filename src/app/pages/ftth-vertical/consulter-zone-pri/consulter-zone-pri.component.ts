@@ -23,7 +23,7 @@ export class ConsulterZonePriComponent implements OnInit {
     this.router.navigateByUrl('pages/immeubles/gerer-pri')
   }
   ngOnInit() {
-    localStorage.clear()
+    //localStorage.clear()
     this.ftthService.AllSro().subscribe(data=>{
       this.sros=data
     },error =>{this.status="warning"

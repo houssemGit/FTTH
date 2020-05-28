@@ -184,7 +184,10 @@ export class AjoutCassetteComponent implements OnInit {
             this.port.Etat = "Libre"
             this.port.Position = 0
             this.port.Type = "IN"
+            this.port.Couleur_fibre="none"
+            this.port.Couleur_tube="none"
             this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})
+
 
           this.port.Type="OUT"
           for(var m=0;m<f ;m++ )

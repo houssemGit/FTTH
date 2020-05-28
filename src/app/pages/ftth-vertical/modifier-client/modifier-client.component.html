@@ -108,51 +108,73 @@
         </div>
       </div>
 
-      <!-- <div class="form-group">
+      <div class="form-group">
         <div class="group-gap">
           <div class="d-block my-3">
             <div class="mb-3">
-              <label style="margin-right: 2rem;">Num steg</label>
-
+              <label style="margin-right: 2rem;">Etat Client</label>
               <select
-              class="form-control selectpicker"
-              (change)="changeNum_steg($event)"
-              formControlName="Num_steg"
-              data-live-search="true"
-              [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }">
-              <option value="">Entrer Num steg ici</option>
-              <option *ngFor="let Num_steg of Num_stegs" [value]="Num_steg">{{Num_steg}}</option>
+                class="custom-select "
+                (change)="changeEtat_client($event)"
+                formControlName="Etat_client"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && fval.Etat_client.errors }"
+                placeholder="Entrer Etat_client ici"
+              >
+                <option value="">Entrer Etat_client ici</option>
+                <option *ngFor="let Etat_client of Etat_clients" [value]="Etat_client">{{Etat_client}}</option>
               </select>
-
-              <div class="invalid-feedback" *ngIf="submitted && Num_steg.errors?.required">
-                <div *ngIf="fval.Num_steg.errors.required">Num steg est obligatoire</div>
+              <div class="invalid-feedback" *ngIf="submitted && fval.Etat_client.errors">
+                <div *ngIf="fval.Etat_client.errors.required">Etat est obligatoire</div>
               </div>
-
-
             </div>
           </div>
         </div>
-      </div> -->
-
-
+      </div>
 
       <div class="form-group">
-        <label for="typeahead-format">Num Steg </label>
-        <input  id="typeahead-format"
-                type="text"
-                formControlName="Num_steg"
-                class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && fval.Num_steg.errors }"
-                [ngbTypeahead]="search"
-                [(ngModel)]="ch"
-                placeholder="Tapez içi num steg"
-                />
-
-        <div class="invalid-feedback" *ngIf="submitted && fval.Num_steg.errors  ">
-          <div *ngIf="fval.Num_steg.errors.required">Num steg est obligatoire</div>
-       </div>
-
+        <label for="KCRM">KCRM</label>
+        <input
+          type="text"
+          formControlName="KCRM"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.KCRM.errors }"
+          placeholder="Entrer KCRM ici"
+        />
+        <div *ngIf="submitted && fval.KCRM.errors" class="invalid-feedback">
+          <div *ngIf="fval.KCRM.errors.required">KCRM  est obligatoire</div>
+        </div>
       </div>
+
+      <div class="form-group">
+        <label for="Debit">Debit</label>
+        <input
+          type="text"
+          formControlName="Debit"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Debit.errors }"
+          placeholder="Entrer Debit ici"
+        />
+        <div *ngIf="submitted && fval.Debit.errors" class="invalid-feedback">
+          <div *ngIf="fval.Debit.errors.required">Debit  est obligatoire</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Nom_soustraitant">Nom sous-traitant</label>
+        <input
+          type="text"
+          formControlName="Nom_soustraitant"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Nom_soustraitant.errors }"
+          placeholder="Entrer Nom sous-traitant ici"
+        />
+        <div *ngIf="submitted && fval.Nom_soustraitant.errors" class="invalid-feedback">
+          <div *ngIf="fval.Nom_soustraitant.errors.required">Nom sous-traitant  est obligatoire</div>
+        </div>
+      </div>
+
+
 
       <div class="form-group">
         <a routerLink="../gerer-client" class="btn btn-link">Annuler</a>

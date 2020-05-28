@@ -134,6 +134,8 @@ annuler(){
          { this.port.ID_splitter=data.ID_splitter
             this.port.Position_tiroir= "Non Raccordé"
             this.port.Etat = "Libre"
+            this.port.Couleur_fibre="none"
+            this.port.Couleur_tube="none"
             this.port.Position = 0
             this.port.Type = "IN"
             this.ftthService.AjoutPort(this.port).subscribe(data => {},error => {})

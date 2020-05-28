@@ -31,9 +31,12 @@ export class GererAppartementComponent implements OnInit {
   loading = false;
   submitted = false;
   concat: Array<any>
-
+  zoen:string
+  res:string
 
   ngOnInit() {
+    this.zoen=localStorage.getItem("choixzone")
+    this.res=localStorage.getItem("choixresidence")
     this.concat=[]
     this.ftthService.getAppartByResidence(localStorage.getItem('ID_pri')).subscribe(data => {
       this.aparts = data;
@@ -43,7 +46,10 @@ export class GererAppartementComponent implements OnInit {
     }, error => {
     this.status="warning"
     this.toastrService.show(``,`Aucun Appartement`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
+    //clean the localstorage
+    localStorage.removeItem("ID_immeuble");localStorage.removeItem("Num_steg");localStorage.removeItem("Num_appartement");localStorage.removeItem("Num_etage");localStorage.removeItem("Nom_bloc");localStorage.removeItem("Num_BE");localStorage.removeItem("Pos_tiroir_col_montante");localStorage.removeItem("Type_immeuble");
   }
+
 
   editApart(e) {
     localStorage.setItem("ID_immeuble", e.ID_immeuble.toString());
@@ -108,6 +114,15 @@ export class GererAppartementComponent implements OnInit {
   posCp:number
   splt0:Splitter
   cast0: Cassette
+  coulfibre : string
+  coultube : string
+  coulfibre0 : string
+  coultube0 : string
+  coulfibre1 : string
+  coultube1 : string
+
+
+
 
   showCrsp(res){
 
@@ -124,6 +139,8 @@ export class GererAppartementComponent implements OnInit {
 
 
     this.ftthService.getPortCorrespondantIn(res.Pos_tiroir_col_montante).subscribe(data => {this.portOUT0 = data;
+      this.coulfibre0=this.portOUT0[0].Couleur_fibre
+      this.coultube0=this.portOUT0[0].Couleur_tube
       this.PosTM=this.portOUT0[0].Position_tiroir
       this.posPp=this.portOUT0[0].Position
 
@@ -138,6 +155,8 @@ export class GererAppartementComponent implements OnInit {
 
            this.ftthService.getBySplitterIn(this.portOUT0[0].ID_splitter).subscribe(data => {this.portIN = data;
             this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
+              this.coulfibre=this.portOUT[0].Couleur_fibre
+              this.coultube=this.portOUT[0].Couleur_tube
               this.posTD=this.portOUT[0].Position_tiroir
               this.posPs=this.portOUT[0].Position
 
@@ -153,9 +172,11 @@ export class GererAppartementComponent implements OnInit {
 
                    this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
                     this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
-
+                      this.coulfibre1=this.portOUT1[0].Couleur_fibre
+                      this.coultube1=this.portOUT1[0].Couleur_tube
                       this.posTT=this.portOUT1[0].Position_tiroir
                       this.posPo=this.portOUT1[0].Position
+
 
 
                       this.ftthService.getSplitterById(this.portOUT[0].ID_splitter).subscribe(data => {this.splt1 = data;
@@ -195,7 +216,9 @@ export class GererAppartementComponent implements OnInit {
     localStorage.setItem("Pos_tiroir_col_montante", appart.Pos_tiroir_col_montante)
   }
 
+  bool: boolean
   SubRaccordeIN(){
+    this.bool=true
     this.submitted = true;
     if (this.FormRacIn.invalid) {
       return console.log("champs invalid");
@@ -203,12 +226,27 @@ export class GererAppartementComponent implements OnInit {
     this.loading = true;
 
     this.appart.Pos_tiroir_col_montante= "TCM N°: "+this.FormRacIn.controls["n_c_c"].value+" Position: "+this.FormRacIn.controls["P_t_c"].value;
-    this.ftthService.raccorderPtoA(localStorage.getItem("ID_appartement") ,this.appart).subscribe((data)=>{
-    this.status="success"
-    this.toastrService.show(``,`Appartement raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
-    this.ngOnInit()},
-    (error)=>{alert('error modification!!');})
-    this.closeModal.nativeElement.click()
+    this.ftthService.UniquePosAppart(localStorage.getItem("ID_pri"), this.appart.Pos_tiroir_col_montante).subscribe(data=>{
+      if(data==true) {
+       this.bool=false
+       this.status="danger";
+       this.toastrService.show(``,`Position tiroire déjà raccordée!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 3000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+       this.closeModal.nativeElement.click()
+       this.annulerRIN()
+       return console.log("Non unique");}
+
+       if(this.bool){
+        this.ftthService.raccorderPtoA(localStorage.getItem("ID_appartement") ,this.appart).subscribe((data)=>{
+          this.status="success"
+          this.toastrService.show(``,`Appartement raccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+          localStorage.removeItem("Pos_tiroir_col_montante")
+          localStorage.removeItem("ID_appartement")
+          localStorage.removeItem("num_appart")
+          this.ngOnInit()},
+          (error)=>{alert('error modification!!');})
+          this.closeModal.nativeElement.click()
+        }
+     })
 
   }
 
@@ -218,6 +256,9 @@ export class GererAppartementComponent implements OnInit {
     this.ftthService.raccorderPtoA(localStorage.getItem("ID_appartement") ,this.appart).subscribe((data)=>{
     this.status="success"
     this.toastrService.show(``,`Appartement déraccordé avec succès`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+    localStorage.removeItem("Pos_tiroir_col_montante")
+    localStorage.removeItem("ID_appartement")
+    localStorage.removeItem("num_appart")
     this.ngOnInit()}
     ,(error)=>{alert('error modification!!');})
    }
@@ -225,9 +266,9 @@ export class GererAppartementComponent implements OnInit {
    annulerRIN(){
     this.pto=[]
     this.pto.push(localStorage.getItem("Pos_tiroir_col_montante"))
-    localStorage.setItem("Pos_tiroir_col_montante", "")
-    localStorage.setItem("ID_appartement", "")
-    localStorage.setItem("num_appart", "")
+    localStorage.removeItem("Pos_tiroir_col_montante")
+    localStorage.removeItem("ID_appartement")
+    localStorage.removeItem("num_appart")
   }
 
   pto: Array<string>

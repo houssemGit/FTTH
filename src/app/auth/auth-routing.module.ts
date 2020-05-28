@@ -5,6 +5,7 @@ import { NbAuthComponent } from '@nebular/auth';
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RequestResetPswComponent } from './reset-password/request-reset-psw/request-reset-psw.component';
+import { AuthGuard } from '../guards/auth.guard.service';
 
 export const routes: Routes = [
   {
@@ -19,10 +20,14 @@ export const routes: Routes = [
       {
         path: 'reset-password',
         component: ResetPasswordComponent,
+        canActivate : [AuthGuard]
+
       },
       {
         path: 'request-reset-password',
         component: RequestResetPswComponent,
+        canActivate : [AuthGuard]
+
       },
     ],
   },

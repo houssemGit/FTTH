@@ -23,9 +23,14 @@ export class DetailsResidenceComponent implements OnInit {
   apparts : Array<Appartement>
   Nom_residence: string
   concat: Array<any>=new Array ;
+  zoen:string
+  res:string
+
 
 
  ngOnInit() {
+  this.zoen=localStorage.getItem("choixzone")
+  this.res=localStorage.getItem("choixresidence")
     this.Nom_residence= localStorage.getItem('choixresidence')
     this.ftthService.getAppartByResidence(localStorage.getItem('ID_pri')).subscribe(data => {
     this.apparts = data;
@@ -66,6 +71,12 @@ export class DetailsResidenceComponent implements OnInit {
   posCp:number
   splt0:Splitter
   cast0: Cassette
+  coulfibre : string
+  coultube : string
+  coulfibre0 : string
+  coultube0 : string
+  coulfibre1 : string
+  coultube1 : string
 
 
   crspRes(res){
@@ -83,6 +94,8 @@ export class DetailsResidenceComponent implements OnInit {
 
 
     this.ftthService.getPortCorrespondantIn(res.Pos_tiroir_col_montante).subscribe(data => {this.portOUT0 = data;
+      this.coulfibre0=this.portOUT0[0].Couleur_fibre
+      this.coultube0=this.portOUT0[0].Couleur_tube
       this.PosTM=this.portOUT0[0].Position_tiroir
       this.posPp=this.portOUT0[0].Position
 
@@ -97,6 +110,8 @@ export class DetailsResidenceComponent implements OnInit {
 
            this.ftthService.getBySplitterIn(this.portOUT0[0].ID_splitter).subscribe(data => {this.portIN = data;
             this.ftthService.getPortCorrespondantIn(this.portIN[0].Position_tiroir).subscribe(data => {this.portOUT = data;
+              this.coulfibre=this.portOUT[0].Couleur_fibre
+              this.coultube=this.portOUT[0].Couleur_tube
               this.posTD=this.portOUT[0].Position_tiroir
               this.posPs=this.portOUT[0].Position
 
@@ -112,7 +127,8 @@ export class DetailsResidenceComponent implements OnInit {
 
                    this.ftthService.getBySplitterIn(this.portOUT[0].ID_splitter).subscribe(data => {this.portIN1 = data;
                     this.ftthService.getPortCorrespondantIn(this.portIN1[0].Position_tiroir).subscribe(data => {this.portOUT1 = data;
-
+                      this.coulfibre1=this.portOUT1[0].Couleur_fibre
+                      this.coultube1=this.portOUT1[0].Couleur_tube
                       this.posTT=this.portOUT1[0].Position_tiroir
                       this.posPo=this.portOUT1[0].Position
 
