@@ -79,6 +79,11 @@ export class DetailsResidenceComponent implements OnInit {
   coultube1 : string
 
 
+voirCorrespondance(e){
+  this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
+
+}
+
   crspRes(res){
 
     this.ftthService.getPriById(localStorage.getItem("ID_pri")).subscribe((data)=>{this.pri= data

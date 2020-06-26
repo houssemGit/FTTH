@@ -1,4 +1,4 @@
-<button routerLink="../ajout-user" class="btn btn-success" style="width:200px"><i class="far fa-plus-square"></i>  Ajouter Utilisateur </button>
+<button nbButton status="success" routerLink="../ajout-user" style="width:200px; float: left"><i class="far fa-plus-square"></i>  Ajouter Utilisateur </button>
 <br>
 <br>
 
@@ -23,8 +23,8 @@
     <td>{{e.Role}}</td>
    <td >
       <div style=" display:flex;flex-direction:row; position: relative; left: 40px">
-     <button class="btn btn-warning"  (click)="editUser(e)" > <i class="fas fa-edit"></i> </button>
-     <button class="btn btn-danger"   (click)="deleteUser(e)" style="margin-left: 20px;">  <i class="fas fa-trash-alt"></i>  </button>
+     <button nbButton status="warning"  (click)="editUser(e)" > <i class="far fa-edit"></i> </button>
+     <button nbButton status="danger"   (click)="deleteUser(e)" style="margin-left: 20px;">  <i class="far fa-trash-alt"></i>  </button>
       </div>
     </td>
     </tr>

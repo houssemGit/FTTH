@@ -30,8 +30,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Changer mot de passe', link:'/auth/reset-password' }, { title: 'Déconnexion' , link:'/auth/login'} ];
-
+  userMenu = [  { title: 'Déconnexion' , link:'/auth/login'} ];
+  //{ title: 'Changer mot de passe', link:'/auth/reset-password' },
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,

@@ -74,35 +74,70 @@
 
 
 
-
 <div class="row">
-<div class="col-lg-7">
-  <nb-card>
-    <nb-card-header>Total Prises</nb-card-header>
-    <nb-card-body>
-      <div class="echart">
-      <ngx-charts-bar-vertical
-      [scheme]="colorScheme"
-      [results]="results"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel">
-    </ngx-charts-bar-vertical>
+  <div class="col-lg-6" >
+    <nb-card style="height: 450px;"
+    >
+      <nb-card-header>Eligibilité</nb-card-header>
+      <nb-card-body  >
+          <ngx-charts-pie-chart
+          [scheme]="colorScheme"
+          [results]="results2"
+          [legend]="showLegend2"
+          [labels]="showLabels2">
+        </ngx-charts-pie-chart>
+      </nb-card-body>
+    </nb-card>
   </div>
-    </nb-card-body>
-  </nb-card>
-</div>
+  <div class="col-lg-6" >
+    <nb-card style="height: 450px;">
+      <nb-card-header>Total Prises</nb-card-header>
+      <nb-card-body >
+        <ngx-charts-bar-vertical
+        [scheme]="colorScheme"
+        [results]="results"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel">
+      </ngx-charts-bar-vertical>
+      </nb-card-body>
+    </nb-card>
+  </div>
 
-<div class="col-lg-5">
+  <!-- <div class="col-lg-5">
+    <nb-card>
+      <nb-card-header>Eligibilité</nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="options" class="echart"></div>
+      </nb-card-body>
+    </nb-card>
+  </div> -->
+  <!-- <div class="col-lg-6" >
+    <nb-card style="height: 450px;"  >
+      <nb-card-header>zones</nb-card-header>
+      <nb-card-body  >
+        <div >
+          <ngx-chartjs-bar-horizontal >
+            <chart type="horizontalBar" [data]="data" [options]="optionsbar"></chart>
+          </ngx-chartjs-bar-horizontal>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div> -->
+  </div>
+
+
+
+<!-- <div class="col-lg-5">
   <nb-card>
     <nb-card-header>Eligibilité</nb-card-header>
     <nb-card-body>
       <div echarts [options]="options" class="echart"></div>
     </nb-card-body>
   </nb-card>
-</div>
+</div> -->
 
 
 

@@ -157,6 +157,12 @@ export class DetailsImmeubleComponent implements OnInit {
     this.toastrService.show(``,`Aucun Monosite`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
   }
 
+
+voirCorrespondance(e){
+  this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
+
+}
+
   crspMono(e){
     //nom équipements
       this.ftthService.getSroById(e.ID_sro).subscribe((data)=>{this.sro= data

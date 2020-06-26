@@ -6,6 +6,8 @@ import { AuthService } from "../../_service/auth.service";
 import { NgForm } from "@angular/forms";
 
 import { ChangeDetectorRef } from "@angular/core";
+import { NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
+import { FtthService } from '../../_service/ftth.service';
 
 @Component({
   selector: "ngx-login",
@@ -14,12 +16,13 @@ import { ChangeDetectorRef } from "@angular/core";
 })
 export class LoginComponent extends NbLoginComponent  {
 
+  status: NbComponentStatus ;
 
   constructor(
     service: NbAuthService, @Inject(NB_AUTH_OPTIONS) protected options,
     cd: ChangeDetectorRef, router: Router,
-    private authService: AuthService
-
+    private authService: AuthService,
+    private toastrService: NbToastrService
   ) {
     super(service, options, cd, router);
     localStorage.clear();
@@ -39,7 +42,13 @@ export class LoginComponent extends NbLoginComponent  {
         this.authService.getUserById(decodedJwtData.sub).subscribe(data => {
         localStorage.setItem('role',data.Role);
         localStorage.setItem('username',data.Nom+' '+data.Prenom);
+        localStorage.setItem('Email',data.Email);
         this.router.navigateByUrl('/pages/dashboard')})
+        this.status="success"
+        this.toastrService.show(``,`Utilisateur connecté avec succès!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 4000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+  }, error => {
+    this.status="danger"
+    this.toastrService.show(``,`Coordonnées incorrectes!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
   });
 
       // this.authService.login(this.user)

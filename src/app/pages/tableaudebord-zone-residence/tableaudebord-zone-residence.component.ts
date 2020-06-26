@@ -40,6 +40,7 @@ export class TableaudebordZoneResidenceComponent implements OnInit {
 
   constructor(    private ftthservice: FtthService,private router: Router,
     private toastrService: NbToastrService,private theme: NbThemeService) {
+
       this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
         const colors: any = config.variables;
         this.colorScheme = {
@@ -69,6 +70,7 @@ export class TableaudebordZoneResidenceComponent implements OnInit {
     pri: Pri
     Imm : Immeuble
   ngOnInit() {
+
     this.erreur= localStorage.getItem('zone-res') + " éligible"
       this.zone= localStorage.getItem('zone-res')
       this.results[0].value=Number(localStorage.getItem('totprise'))
@@ -153,7 +155,10 @@ export class TableaudebordZoneResidenceComponent implements OnInit {
                     localStorage.setItem('pro',this.pro.toString())
                     localStorage.setItem('oiab',this.oiab.toString())
                     localStorage.setItem('totclient',this.nbclient.toString())
-                    this.router.navigateByUrl('pages/dashboard-zone-residence')
+                    //this.router.navigateByUrl('pages/dashboard-zone-residence')
+                    //this.ngOnInit()
+                    location.reload();
+
 
                   }, error => {alert("error serveur affichage stat");
                   })
@@ -216,7 +221,9 @@ export class TableaudebordZoneResidenceComponent implements OnInit {
           localStorage.setItem('pro',this.pro.toString())
           localStorage.setItem('oiab',this.oiab.toString())
           localStorage.setItem('totclient',this.nbclient.toString())
-          this.router.navigateByUrl('pages/dashboard-zone-residence')
+          //this.router.navigateByUrl('pages/dashboard-zone-residence')
+          //this.ngOnInit()
+          location.reload();
 
         }, error => {this.status="danger"
         this.toastrService.show(``,`Erreur serveur affichage statistique`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT})})

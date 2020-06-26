@@ -308,6 +308,10 @@ export class FtthService {
     //return this.http.get<Array<Pri>>("http://localhost:8000/api/pris/zone/"+id.toString())
 
   }
+  // import excel
+  ImportExcel(formdata){
+    return this.http.post<any>("http://localhost:8000/api/",formdata)
+  }
 
   //add
   AjoutOlt(olt: any){
@@ -336,6 +340,10 @@ export class FtthService {
   }
   AjoutMono(appart: any){
     return this.http.post<Monosite>("http://localhost:8000/api/monosites", appart);
+  }
+  voirCorrespondance(e: any){
+    return this.http.get("http://localhost:8000/api/correspondance");
+
   }
 
 }

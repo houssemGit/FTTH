@@ -84,7 +84,7 @@ export class ModifierUserComponent implements OnInit {
      },
       (error)=>{
         this.status="danger"
-        this.toastrService.show(``,`Erreur modification!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});        this.loading = false;
+        this.toastrService.show(``,`Utilisateur existe déjà!`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});        this.loading = false;
       }
     )
 

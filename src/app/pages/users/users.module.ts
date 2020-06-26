@@ -16,6 +16,8 @@ import{UsersComponent} from './users.component'
 import { AjoutUserComponent } from './ajout-user/ajout-user.component';
 import { ModifierUserComponent } from './modifier-user/modifier-user.component';
 import { GestionUserComponent } from './gestion-user/gestion-user.component';
+import { NbPopoverModule, NbButtonModule, NbSelectModule, NbIconModule } from '@nebular/theme';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -30,6 +32,11 @@ import { GestionUserComponent } from './gestion-user/gestion-user.component';
     ToastrModule.forRoot(),
     UsersRoutingModule,
     HttpClientModule,
+    NbPopoverModule,
+    NbButtonModule,
+    NbSelectModule,
+    NgbModule,
+    NbIconModule,
   ],
   entryComponents: [
 

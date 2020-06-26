@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./tableaudebord.component.scss']
 })
 export class TableaudebordComponent implements OnInit {
+  data: any;
+  optionsbar : any;
 
   colorScheme: any;
   themeSubscription: any;
@@ -29,99 +31,96 @@ export class TableaudebordComponent implements OnInit {
 
   results = [
     { name: 'Total prises', value: 8940   },
-    { name: 'Raccordable', value: 5000  },
-    { name: 'Raccordé', value: 1000  },
+    { name: 'Raccordable', value: 6000  },
+    { name: 'Raccordé', value: 2940  },
   ];
-  showLegend = false;
+  showLegend = true;
   showXAxis = true;
   showYAxis = true;
   xAxisLabel = 'Country';
   yAxisLabel = 'Prises';
 
+  results2 = [
+    { name: 'P2P', value: 1 },
+    { name: 'GPON', value: 3 },
+
+  ];
+  showLegend2 = true;
+  showLabels2 = true;
+
 
   constructor(    private ftthservice: FtthService,private router: Router,
     private toastrService: NbToastrService,private theme: NbThemeService) {
+
       this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
         const colors: any = config.variables;
         this.colorScheme = {
           domain: [colors.primary, colors.warning , colors.success, colors.info , colors.danger, ],
         };
+
+
+        // h bar
+        // const chartjs: any = config.variables.chartjs;
+
+        // this.data = {
+        //   labels: ['CUN', 'Lac1', 'Ennaser', 'Lac2', 'Charguia2', 'T Ghazela','Kram','Charguia1','Route Gabes','Djerba','Montplaisir','Charguia1','Grombalia'],
+        //   datasets: [{
+        //       label: 'Dataset 1',
+        //       backgroundColor: colors.infoLight,
+        //       borderWidth: 1,
+        //       data: [this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random()],
+        //      }, //{
+        //     //   label: 'Dataset 2',
+        //     //   backgroundColor: colors.successLight,
+        //     //   data: [this.random(), this.random(), this.random(), this.random(), this.random(), this.random()],
+        //     // },
+        //   ],
+        // };
+
+        // this.options = {
+        //   responsive: true,
+        //   maintainAspectRatio: false,
+        //   elements: {
+        //     rectangle: {
+        //       borderWidth: 2,
+        //     },
+        //   },
+        //   scales: {
+        //     xAxes: [
+        //       {
+        //         gridLines: {
+        //           display: true,
+        //           color: chartjs.axisLineColor,
+        //         },
+        //         ticks: {
+        //           fontColor: chartjs.textColor,
+        //         },
+        //       },
+        //     ],
+        //     yAxes: [
+        //       {
+        //         gridLines: {
+        //           display: false,
+        //           color: chartjs.axisLineColor,
+        //         },
+        //         ticks: {
+        //           fontColor: chartjs.textColor,
+        //         },
+        //       },
+        //     ],
+        //   },
+        //   legend: {
+        //     position: 'right',
+        //     labels: {
+        //       fontColor: chartjs.textColor,
+        //     },
+        //   },
+        // };
       });
 
-  //     this.ftthservice.AllSro().subscribe(data => {
-  //       this.sros=data
-  //       for (let i = 0; i < this.sros.length; i++) {
-  //         this.ftthservice.prisezone(this.sros[i].Nom_zone).subscribe(data=>{
-  //           localStorage.setItem("aa",data.toString())
-  //           localStorage.setItem("bb",this.sros[i].Nom_zone)
-  //           this.dynam.push({value: Number(localStorage.getItem("aa")),name:localStorage.getItem("bb")})
-
-  //         })
-  //       }
-
-
-  //  })
-  //  localStorage.removeItem("aa")
-  //   localStorage.removeItem("bb")
 
 
 
-this.dynam.push({ value: 8940, name: "CUN"  },{ value: 5000, name: "CHARGUIA" })
-console.log(this.dynam);
-
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-
-      const colors = config.variables;
-      const echarts: any = config.variables.echarts;
-
-      this.options = {
-        backgroundColor: echarts.bg,
-        color: [colors.primary,colors.warning, colors.info, colors.danger, colors.success ],
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)',
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'left',
-          //data: this.dynamss,
-          textStyle: {
-            color: echarts.textColor,
-          },
-        },
-        series: [
-          {
-            name: 'Prises',
-            type: 'pie',
-            radius: '80%',
-            center: ['50%', '50%'],
-            //** dunamic
-            data: this.dynam,
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: echarts.itemHoverShadowColor,
-              },
-            },
-            label: {
-              normal: {
-                textStyle: {
-                  color: echarts.textColor,
-                },
-              },
-            },
-            labelLine: {
-              normal: {
-                lineStyle: {
-                  color: echarts.axisLineColor,
-                },
-              },
-            },
-          },
-        ],
-      };
-    });
 
     }
     sros : Array<Sro> = new Array
@@ -132,9 +131,7 @@ console.log(this.dynam);
     pri: Pri
     Imm : Immeuble
   ngOnInit() {
-
-    //localStorage.clear()
-    // total client général
+    //total client général
     this.ftthservice.total_client().subscribe(data=>{
       this.b2b=data[0];this.b2c=data[1];this.p2p=data[2];this.pro=data[3];this.oiab=data[4];this.nbclient=data[0]+data[1]+data[2]+data[3]+data[4]
     })
@@ -293,5 +290,8 @@ console.log(this.dynam);
 
       }, error => {this.status="danger"
       this.toastrService.show(``,`Erreur serveur affichage statistique`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT})})
+    }
+    private random() {
+      return Math.round(Math.random() * 100);
     }
 }

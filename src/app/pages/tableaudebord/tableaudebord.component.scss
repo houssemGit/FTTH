@@ -1,8 +1,11 @@
 @import '../../@theme/styles/themes';
 
 @include nb-install-component() {
-  ngx-echarts-pie,
   ngx-d3-bar,
+  ngx-d3-pie,
+  ngx-chartjs-bar-horizontal,
+
+
 
 
   ::ng-deep .echart {

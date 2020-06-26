@@ -340,6 +340,12 @@ export class GererSroComponent implements OnInit {
   coulfibre : string
   coultube : string
 
+
+voirCorrespondance(e){
+  this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
+
+}
+
   showCrsp(e){
 
     this.ftthService.getSroById(localStorage.getItem("ID_sro")).subscribe((data)=>{this.sro= data

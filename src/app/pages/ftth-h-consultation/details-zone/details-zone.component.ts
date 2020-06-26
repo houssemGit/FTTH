@@ -91,7 +91,10 @@ export class DetailsZoneComponent implements OnInit {
   coultube : string
   oloto: Olt
 
+voirCorrespondance(e){
+  this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
 
+}
 
   showCrsp(e){
 

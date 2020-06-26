@@ -109,14 +109,8 @@
       </div>
 
       <div class="form-group">
-        <a  (click)="annuler()" style="color: black;" class="btn btn-link"
-          >Retour</a
-        >
-        <button
-          style="color: ivory; float:right "
-          [disabled]="loading"
-          class="btn btn-warning"
-        >
+        <a  (click)="annuler()" class="btn btn-link">Retour</a>
+        <button style="color: ivory; float:right " [disabled]="loading" nbButton status="warning">
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"

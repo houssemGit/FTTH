@@ -24,6 +24,7 @@ import { PagesComponent } from './pages.component';
 import { AjoutCassetteComponent } from './cassette/ajout-cassette/ajout-cassette.component';
 import { AjoutSplitterComponent } from './cassette/ajout-splitter/ajout-splitter.component';
 import { TableaudebordComponent } from './tableaudebord/tableaudebord.component';
+import { ChartjsBarHorizontalComponent } from './tableaudebord/bar-horiz-chartjs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableaudebordZoneResidenceComponent } from './tableaudebord-zone-residence/tableaudebord-zone-residence.component';
 
@@ -47,6 +48,8 @@ import { TableaudebordZoneResidenceComponent } from './tableaudebord-zone-reside
     NgbModule,
     NbIconModule,
 
+        ThemeModule,
+
     NgxEchartsModule,
     NgxChartsModule,
     ChartModule,
@@ -57,6 +60,7 @@ import { TableaudebordZoneResidenceComponent } from './tableaudebord-zone-reside
     AjoutCassetteComponent,
     AjoutSplitterComponent,
     TableaudebordComponent,
+    ChartjsBarHorizontalComponent,
     TableaudebordZoneResidenceComponent,
 
   ],

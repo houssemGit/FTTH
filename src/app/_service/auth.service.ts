@@ -41,7 +41,10 @@ export class AuthService {
     alert("logged out"); //this.toastService.info('Вы вышли из системы!');
     this.router.navigate(["/login"]);
   }
-  resetemail(data) {
+  reset_psw_email(ch:any) {
+    return this.http.post("http://localhost:8000/api/users/forgot/"+ch,ch);
+  }
+  reset_psw(data) {
     return this.http.post("http://localhost:8000/api/users/reset", data);
   }
 }

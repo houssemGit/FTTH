@@ -348,6 +348,12 @@ export class GererPriComponent implements OnInit {
   coulfibre1 : string
   coultube1 : string
 
+
+voirCorrespondance(e){
+  this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
+
+}
+
   showCrsp(e){ //nom équipements
     this.ftthService.getPriById(localStorage.getItem("ID_pri")).subscribe((data)=>{this.pri= data
       this.ftthService.getSroById(this.pri.ID_sro.toString()).subscribe((data)=>{this.sro= data

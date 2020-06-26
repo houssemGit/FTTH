@@ -35,6 +35,12 @@ export class GererAppartementComponent implements OnInit {
   res:string
 
   ngOnInit() {
+
+    //uploadForm
+    this.uploadForm = this.formBuilder.group({
+      excel: ['']
+    })
+
     this.zoen=localStorage.getItem("choixzone")
     this.res=localStorage.getItem("choixresidence")
     this.concat=[]
@@ -48,6 +54,18 @@ export class GererAppartementComponent implements OnInit {
     this.toastrService.show(``,`Aucun Appartement`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
     //clean the localstorage
     localStorage.removeItem("ID_immeuble");localStorage.removeItem("Num_steg");localStorage.removeItem("Num_appartement");localStorage.removeItem("Num_etage");localStorage.removeItem("Nom_bloc");localStorage.removeItem("Num_BE");localStorage.removeItem("Pos_tiroir_col_montante");localStorage.removeItem("Type_immeuble");
+  }
+
+  uploadForm : FormGroup
+  fileChange(event) {
+    const file = event.target.files[0]
+    this.uploadForm.get('excel').setValue(file);
+  }
+  onSubmit(){
+    const formData = new FormData();
+    console.log(this.uploadForm.get('excel').value);
+    formData.append('myFile',this.uploadForm.get('excel').value)
+    this.ftthService.ImportExcel(formData).subscribe(data => console.log(data), error => console.log(error))
   }
 
 
@@ -123,6 +141,10 @@ export class GererAppartementComponent implements OnInit {
 
 
 
+  voirCorrespondance(e){
+    this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
+
+  }
 
   showCrsp(res){
 

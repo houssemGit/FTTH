@@ -60,7 +60,7 @@ export class AjoutUserComponent implements OnInit {
      },
       (error)=>{
         this.status="danger"
-        this.toastrService.show(``,`'Erreur Ajout!'`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
+        this.toastrService.show(``,`'Utilisateur existe déjà!'`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});
         this.loading = false;
       }
     )

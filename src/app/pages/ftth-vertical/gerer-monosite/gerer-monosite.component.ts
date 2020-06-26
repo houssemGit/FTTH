@@ -127,6 +127,12 @@ export class GererMonositeComponent implements OnInit {
   coulfibre1 : string
   coultube1 : string
 
+
+voirCorrespondance(e){
+  this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
+
+}
+
   showCrsp(e){//nom équipements
     this.ftthService.getSroById(e.ID_sro).subscribe((data)=>{this.sro= data
       this.nomSRO=this.sro.Nom_sro

@@ -83,7 +83,7 @@ const routes: Routes = [{
 
 
     },
-    /*
+
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
@@ -137,7 +137,7 @@ const routes: Routes = [{
       loadChildren: () => import('./tables/tables.module')
         .then(m => m.TablesModule),
     },
-    */
+
     {
       path: 'miscellaneous',
       loadChildren: () => import('./miscellaneous/miscellaneous.module')

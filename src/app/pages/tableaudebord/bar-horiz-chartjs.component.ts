@@ -6,6 +6,7 @@ import { NbThemeService } from '@nebular/theme';
   template: `
     <chart type="horizontalBar" [data]="data" [options]="options"></chart>
   `,
+
 })
 export class ChartjsBarHorizontalComponent implements OnDestroy {
   data: any;
@@ -21,7 +22,7 @@ export class ChartjsBarHorizontalComponent implements OnDestroy {
       this.data = {
         labels: ['CUN', 'Lac1', 'Ennaser', 'Lac2', 'Charguia2', 'T Ghazela','Kram','Charguia1','Route Gabes','Djerba','Montplaisir','Charguia1','Grombalia'],
         datasets: [{
-            label: 'prises',
+            label: 'Dataset 1',
             backgroundColor: colors.infoLight,
             borderWidth: 1,
             data: [this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random()],
