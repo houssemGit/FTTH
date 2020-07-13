@@ -31,8 +31,24 @@ export class AjoutAppartementComponent implements OnInit {
       Num_BE: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Num_etage: ["", [Validators.required]],
       Nom_bloc: ["", [Validators.required]],
+      NCCCM: ["", [Validators.required]],
+      Coul_fib:["", Validators.required],
+      Coul_tube:["", Validators.required],
     });
 
+  }
+
+  get ctu() {
+    return this.registerForm.get("Coul_tube");
+  }
+  Coul_tube(e) {
+    this.ctu.setValue(e.target.value, { onlySelf: true });
+  }
+  get cfb() {
+    return this.registerForm.get("Coul_fib");
+  }
+  Coul_fib(e) {
+    this.cfb.setValue(e.target.value, { onlySelf: true });
   }
 
   get fval() {
@@ -56,7 +72,9 @@ export class AjoutAppartementComponent implements OnInit {
     this.appart.Num_etage= this.registerForm.controls["Num_etage"].value;
     this.appart.Num_steg= this.registerForm.controls["Num_steg"].value;
     this.appart.Nom_bloc= this.registerForm.controls["Nom_bloc"].value;
-    this.appart.Type_immeuble= "Appartement"
+    this.appart.Nom_Capacite_Cable_Colonne_Montante= this.registerForm.controls["NCCCM"].value;
+    this.appart.Couleur_tube= this.registerForm.controls["Coul_fib"].value;
+    this.appart.Couleur_fibre= this.registerForm.controls["Coul_tube"].value;
     this.appart.IsRaccorde= false
     this.appart.Pos_tiroir_col_montante="Non Raccordé"
 

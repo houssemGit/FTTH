@@ -11,9 +11,10 @@ import { FtthVConsultationRoutingModule,routedComponents } from './ftth-v-consul
 import { NbAccordionModule, NbPopoverModule, NbButtonModule, NbIconModule, NbCardModule, NbListModule } from '@nebular/theme';
 import { ConsulterZoneEligibiliteComponent } from './consulter-zone-eligibilite/consulter-zone-eligibilite.component';
 import { DetailsEligibiliteComponent } from './details-eligibilite/details-eligibilite.component';
+import { DetailsEligibiliteAppartementComponent } from './details-eligibilite-appartement/details-eligibilite-appartement.component';
 
 @NgModule({
-  declarations: [routedComponents, DetailsResidenceComponent, ConsulterResidenceComponent, ConsulterZoneResidenceComponent, ConsulterZoneImmeubleComponent, DetailsImmeubleComponent, ConsulterZoneEligibiliteComponent, DetailsEligibiliteComponent],
+  declarations: [routedComponents, DetailsResidenceComponent, ConsulterResidenceComponent, ConsulterZoneResidenceComponent, ConsulterZoneImmeubleComponent, DetailsImmeubleComponent, ConsulterZoneEligibiliteComponent, DetailsEligibiliteComponent, DetailsEligibiliteAppartementComponent],
   imports: [
     CommonModule,
     HttpClientModule,

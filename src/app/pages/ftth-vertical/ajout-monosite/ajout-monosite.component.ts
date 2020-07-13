@@ -36,6 +36,8 @@ export class AjoutMonositeComponent implements OnInit {
       Etat_con: ["", [Validators.required]],
       Etat_racc: ["", [Validators.required]],
       Num_plan: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
+      Longitude:['', Validators.required],
+      Latitude:['', Validators.required],
     });
 
   }
@@ -75,9 +77,10 @@ export class AjoutMonositeComponent implements OnInit {
     this.mono.Adresse= this.registerForm.controls["Adresse"].value;
     this.mono.Etat_convention= this.registerForm.controls["Etat_con"].value;
     this.mono.Etat_raccordement= this.registerForm.controls["Etat_racc"].value;
-    this.mono.Type_immeuble= "Monosite"
     this.mono.IsRaccorde= false
     this.mono.Pos_tiroir_distribution="Non Raccordé"
+    this.mono.Longitude=this.registerForm.controls["Longitude"].value
+    this.mono.Latitude=this.registerForm.controls["Latitude"].value
 
 
 

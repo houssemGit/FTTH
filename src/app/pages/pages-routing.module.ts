@@ -34,12 +34,12 @@ const routes: Routes = [{
     {
       path: 'zones/ajout-cassette',
       component: AjoutCassetteComponent,
-      canActivate : [CommercialGuardService]
+      //canActivate : [CommercialGuardService]
     },
     {
       path: 'zones/ajout-splitter',
       component: AjoutSplitterComponent,
-      canActivate : [CommercialGuardService]
+      //canActivate : [CommercialGuardService]
 
     },
 
@@ -47,26 +47,26 @@ const routes: Routes = [{
       path: 'utilisateurs',
       loadChildren: () => import('./users/users.module')
         .then(m => m.UsersModule),
-      canActivate : [AdminGuard]
+      //canActivate : [AdminGuard]
     },
     {
       path: 'zones',
       loadChildren: () => import('./ftth-horizental/ftth-horizental.module')
         .then(m => m.FtthHorizentalModule),
-        canActivate : [ExpertFtthHGuardService]
+        //canActivate : [ExpertFtthHGuardService]
 
     },
      {
       path: 'immeubles',
       loadChildren: () => import('./ftth-vertical/ftth-vertical.module')
         .then(m => m.FtthVerticalModule),
-        canActivate : [ExpertFtthVGuardService]
+        //canActivate : [ExpertFtthVGuardService]
     },
      {
       path: 'consulter-zones',
       loadChildren: () => import('./ftth-h-consultation/ftth-h-consultation.module')
         .then(m => m.FtthHConsultationModule),
-        canActivate : [CommercialGuardService]
+        //canActivate : [CommercialGuardService]
     },
      {
       path: 'consulter-immeubles',

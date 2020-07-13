@@ -8,6 +8,9 @@ export class Appartement extends Immeuble {
   Pos_tiroir_col_montante: string;
   ID_pri: number;
   IsRaccorde : boolean
+  Nom_Capacite_Cable_Colonne_Montante : string
+  Couleur_tube : string
+  Couleur_fibre : string
 
   constructor(){
       super()

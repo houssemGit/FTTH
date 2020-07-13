@@ -10,6 +10,8 @@ export class Monosite extends Immeuble  {
   IsRaccorde: boolean
   Etat_raccordement:string
   Etat_convention: string
+  Longitude: string
+  Latitude : string
 
   constructor(){
     super()

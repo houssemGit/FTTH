@@ -3,10 +3,10 @@
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()">FTTH-ooredoo
-       <!-- <img src="https://images.app.goo.gl/j2tK8Qxw1jXmGn8z7" alt="logo"> -->
+    <!-- <a class="logo" href="#" (click)="navigateHome()">
+        <img src="https://images.app.goo.gl/j2tK8Qxw1jXmGn8z7" alt="logo">
 
-    </a>
+    </a> -->
   </div>
   <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary" hidden>
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
@@ -21,7 +21,8 @@
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
     <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline"></nb-action> -->
+    <nb-action class="control-item" icon="bell-outline"  badgeText="2" badgeStatus="danger" badgePosition="top right">
+    </nb-action> -->
     <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"

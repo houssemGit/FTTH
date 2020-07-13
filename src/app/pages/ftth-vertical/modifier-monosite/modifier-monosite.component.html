@@ -59,6 +59,32 @@
           <div *ngIf="fval.Num_plan.errors.required">Numero plan est obligatoire</div>
         </div>
       </div>
+      <div class="form-group">
+        <label for="Longitude">GPS: Longitude</label>
+        <input
+          type="text"
+          formControlName="Longitude"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Longitude.errors }"
+          placeholder="Entrer Longitude ici"
+        />
+        <div *ngIf="submitted && fval.Longitude.errors" class="invalid-feedback">
+          <div *ngIf="fval.Longitude.errors.required">Longitude est obligatoire</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Latitude">GPS: Latitude</label>
+        <input
+          type="text"
+          formControlName="Latitude"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && fval.Latitude.errors }"
+          placeholder="Entrer Latitude ici"
+        />
+        <div *ngIf="submitted && fval.Latitude.errors" class="invalid-feedback">
+          <div *ngIf="fval.Latitude.errors.required">Latitude est obligatoire</div>
+        </div>
+      </div>
           <!-- select item -->
           <div class="form-group">
             <div class="group-gap">

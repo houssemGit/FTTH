@@ -56,7 +56,7 @@ export class GererMonositeComponent implements OnInit {
     }, error => {
     this.status="warning"
     this.toastrService.show(``,`Aucun Monosite`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
-    localStorage.removeItem("Etat_con");localStorage.removeItem("Etat_racc");localStorage.removeItem("Num_steg");localStorage.removeItem("Adresse");localStorage.removeItem("Nom_monosite");localStorage.removeItem("Num_plan");localStorage.removeItem("Type_immeuble");
+    localStorage.removeItem("Etat_con");localStorage.removeItem("Etat_racc");localStorage.removeItem("Num_steg");localStorage.removeItem("Adresse");localStorage.removeItem("Nom_monosite");localStorage.removeItem("Num_plan");localStorage.removeItem("Longitude");localStorage.removeItem("Latitude");
 
   }
 
@@ -69,9 +69,10 @@ export class GererMonositeComponent implements OnInit {
     if (e.Pos_tiroir_distribution!=null)
     {localStorage.setItem("Pos_tiroir_distribution", e.Pos_tiroir_distribution.toString())}
     localStorage.setItem("Num_plan", e.Num_plan.toString());
-    localStorage.setItem("Type_immeuble", e.Type_immeuble.toString());
     localStorage.setItem("Etat_con", e.Etat_convention.toString());
     localStorage.setItem("Etat_racc", e.Etat_raccordement.toString());
+    localStorage.setItem("Longitude", e.Longitude.toString());
+    localStorage.setItem("Latitude", e.Latitude.toString());
     this.router.navigateByUrl("pages/immeubles/modifier-monosite");
   }
 

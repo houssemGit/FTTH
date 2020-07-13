@@ -49,6 +49,8 @@ export class AjoutPriComponent implements OnInit {
       Adresse: ['', Validators.required],
       Etat_convention:['', Validators.required],
       Etat_raccordement:['', Validators.required],
+      Longitude:['', Validators.required],
+      Latitude:['', Validators.required],
     });
 
     // affichage des zones
@@ -110,6 +112,8 @@ export class AjoutPriComponent implements OnInit {
     this.pri.Adresse= this.registerForm.controls["Adresse"].value;
     this.pri.Etat_convention=this.registerForm.controls["Etat_convention"].value
     this.pri.Etat_raccordement=this.registerForm.controls["Etat_raccordement"].value
+    this.pri.Longitude=this.registerForm.controls["Longitude"].value
+    this.pri.Latitude=this.registerForm.controls["Latitude"].value
 
 
 

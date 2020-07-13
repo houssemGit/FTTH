@@ -10,6 +10,10 @@ import { Cassette } from '../../../_models/cassette';
 import { Pri } from '../../../_models/pri';
 import { Sro } from '../../../_models/sro';
 import { Olt } from '../../../_models/olt';
+import { Client } from '../../../_models/client';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { Excel } from '../../../_models/excel';
 
 @Component({
   selector: 'ngx-gerer-appartement',
@@ -25,35 +29,57 @@ export class GererAppartementComponent implements OnInit {
     });
    }
 
+   @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective;
+   dtOptions: DataTables.Settings = {};
+   dtTrigger: Subject<Appartement> = new Subject();
   status: NbComponentStatus ;
   aparts: Array<Appartement>;
   FormRacIn: FormGroup;
   loading = false;
   submitted = false;
-  concat: Array<any>
+  concat: Array<any>=new Array ;
   zoen:string
   res:string
+  apparts: Array<any>=new Array ;
+  clientest  :Array<any>=new Array ;
+  aa: string
 
   ngOnInit() {
-
     //uploadForm
     this.uploadForm = this.formBuilder.group({
       excel: ['']
     })
 
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 100,
+      "ordering": false
+    };
+
     this.zoen=localStorage.getItem("choixzone")
     this.res=localStorage.getItem("choixresidence")
-    this.concat=[]
+
     this.ftthService.getAppartByResidence(localStorage.getItem('ID_pri')).subscribe(data => {
-      this.aparts = data;
-      for (let i = 0; i < this.aparts.length; i+=2) {
-        this.concat.push(Object.assign(this.aparts[i+1][0],this.aparts[i]))
-        }
+      this.apparts = data;
+        for (let i = 0; i < this.apparts.length; i+=2) {this.concat.push(Object.assign(this.apparts[i+1][0],this.apparts[i]))}
+           //concat client
+           this.ftthService.getClientsResidencetest(localStorage.getItem('ID_pri')).subscribe( (data)=>{
+            this.clientest=data
+
+            for (let i = 0; i < this.clientest.length; i++) {
+              for (let j = 0; j < this.concat.length; j++) {
+                if(this.clientest[i][0].ID_immeuble==this.concat[j].ID_immeuble){
+                Object.assign(this.concat[j],this.clientest[i][0])
+              }
+              }
+            }
+            });
+        this.dtTrigger.next();
     }, error => {
     this.status="warning"
     this.toastrService.show(``,`Aucun Appartement`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
     //clean the localstorage
-    localStorage.removeItem("ID_immeuble");localStorage.removeItem("Num_steg");localStorage.removeItem("Num_appartement");localStorage.removeItem("Num_etage");localStorage.removeItem("Nom_bloc");localStorage.removeItem("Num_BE");localStorage.removeItem("Pos_tiroir_col_montante");localStorage.removeItem("Type_immeuble");
+    localStorage.removeItem("ID_immeuble");localStorage.removeItem("Num_steg");localStorage.removeItem("Num_appartement");localStorage.removeItem("Num_etage");localStorage.removeItem("Nom_bloc");localStorage.removeItem("Num_BE");localStorage.removeItem("Pos_tiroir_col_montante");localStorage.removeItem("NCCCM");localStorage.removeItem("Coul_fib");localStorage.removeItem("Coul_tube");
   }
 
   uploadForm : FormGroup
@@ -61,13 +87,33 @@ export class GererAppartementComponent implements OnInit {
     const file = event.target.files[0]
     this.uploadForm.get('excel').setValue(file);
   }
-  onSubmit(){
-    const formData = new FormData();
-    console.log(this.uploadForm.get('excel').value);
-    formData.append('myFile',this.uploadForm.get('excel').value)
-    this.ftthService.ImportExcel(formData).subscribe(data => console.log(data), error => console.log(error))
+  omport = new Excel()
+  // file : File
+  // public onFileChange(files: FileList): void {
+  //   if (files.length) {
+  //     this.file = files[0];
+  //   }
+  // }
+
+  onSubmitImport(){
+    const select_file = new FormData();
+    select_file.append("select_file",this.uploadForm.get('excel').value)
+    this.omport.id=Number(localStorage.getItem('ID_pri'))
+    this.omport.select_file=select_file
+
+
+    console.log(select_file.get("select_file"));
+
+
+
+
+    this.ftthService.ImportExcel(this.omport).subscribe(data => console.log(data), error => console.log(error))
   }
 
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
   editApart(e) {
     localStorage.setItem("ID_immeuble", e.ID_immeuble.toString());
@@ -77,7 +123,9 @@ export class GererAppartementComponent implements OnInit {
     localStorage.setItem("Nom_bloc", e.Nom_bloc.toString());
     localStorage.setItem("Num_BE", e.Num_BE.toString());
     localStorage.setItem("Pos_tiroir_col_montante", e.Pos_tiroir_col_montante.toString());
-    localStorage.setItem("Type_immeuble", e.Type_immeuble.toString());
+    localStorage.setItem("NCCCM", e.Nom_Capacite_Cable_Colonne_Montante.toString());
+    localStorage.setItem("Coul_fib", e.Couleur_fibre.toString());
+    localStorage.setItem("Coul_tube", e.Couleur_tube.toString());
 
     this.router.navigateByUrl("pages/immeubles/modifier-appartement");
   }
@@ -138,13 +186,6 @@ export class GererAppartementComponent implements OnInit {
   coultube0 : string
   coulfibre1 : string
   coultube1 : string
-
-
-
-  voirCorrespondance(e){
-    this.ftthService.voirCorrespondance(e).subscribe((data)=>{ }, (error)=>{})
-
-  }
 
   showCrsp(res){
 
@@ -297,6 +338,27 @@ export class GererAppartementComponent implements OnInit {
   clickacco(appart){
     this.pto=[]
     this.pto.push(appart.Pos_tiroir_col_montante)
+  }
+
+  nsONT:string
+  Ntel:number
+  SR:string
+  Bo:string
+  type:string
+  client:Client
+  introuvable: boolean
+  detailsClient(e){
+    this.ftthService.getClientsByImmeuble(e.ID_immeuble).subscribe(data => {this.client= data
+      this.introuvable=false
+      this.nsONT=this.client[0].Num_serie_ONT
+      this.Ntel=this.client[0].Num_telephone
+      this.SR=this.client[0].Solution_raccordement
+      this.Bo=this.client[0].Budget_optique
+      this.type=this.client[0].Type_client
+    }, error => {
+      this.introuvable=true
+
+    })
   }
 
 }

@@ -36,6 +36,8 @@ export class ModifierMonositeComponent implements OnInit {
       Num_plan: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
       Etat_con: ["", [Validators.required]],
       Etat_racc: ["", [Validators.required]],
+      Longitude:['', Validators.required],
+      Latitude:['', Validators.required],
     });
 
     this.registerForm.controls['Num_steg'].setValue(localStorage.getItem('Num_steg'))
@@ -44,6 +46,8 @@ export class ModifierMonositeComponent implements OnInit {
     this.registerForm.controls['Num_plan'].setValue(localStorage.getItem('Num_plan'))
     this.registerForm.controls['Etat_con'].setValue(localStorage.getItem('Etat_con'))
     this.registerForm.controls['Etat_racc'].setValue(localStorage.getItem('Etat_racc'))
+    this.registerForm.controls['Longitude'].setValue(localStorage.getItem('Longitude'))
+    this.registerForm.controls['Latitude'].setValue(localStorage.getItem('Latitude'))
 
   }
 
@@ -82,7 +86,8 @@ export class ModifierMonositeComponent implements OnInit {
     this.mono.Etat_convention= this.registerForm.controls["Etat_con"].value;
     this.mono.Etat_raccordement= this.registerForm.controls["Etat_racc"].value;
     this.mono.Pos_tiroir_distribution=localStorage.getItem('Pos_tiroir_distribution')
-    this.mono.Type_immeuble=localStorage.getItem('Type_immeuble')
+    this.mono.Longitude=this.registerForm.controls["Longitude"].value
+    this.mono.Latitude=this.registerForm.controls["Latitude"].value
 
 
 

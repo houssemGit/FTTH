@@ -34,7 +34,7 @@ export class GererPriComponent implements OnInit {
     this.status="warning"
     this.toastrService.show(``,`Aucun PRI`,{ status: this.status, destroyByClick: true, hasIcon: false,duration: 2000,position: NbGlobalPhysicalPosition.TOP_RIGHT});});
     // clear storage
-    localStorage.removeItem("Adresse");localStorage.removeItem("Nom_residence");localStorage.removeItem("Nom_pri");localStorage.removeItem("N_C_C_D");localStorage.removeItem("Num_plan");localStorage.removeItem("Nb_prise");localStorage.removeItem("Num_syndique");localStorage.removeItem("Nom_syndique");localStorage.removeItem("Etat_convention");localStorage.removeItem("Etat_raccordement");
+    localStorage.removeItem("Adresse");localStorage.removeItem("Nom_residence");localStorage.removeItem("Nom_pri");localStorage.removeItem("N_C_C_D");localStorage.removeItem("Num_plan");localStorage.removeItem("Nb_prise");localStorage.removeItem("Num_syndique");localStorage.removeItem("Nom_syndique");localStorage.removeItem("Etat_convention");localStorage.removeItem("Etat_raccordement");localStorage.removeItem("Longitude");localStorage.removeItem("Latitude");
 
   }
 
@@ -70,6 +70,8 @@ export class GererPriComponent implements OnInit {
     localStorage.setItem("Nom_syndique", e.Nom_syndique.toString());
     localStorage.setItem("Etat_convention", e.Etat_convention.toString());
     localStorage.setItem("Etat_raccordement", e.Etat_raccordement.toString());
+    localStorage.setItem("Longitude", e.Longitude.toString());
+    localStorage.setItem("Latitude", e.Latitude.toString());
 
 
     this.router.navigateByUrl("pages/immeubles/modifier-pri");

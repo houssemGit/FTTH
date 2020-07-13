@@ -9,6 +9,7 @@ import { DetailsResidenceComponent } from './details-residence/details-residence
 import { DetailsImmeubleComponent } from './details-immeuble/details-immeuble.component';
 import { ConsulterZoneEligibiliteComponent } from './consulter-zone-eligibilite/consulter-zone-eligibilite.component';
 import { DetailsEligibiliteComponent } from './details-eligibilite/details-eligibilite.component';
+import { DetailsEligibiliteAppartementComponent } from './details-eligibilite-appartement/details-eligibilite-appartement.component';
 
 
 
@@ -47,6 +48,10 @@ const routes: Routes = [{
       path: 'details-eligibilite',
       component: DetailsEligibiliteComponent ,
     },
+    {
+      path: 'details-eligibilite-appartement',
+      component: DetailsEligibiliteAppartementComponent ,
+    },
 
   ],
 }];
@@ -65,5 +70,6 @@ export const routedComponents = [
   ConsulterZoneEligibiliteComponent,
   DetailsImmeubleComponent,
   DetailsResidenceComponent,
-  DetailsEligibiliteComponent
+  DetailsEligibiliteComponent,
+  DetailsEligibiliteAppartementComponent
 ];

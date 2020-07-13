@@ -309,8 +309,8 @@ export class FtthService {
 
   }
   // import excel
-  ImportExcel(formdata){
-    return this.http.post<any>("http://localhost:8000/api/",formdata)
+  ImportExcel(x: any){
+    return this.http.post<any>("http://localhost:8000/api/appartements/import",x)
   }
 
   //add

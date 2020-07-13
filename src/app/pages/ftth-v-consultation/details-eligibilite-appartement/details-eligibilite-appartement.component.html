@@ -1,35 +1,32 @@
-<h6>Eligibilité zone {{zone}}</h6>
+<h6>Eligibilité résidence {{res}}</h6>
 <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr>
-      <th>Nom Immeuble</th>
-      <th>Adresse</th>
-      <th>Nombre prises</th>
-      <th>Nom syndique</th>
-      <th>Contact syndique</th>
-      <th>Raccordement horizental</th>
+      <th>N°APPARTEMENT</th>
+      <th>N°ETAGE</th>
+      <th>Nom du Bloc</th>
+      <th>N°Compteur STEG</th>
       <th>Etat raccordement</th>
-      <th>Etat convention</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let e of mix">
+    <tr *ngFor="let e of concat">
 
-    <td>{{e.Nom_residence}} {{e.Nom_monosite}}</td>
-    <td>{{e.Adresse}}</td>
-    <td>{{e.Nb_prise}} {{e.nb_prise_mono}}</td>
-    <td>{{e.Nom_syndique}} </td>
-    <td>{{e.Num_syndique}}  </td>
-    <td >oui</td>
-    <td>{{e.Etat_raccordement}}</td>
-    <td  >{{e.Etat_convention}}</td>
+    <td>{{e.Num_appartement}} </td>
+    <td>{{e.Num_etage}}</td>
+    <td>{{e.Nom_bloc}} </td>
+    <td>{{e.Num_steg}}</td>
+    <td>
+      <a  *ngIf="e.IsRaccorde==1">Raccordé</a>
+      <a *ngIf="e.IsRaccorde==0">Non Raccordé</a>
+    </td>
     <td >
       <div style=" display:flex;flex-direction:row; position: relative; left: 5px">
          <button *ngIf="e.Nom_syndique; else client" nbButton status="danger"  (click)="detailsResidence(e)" nbPopover="Details Appartements" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"> <i class="far fa-building"></i> </button>
          <ng-template #client>
-          <button *ngIf="e.KCRM;"  nbButton status="success"   (click)="detailsClient(e)" data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Details Clients" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" > <i class="far fa-user"></i> </button>
-          <button *ngIf="!e.KCRM"  nbButton status="success" disabled  (click)="detailsClient(e)" data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Details Clients" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" > <i class="far fa-user"></i> </button>
+          <button *ngIf="e.KCRM"  nbButton status="success"  (click)="detailsClient(e)" data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Details Clients" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" > <i class="far fa-user"></i> </button>
+          <button *ngIf="!e.KCRM" disabled nbButton status="success"  (click)="detailsClient(e)" data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Details Clients" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" > <i class="far fa-user"></i> </button>
           <button nbButton status="primary"   (click)="copy(e)" style="margin-left: 20px;" nbPopover="Copier" nbPopoverTrigger="hint" nbPopoverPlacement="bottom">  <i class="far fa-copy"></i>  </button>
         </ng-template>
        </div>

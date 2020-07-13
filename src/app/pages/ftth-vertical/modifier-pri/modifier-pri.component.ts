@@ -47,6 +47,8 @@ export class ModifierPriComponent implements OnInit {
       Adresse: ['', Validators.required],
       Etat_convention:['', Validators.required],
       Etat_raccordement:['', Validators.required],
+      Longitude:['', Validators.required],
+      Latitude:['', Validators.required],
     });
 
     this.registerForm.controls['Nom_pri'].setValue(localStorage.getItem('Nom_pri'))
@@ -59,6 +61,8 @@ export class ModifierPriComponent implements OnInit {
     this.registerForm.controls['Adresse'].setValue(localStorage.getItem('Adresse'))
     this.registerForm.controls['Etat_convention'].setValue(localStorage.getItem('Etat_convention'))
     this.registerForm.controls['Etat_raccordement'].setValue(localStorage.getItem('Etat_raccordement'))
+    this.registerForm.controls['Longitude'].setValue(localStorage.getItem('Longitude'))
+    this.registerForm.controls['Latitude'].setValue(localStorage.getItem('Latitude'))
 
 
 
@@ -129,6 +133,8 @@ export class ModifierPriComponent implements OnInit {
     this.nomSRO= this.registerForm.controls["sro"].value;
     this.pri.Etat_convention=this.registerForm.controls["Etat_convention"].value
     this.pri.Etat_raccordement=this.registerForm.controls["Etat_raccordement"].value
+    this.pri.Longitude=this.registerForm.controls["Longitude"].value
+    this.pri.Latitude=this.registerForm.controls["Latitude"].value
 
     this.ftthService.AllSro().subscribe(data =>
       { this.sros=data

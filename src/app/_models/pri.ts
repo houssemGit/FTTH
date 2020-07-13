@@ -11,6 +11,8 @@ export class Pri {
   Adresse: string
   Etat_raccordement : string
   Etat_convention	: string
+  Longitude: string
+  Latitude : string
   constructor(){
 
   }

@@ -2,7 +2,54 @@
 <button routerLink="../ajout-appartement" nbButton status="success"  style="width:200px; float:right;"><i class="far fa-plus-square"></i>  Ajouter Appartement </button>
 <br>
 <br>
-<div class="accordions-container row">
+<form [formGroup]="uploadForm" (ngSubmit)="onSubmitImport()">
+  <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".csv, .xlsx" />
+  <button type="submit" nbButton status="primary"  style="width:200px; float:right;"><i class="far fa-plus-square"></i>Importer Excel</button>
+</form>
+
+<table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th>Position Tiroir CM</th>
+      <th>Nom du Bloc</th>
+      <th>Nom et capacité du CCM</th>
+      <th>COULEUR TUBE</th>
+      <th>COULEUR FIBRE</th>
+      <th>N°BEO</th>
+      <th>N°ETAGE</th>
+      <th>N°APPARTEMENT</th>
+      <th>N°STEG</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of concat">
+
+    <td>{{e.Pos_tiroir_col_montante}} </td>
+    <td>{{e.Nom_bloc}}</td>
+    <td>{{e.Nom_Capacite_Cable_Colonne_Montante}} </td>
+    <td [ngStyle]="{'background-color': (e.Couleur_tube=='Bleu') ? '#0000ff' : ((e.Couleur_tube=='Orange') ? '#ff4500' : ((e.Couleur_tube=='Vert') ? '#008000' : ((e.Couleur_tube=='Marron') ? '#a52a2a' : ((e.Couleur_tube=='Gris') ? '#808080' : ((e.Couleur_tube=='Blanc') ? '#ffffff' : ((e.Couleur_tube=='Rouge') ? '#ff0000' : ((e.Couleur_tube=='Noir') ? '#000000' : ((e.Couleur_tube=='Jaune') ? '#ffff00' : ((e.Couleur_tube=='Violet') ? '#800080' : ((e.Couleur_tube=='Rose') ? '#ffc0cb' : ((e.Couleur_tube=='Turquoise') ? '#40e0d0' : null ) ) )  )  ) ) ) ) ) ) )}"></td>
+    <td [ngStyle]="{'background-color': (e.Couleur_fibre=='Bleu') ? '#0000ff' : ((e.Couleur_fibre=='Orange') ? '#ff4500' : ((e.Couleur_fibre=='Vert') ? '#008000' : ((e.Couleur_fibre=='Marron') ? '#a52a2a' : ((e.Couleur_fibre=='Gris') ? '#808080' : ((e.Couleur_fibre=='Blanc') ? '#ffffff' : ((e.Couleur_fibre=='Rouge') ? '#ff0000' : ((e.Couleur_fibre=='Noir') ? '#000000' : ((e.Couleur_fibre=='Jaune') ? '#ffff00' : ((e.Couleur_fibre=='Violet') ? '#800080' : ((e.Couleur_fibre=='Rose') ? '#ffc0cb' : ((e.Couleur_fibre=='Turquoise') ? '#40e0d0' : null ) ) )  )  ) ) ) ) ) ) )}"></td>
+    <td>{{e.Num_BE}}</td>
+    <td>{{e.Num_etage}}</td>
+    <td>{{e.Num_appartement}}</td>
+    <td>{{e.Num_steg}}</td>
+
+    <td >
+      <div style=" display:flex;flex-direction:row;  ">
+        <button *ngIf="e.KCRM"  nbButton status="success"  (click)="detailsClient(e)" data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Details Clients" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" > <i class="far fa-user"></i> </button>
+        <button *ngIf="!e.KCRM" disabled nbButton status="success"  (click)="detailsClient(e)" data-toggle="modal" data-target="#exampleModalLongclient" nbPopover="Details Clients" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" > <i class="far fa-user"></i> </button>        <!-- <button  nbButton status="info"   (click)="copy(e)" style="margin-left: 5px;" nbPopover="Copier" nbPopoverTrigger="hint" nbPopoverPlacement="bottom">  <i class="far fa-copy"></i>  </button> -->
+        <button  nbButton status="primary"  (click)="showCrsp(e)" style="margin-left: 5px;" data-toggle="modal" data-target="#exampleModalLongcrs" nbPopover="Voir correspondance" nbPopoverTrigger="hint" nbPopoverPlacement="bottom"  >  <i class="fas fa-search"></i>   </button>
+        <button  nbButton status="warning" (click)="editApart(e)" style="margin-left: 5px;" nbPopover="modifier" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" > <i class="far fa-edit"></i> </button>
+        <button  nbButton status="danger"  (click)="deleteAppart(e)" style="margin-left: 5px;" nbPopover="Supprimer" nbPopoverTrigger="hint" nbPopoverPlacement="bottom" data-toggle="modal" data-target="#confsupr" >  <i class="far fa-trash-alt"></i>   </button>
+
+       </div>
+    </td>
+
+    </tr>
+  </tbody>
+</table>
+<!-- <div class="accordions-container row">
   <div class="accordion-container col-md-12 col-lg-100 col-xxxl-6" >
     <nb-accordion >
       <nb-accordion-item  *ngFor="let appart of concat;let i = index "    >
@@ -42,7 +89,7 @@
       </nb-accordion-item>
     </nb-accordion>
   </div>
-</div>
+</div> -->
 
 <!-- Modal déraccordé IN -->
 <div data-backdrop="static" class="modal fade" id="déraccordéIN" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -180,9 +227,31 @@
   </div>
 </div>
 
-<br>
-<br>
-<!-- <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-  <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".csv, .xlsx" />
-  <button type="submit" nbButton status="primary"  style="width:200px; float:right;"><i class="far fa-plus-square"></i>Importer Excel</button>
-</form> -->
+
+
+<!-- Modal crsp client -->
+<div class="modal fade" id="exampleModalLongclient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> Client Monosite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="introuvable==false">
+          <h6>Num serie ONT: {{nsONT}}</h6>
+        <h6>Num telephone: {{Ntel}}</h6>
+        <h6>Solution de raccordement: {{SR}}</h6>
+        <h6>Budget optique: {{Bo}}</h6>
+        <h6>Type: {{type}}</h6>
+        </div>
+        <div *ngIf="introuvable==true">
+          <h6>N'est pas encore un client!</h6>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

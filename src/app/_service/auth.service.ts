@@ -32,7 +32,8 @@ export class AuthService {
     return localStorage.getItem('role');
   }
   checkAvailability(): boolean {
-    return !!localStorage.getItem('token') && !!localStorage.getItem('role') && !!localStorage.getItem('username') ;
+    //return !!localStorage.getItem('token') && !!localStorage.getItem('role') && !!localStorage.getItem('username') ;
+    return true ;
   }
 
   public logout() {
